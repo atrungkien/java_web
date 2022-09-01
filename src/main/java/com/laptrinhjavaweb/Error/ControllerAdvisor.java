@@ -1,4 +1,4 @@
-package Error;
+package com.laptrinhjavaweb.Error;
 
 import java.util.ArrayList;
 import java.util.List;

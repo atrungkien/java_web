@@ -22,7 +22,6 @@ public class AssignmentbuildingAPI {
 	public List<BuildingUserOutput> getStaff(@RequestBody Long buildingId,
 											 @RequestBody List<Long> listStaffId){
 			assignmentBuildingSevice.assignmentBuilding(buildingId, listStaffId);
-			
 			return getStaff(buildingId, listStaffId);
 	}
 }
