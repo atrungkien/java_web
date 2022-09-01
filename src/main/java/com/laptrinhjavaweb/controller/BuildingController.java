@@ -1,21 +1,26 @@
 package com.laptrinhjavaweb.controller;
 
 import java.util.List;
+import java.util.Map;
 
+import com.laptrinhjavaweb.model.dto.BuildingDto;
+import com.laptrinhjavaweb.model.dto.BuildingRole;
+import com.laptrinhjavaweb.model.input.AssignmentInput;
+import com.laptrinhjavaweb.model.input.BuildingSeachInput;
 import com.laptrinhjavaweb.model.output.BuildingSeachOutput;
+import com.laptrinhjavaweb.repository.entity.BuildingEntity;
 import com.laptrinhjavaweb.service.BuildingService;
 import com.laptrinhjavaweb.service.impl.BuildingServiceImpl;
 
 public class BuildingController {
 	
 	private BuildingService buildingService = new BuildingServiceImpl();
-	 
-	public List<BuildingSeachOutput> findBuilding(String name,String district,
-			String buildingArea,String street,String ward,String numberOfBasement,
-			String buildingTypes, String costRentFrom,String costRentTo,String areaRentFrom,
-			String areaRentTo,String staffId) {
-		List<BuildingSeachOutput> results = buildingService.findBuilding(name, district, buildingArea, street,
-				ward, numberOfBasement, buildingTypes, costRentFrom, costRentTo, areaRentFrom, areaRentTo, staffId);
+
+	public List<BuildingSeachOutput> findBuilding(Map<String, Object> params, List<String> rentTypes){
+		List<BuildingSeachOutput> results = buildingService.findBuilding(params, rentTypes);
 		return results;
 	}
+	
+	
+
 }

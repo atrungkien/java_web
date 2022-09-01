@@ -1,16 +1,15 @@
 package com.laptrinhjavaweb.service;
+
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.stereotype.Service;
-
+import com.laptrinhjavaweb.model.dto.BuildingDto;
+import com.laptrinhjavaweb.model.input.AssignmentInput;
+import com.laptrinhjavaweb.model.input.BuildingSeachInput;
 import com.laptrinhjavaweb.model.output.BuildingSeachOutput;
+import com.laptrinhjavaweb.repository.entity.RentAreaEntity;
 
-@Service
+
 public interface BuildingService {
-	public List<BuildingSeachOutput> findBuilding(String name,String district,
-			String buildingArea,String street,String ward,String numberOfBasement,
-			String buildingTypes, String costRentFrom,String costRentTo,String areaRentFrom,
-			String areaRentTo,String staffId);
-
+	List<BuildingSeachOutput> findBuilding(Map<String, Object> params, List<String> rentTypes);
 }

@@ -1,101 +1,26 @@
 package com.laptrinhjavaweb.model.dto;
 
-public class BuildingDTO {
-	private Long id;
+public class BuildingDto {
 	private String name;
-	private String numberOfBasement;
-	private String floorarea;
-	private String createddate;
-	private String createdby;
-	private String districid;
-	private String modifieddate;
-	private String modifiedby;
-	private String buildingArea;
 	private String street;
 	private String ward;
-	private String district;
-	private String structure;
-	private Integer costRent;
-	private String costDescription;
-	private String serviceCost;
-	private String carCost;
-	private String motorbikeCost;
-	private String overtimeCost;
-	private String buildingTypes;
-	private String costRentFrom;
-	private String costRentTo;
-	private String areaRentFrom;
-	private String areaRentTo;
-	private String staffId;
-	private String electricityCost;
-	private String deposit;
-	private String payment;
-	private String timeRent;
-	private String timeDecorator;
-	private String managerName;
-	private String managerPhone;
-	private String areaRent;
-	private String address;
-	private String type;
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
+	private String managerphone;
+	private String managername;
+	private Integer numberofbasement;
+	private Integer floorarea;
+	private Integer rentpriceTo;
+	private Integer rentpriceFrom;
+	private Integer rentareaFrom;
+	private Integer rentareaTo;
+	private Long buildingId;
+	private Integer[] staffIds = {1,2};
+	private String[] district;
+	private String[] types;
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public String getNumberOfBasement() {
-		return numberOfBasement;
-	}
-	public void setNumberOfBasement(String numberOfBasement) {
-		this.numberOfBasement = numberOfBasement;
-	}
-	public String getFloorarea() {
-		return floorarea;
-	}
-	public void setFloorarea(String floorarea) {
-		this.floorarea = floorarea;
-	}
-	public String getCreateddate() {
-		return createddate;
-	}
-	public void setCreateddate(String createddate) {
-		this.createddate = createddate;
-	}
-	public String getCreatedby() {
-		return createdby;
-	}
-	public void setCreatedby(String createdby) {
-		this.createdby = createdby;
-	}
-	public String getDistricid() {
-		return districid;
-	}
-	public void setDistricid(String districid) {
-		this.districid = districid;
-	}
-	public String getModifieddate() {
-		return modifieddate;
-	}
-	public void setModifieddate(String modifieddate) {
-		this.modifieddate = modifieddate;
-	}
-	public String getModifiedby() {
-		return modifiedby;
-	}
-	public void setModifiedby(String modifiedby) {
-		this.modifiedby = modifiedby;
-	}
-	public String getBuildingArea() {
-		return buildingArea;
-	}
-	public void setBuildingArea(String buildingArea) {
-		this.buildingArea = buildingArea;
 	}
 	public String getStreet() {
 		return street;
@@ -109,149 +34,78 @@ public class BuildingDTO {
 	public void setWard(String ward) {
 		this.ward = ward;
 	}
-	public String getDistrict() {
+	public String getManagerphone() {
+		return managerphone;
+	}
+	public void setManagerphone(String managerphone) {
+		this.managerphone = managerphone;
+	}
+	public String getManagername() {
+		return managername;
+	}
+	public void setManagername(String managername) {
+		this.managername = managername;
+	}
+	public Integer getNumberofbasement() {
+		return numberofbasement;
+	}
+	public void setNumberofbasement(Integer numberofbasement) {
+		this.numberofbasement = numberofbasement;
+	}
+	public Integer getFloorarea() {
+		return floorarea;
+	}
+	public void setFloorarea(Integer floorarea) {
+		this.floorarea = floorarea;
+	}
+	public Integer getRentpriceTo() {
+		return rentpriceTo;
+	}
+	public void setRentpriceTo(Integer rentpriceTo) {
+		this.rentpriceTo = rentpriceTo;
+	}
+	public Integer getRentpriceFrom() {
+		return rentpriceFrom;
+	}
+	public void setRentpriceFrom(Integer rentpriceFrom) {
+		this.rentpriceFrom = rentpriceFrom;
+	}
+	public Integer getRentareaFrom() {
+		return rentareaFrom;
+	}
+	public void setRentareaFrom(Integer rentareaFrom) {
+		this.rentareaFrom = rentareaFrom;
+	}
+	public Integer getRentareaTo() {
+		return rentareaTo;
+	}
+	public void setRentareaTo(Integer rentareaTo) {
+		this.rentareaTo = rentareaTo;
+	}
+	public Long getBuildingId() {
+		return buildingId;
+	}
+	public void setBuildingId(Long buildingId) {
+		this.buildingId = buildingId;
+	}
+	public Integer[] getStaffIds() {
+		return staffIds;
+	}
+	public void setStaffIds(Integer[] staffIds) {
+		this.staffIds = staffIds;
+	}
+	public String[] getDistrict() {
 		return district;
 	}
-	public void setDistrict(String district) {
+	public void setDistrict(String[] district) {
 		this.district = district;
 	}
-	public String getStructure() {
-		return structure;
+	public String[] getTypes() {
+		return types;
 	}
-	public void setStructure(String structure) {
-		this.structure = structure;
+	public void setTypes(String[] types) {
+		this.types = types;
 	}
-	public Integer getCostRent() {
-		return costRent;
-	}
-	public void setCostRent(Integer costRent) {
-		this.costRent = costRent;
-	}
-	public String getCostDescription() {
-		return costDescription;
-	}
-	public void setCostDescription(String costDescription) {
-		this.costDescription = costDescription;
-	}
-	public String getServiceCost() {
-		return serviceCost;
-	}
-	public void setServiceCost(String serviceCost) {
-		this.serviceCost = serviceCost;
-	}
-	public String getCarCost() {
-		return carCost;
-	}
-	public void setCarCost(String carCost) {
-		this.carCost = carCost;
-	}
-	public String getMotorbikeCost() {
-		return motorbikeCost;
-	}
-	public void setMotorbikeCost(String motorbikeCost) {
-		this.motorbikeCost = motorbikeCost;
-	}
-	public String getOvertimeCost() {
-		return overtimeCost;
-	}
-	public void setOvertimeCost(String overtimeCost) {
-		this.overtimeCost = overtimeCost;
-	}
-	public String getBuildingTypes() {
-		return buildingTypes;
-	}
-	public void setBuildingTypes(String buildingTypes) {
-		this.buildingTypes = buildingTypes;
-	}
-	public String getCostRentFrom() {
-		return costRentFrom;
-	}
-	public void setCostRentFrom(String costRentFrom) {
-		this.costRentFrom = costRentFrom;
-	}
-	public String getCostRentTo() {
-		return costRentTo;
-	}
-	public void setCostRentTo(String costRentTo) {
-		this.costRentTo = costRentTo;
-	}
-	public String getAreaRentFrom() {
-		return areaRentFrom;
-	}
-	public void setAreaRentFrom(String areaRentFrom) {
-		this.areaRentFrom = areaRentFrom;
-	}
-	public String getAreaRentTo() {
-		return areaRentTo;
-	}
-	public void setAreaRentTo(String areaRentTo) {
-		this.areaRentTo = areaRentTo;
-	}
-	public String getStaffId() {
-		return staffId;
-	}
-	public void setStaffId(String staffId) {
-		this.staffId = staffId;
-	}
-	public String getElectricityCost() {
-		return electricityCost;
-	}
-	public void setElectricityCost(String electricityCost) {
-		this.electricityCost = electricityCost;
-	}
-	public String getDeposit() {
-		return deposit;
-	}
-	public void setDeposit(String deposit) {
-		this.deposit = deposit;
-	}
-	public String getPayment() {
-		return payment;
-	}
-	public void setPayment(String payment) {
-		this.payment = payment;
-	}
-	public String getTimeRent() {
-		return timeRent;
-	}
-	public void setTimeRent(String timeRent) {
-		this.timeRent = timeRent;
-	}
-	public String getTimeDecorator() {
-		return timeDecorator;
-	}
-	public void setTimeDecorator(String timeDecorator) {
-		this.timeDecorator = timeDecorator;
-	}
-	public String getManagerName() {
-		return managerName;
-	}
-	public void setManagerName(String managerName) {
-		this.managerName = managerName;
-	}
-	public String getManagerPhone() {
-		return managerPhone;
-	}
-	public void setManagerPhone(String managerPhone) {
-		this.managerPhone = managerPhone;
-	}
-	public String getAreaRent() {
-		return areaRent;
-	}
-	public void setAreaRent(String areaRent) {
-		this.areaRent = areaRent;
-	}
-	public String getAddress() {
-		return address;
-	}
-	public void setAddress(String address) {
-		this.address = address;
-	}
-	public String getType() {
-		return type;
-	}
-	public void setType(String type) {
-		this.type = type;
-	}
+	
 	
 }

@@ -1,35 +1,38 @@
 package com.laptrinhjavaweb.model.input;
 
 public class BuildingSeachInput {
+	private Long staffid;
+	private Long buildingid;
 	private String name;
-	private String district;
-	private String buildingArea;
 	private String street;
 	private String ward;
-	private String numberOfBasement;
-	private String costRentFrom;
-	private String costRentTo;
-	private String areaRentFrom;
-	private String areaRentTo;
-	private String staffId;
+	private String managerphone;
+	private String managername;
+	private String renttype;
+	private String[] district;
+	private String[] types;
+	private Integer numberofbasement;
+	private Integer floorarea;
+	private Integer rentpricedescription;
+	private Integer rentprice;
 	
+	public Long getStaffid() {
+		return staffid;
+	}
+	public void setStaffid(Long staffid) {
+		this.staffid = staffid;
+	}
+	public Long getBuildingid() {
+		return buildingid;
+	}
+	public void setBuildingid(Long buildingid) {
+		this.buildingid = buildingid;
+	}
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public String getDistrict() {
-		return district;
-	}
-	public void setDistrict(String district) {
-		this.district = district;
-	}
-	public String getBuildingArea() {
-		return buildingArea;
-	}
-	public void setBuildingArea(String buildingArea) {
-		this.buildingArea = buildingArea;
 	}
 	public String getStreet() {
 		return street;
@@ -43,41 +46,58 @@ public class BuildingSeachInput {
 	public void setWard(String ward) {
 		this.ward = ward;
 	}
-	public String getNumberOfBasement() {
-		return numberOfBasement;
+	public String getManagerphone() {
+		return managerphone;
 	}
-	public void setNumberOfBasement(String numberOfBasement) {
-		this.numberOfBasement = numberOfBasement;
-	
+	public void setManagerphone(String managerphone) {
+		this.managerphone = managerphone;
 	}
-	public String getCostRentFrom() {
-		return costRentFrom;
+	public String getManagername() {
+		return managername;
 	}
-	public void setCostRentFrom(String costRentFrom) {
-		this.costRentFrom = costRentFrom;
+	public void setManagername(String managername) {
+		this.managername = managername;
 	}
-	public String getCostRentTo() {
-		return costRentTo;
+	public String getRenttype() {
+		return renttype;
 	}
-	public void setCostRentTo(String costRentTo) {
-		this.costRentTo = costRentTo;
+	public void setRenttype(String renttype) {
+		this.renttype = renttype;
 	}
-	public String getAreaRentFrom() {
-		return areaRentFrom;
+	public String[] getDistrict() {
+		return district;
 	}
-	public void setAreaRentFrom(String areaRentFrom) {
-		this.areaRentFrom = areaRentFrom;
+	public void setDistrict(String[] district) {
+		this.district = district;
 	}
-	public String getAreaRentTo() {
-		return areaRentTo;
+	public Integer getNumberofbasement() {
+		return numberofbasement;
 	}
-	public void setAreaRentTo(String areaRentTo) {
-		this.areaRentTo = areaRentTo;
+	public void setNumberofbasement(Integer numberofbasement) {
+		this.numberofbasement = numberofbasement;
 	}
-	public String getStaffId() {
-		return staffId;
+	public Integer getFloorarea() {
+		return floorarea;
 	}
-	public void setStaffId(String staffId) {
-		this.staffId = staffId;
+	public void setFloorarea(Integer floorarea) {
+		this.floorarea = floorarea;
+	}
+	public Integer getRentpricedescription() {
+		return rentpricedescription;
+	}
+	public void setRentpricedescription(Integer rentpricedescription) {
+		this.rentpricedescription = rentpricedescription;
+	}
+	public Integer getRentprice() {
+		return rentprice;
+	}
+	public void setRentprice(Integer rentprice) {
+		this.rentprice = rentprice;
+	}
+	public String[] getTypes() {
+		return types;
+	}
+	public void setTypes(String[] types) {
+		this.types = types;
 	}
 }

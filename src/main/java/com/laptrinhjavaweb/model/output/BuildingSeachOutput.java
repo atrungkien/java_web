@@ -1,39 +1,37 @@
 package com.laptrinhjavaweb.model.output;
 
+import java.util.List;
+
 public class BuildingSeachOutput {
+	
 	private String name;
-	private String address;
-	private String managerName;
-	private String managerPhone;
-	private String floorarea;
-	private String costDescription;
-	private String buildingTypes;
-	private Integer costRent;
-	private String serviceCost;
-	private String overtimeCost;
-	private String districid;
+    private String address;
+    private int floorArea;
+    private String rentPriceDescription;
+    private int rentPrice;
+    private String rentArea;
+    private String managerphone;
+	private String managername;
+	private List<Long> staffID;
+	private String staffName;
 	
-	
-	
-	public String getDistricid() {
-		return districid;
+	public List<Long> getStaffID() {
+		return staffID;
 	}
-	public void setDistricid(String districid) {
-		this.districid = districid;
+	public void setStaffID(List<Long> list) {
+		this.staffID = list;
 	}
-	public String getBuildingTypes() {
-		return buildingTypes;
+	public String getStaffName() {
+		return staffName;
 	}
-	public void setBuildingTypes(String buildingTypes) {
-		this.buildingTypes = buildingTypes;
+	public void setStaffName(String staffName) {
+		this.staffName = staffName;
 	}
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
-		
-
 	}
 	public String getAddress() {
 		return address;
@@ -41,47 +39,42 @@ public class BuildingSeachOutput {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public String getManagerName() {
-		return managerName;
+	public int getFloorArea() {
+		return floorArea;
 	}
-	public void setManagerName(String managerName) {
-		this.managerName = managerName;
+	public void setFloorArea(int floorArea) {
+		this.floorArea = floorArea;
 	}
-	public String getManagerPhone() {
-		return managerPhone;
+	public String getRentPriceDescription() {
+		return rentPriceDescription;
 	}
-	public void setManagerPhone(String managerPhone) {
-		this.managerPhone = managerPhone;
+	public void setRentPriceDescription(String rentPriceDescription) {
+		this.rentPriceDescription = rentPriceDescription;
 	}
-	public String getFloorarea() {
-		return floorarea;
+	public int getRentPrice() {
+		return rentPrice;
 	}
-	public void setFloorarea(String floorarea) {
-		this.floorarea = floorarea;
+	public void setRentPrice(int rentPrice) {
+		this.rentPrice = rentPrice;
 	}
-	public String getCostDescription() {
-		return costDescription;
+	public String getRentArea() {
+		return rentArea;
 	}
-	public void setCostDescription(String costDescription) {
-		this.costDescription = costDescription;
+	public void setRentArea(String rentArea) {
+		this.rentArea = rentArea;
 	}
-	public Integer getCostRent() {
-		return costRent;
+	public String getManagerphone() {
+		return managerphone;
 	}
-	public void setCostRent(Integer costRent) {
-		this.costRent = costRent;
+	public void setManagerphone(String managerphone) {
+		this.managerphone = managerphone;
 	}
-	public String getServiceCost() {
-		return serviceCost;
+	public String getManagername() {
+		return managername;
 	}
-	public void setServiceCost(String serviceCost) {
-		this.serviceCost = serviceCost;
+	public void setManagername(String managername) {
+		this.managername = managername;
 	}
-	public String getOvertimeCost() {
-		return overtimeCost;
-	}
-	public void setOvertimeCost(String overtimeCost) {
-		this.overtimeCost = overtimeCost;
-	}
+	
 	
 }

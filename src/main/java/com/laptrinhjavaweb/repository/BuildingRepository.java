@@ -1,15 +1,11 @@
 package com.laptrinhjavaweb.repository;
 
 import java.util.List;
-
-import org.springframework.stereotype.Repository;
+import java.util.Map;
 
 import com.laptrinhjavaweb.repository.entity.BuildingEntity;
+import com.laptrinhjavaweb.repository.entity.UserEntity;
 
-@Repository
-public interface BuildingRepository {
-	List<BuildingEntity> findBuilding(String name,String district,
-			String buildingArea,String street,String ward,String numberOfBasement,
-			String buildingTypes, String costRentFrom,String costRentTo,String areaRentFrom,
-			String areaRentTo,String staffId);
+public interface BuildingRepository extends JdbcRepository<BuildingEntity>{
+	List<BuildingEntity> findBuilding(Map<String, Object> params,List<String> rentTypes);
 }
