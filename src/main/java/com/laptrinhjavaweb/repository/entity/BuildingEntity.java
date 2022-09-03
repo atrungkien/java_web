@@ -1,33 +1,21 @@
 package com.laptrinhjavaweb.repository.entity;
 
-import com.laptrinhjavaweb.anotation.Column;
-import com.laptrinhjavaweb.anotation.Entity;
-import com.laptrinhjavaweb.anotation.Table;
-@Entity
-@Table(name = "building")
-public class BuildingEntity extends BaseEntity{
+
+public class BuildingEntity{
 	
-	@Column(name = "name")
+	private Long id;
 	private String name;
-	@Column(name = "street")
 	private String street;
-	@Column(name = "ward")
+	private Long districtID;
 	private String ward;
-	@Column(name = "managerphone")
+	private String serviceFee;
 	private String managerphone;
-	@Column(name = "managername")
 	private String managername;
-	@Column(name = "districtid")
 	private String districtid;
-	@Column(name = "numberofbasement")
 	private Integer numberofbasement;
-	@Column(name = "floorarea")
 	private Integer floorarea;
-	@Column(name = "rentpricedescription")
 	private Integer rentpricedescription;
-	@Column(name = "rentprice")
 	private Integer rentprice;
-	@Column(name = "rentArea")
 	private Integer rentArea;
 	
 	public String getManagerphone() {
@@ -89,5 +77,23 @@ public class BuildingEntity extends BaseEntity{
 	}
 	public void setRentArea(Integer rentArea) {
 		this.rentArea = rentArea;
+	}
+	public Long getDistrictID() {
+		return districtID;
+	}
+	public void setDistrictID(Long districtID) {
+		this.districtID = districtID;
+	}
+	public String getServiceFee() {
+		return serviceFee;
+	}
+	public void setServiceFee(String serviceFee) {
+		this.serviceFee = serviceFee;
+	}
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
 	}
 }

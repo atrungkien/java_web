@@ -24,17 +24,15 @@ public class BuildingAPI {
 	@Autowired
 	private BuildingService buildingservice;
 	@GetMapping
-	public List<BuildingSeachOutput> findBuilding (@RequestParam Map<String, Object> params, List<String> rentTypes)
+	public List<BuildingSeachOutput> findBuilding (@RequestParam(required = false) Map<String, Object> params,
+												   @RequestParam(required = false, name = "renttypes") List<String> rentTypes)
 	{
 		List<BuildingSeachOutput> results = buildingservice.findBuilding(params, rentTypes);			
 		return results;
 	}
 	
-	
-	
 	@PostMapping
 	public  BuildingSeachOutput createBuilding(@RequestBody BuildingSeachOutput newBuilding){
-	
 			validateData(newBuilding);
 			return newBuilding;
 	}

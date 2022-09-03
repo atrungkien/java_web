@@ -2,17 +2,11 @@ package com.laptrinhjavaweb.converter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import com.laptrinhjavaweb.model.output.BuildingSeachOutput;
-import com.laptrinhjavaweb.model.output.BuildingUserOutput;
-import com.laptrinhjavaweb.repository.DistrictRepository;
-import com.laptrinhjavaweb.repository.entity.AssignmentbuildingEntity;
 import com.laptrinhjavaweb.repository.entity.BuildingEntity;
 import com.laptrinhjavaweb.repository.entity.DistrictEntity;
 import com.laptrinhjavaweb.repository.entity.RentAreaEntity;
-import com.laptrinhjavaweb.repository.entity.UserEntity;
-import com.laptrinhjavaweb.repository.impl.DistrictRepositoryImpl;
 
 public class BuildingConverter {
 	

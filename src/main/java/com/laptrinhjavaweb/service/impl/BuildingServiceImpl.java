@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.laptrinhjavaweb.converter.BuildingConverter;
 import com.laptrinhjavaweb.model.output.BuildingSeachOutput;
 import com.laptrinhjavaweb.repository.BuildingRepository;
@@ -18,9 +20,13 @@ import com.laptrinhjavaweb.repository.impl.RentAreaRepositoryImpl;
 import com.laptrinhjavaweb.service.BuildingService;
 
 public class BuildingServiceImpl implements BuildingService {
+	@Autowired
 	private BuildingRepository buildingRepository = new BuildingRepositoryImpl();
+	@Autowired
 	private DistrictRepository districtRepository = new DistrictRepositoryImpl();
+	@Autowired
 	private RentAreaRepository rentAreaRepository = new RentAreaRepositoryImpl();
+	@Autowired
 	private BuildingConverter buildingConverter = new BuildingConverter();
 
 	@Override
@@ -28,7 +34,7 @@ public class BuildingServiceImpl implements BuildingService {
 		List<BuildingSeachOutput> results = new ArrayList<>();
 		List<BuildingEntity> buildingEntities = buildingRepository.findBuilding(params,rentTypes);	
 				for (BuildingEntity item : buildingEntities) {
-					DistrictEntity districtEntity = districtRepository.findById(item.getId());
+					DistrictEntity districtEntity = districtRepository.findByDistrictID(item.getId());
 					List<RentAreaEntity> rentArea = rentAreaRepository.findByBuildingId(item.getId());
 					BuildingSeachOutput buildingSeachOutput = buildingConverter.toBuildingSearchs(buildingEntities,rentArea, districtEntity);
 					

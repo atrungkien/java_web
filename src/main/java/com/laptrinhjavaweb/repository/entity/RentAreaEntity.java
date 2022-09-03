@@ -1,16 +1,9 @@
 package com.laptrinhjavaweb.repository.entity;
 
-import com.laptrinhjavaweb.anotation.Column;
-import com.laptrinhjavaweb.anotation.Entity;
-import com.laptrinhjavaweb.anotation.Table;
 
-@Entity
-@Table(name = "rentarea")
 public class RentAreaEntity {
-	
-	@Column(name = "value")
+	private Long id;
 	private Integer value;
-	@Column(name = "value")
 	private Long buildingId;
 
 	public Integer getValue() {
@@ -24,5 +17,11 @@ public class RentAreaEntity {
 	}
 	public void setBuildingId(Long buildingId) {
 		this.buildingId = buildingId;
+	}
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
 	}
 }

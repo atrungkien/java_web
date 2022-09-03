@@ -1,17 +1,33 @@
 package com.laptrinhjavaweb.repository.impl;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.laptrinhjavaweb.Mapper.BuildingMapper;
 import com.laptrinhjavaweb.repository.BuildingRepository;
 import com.laptrinhjavaweb.repository.entity.BuildingEntity;
+import com.laptrinhjavaweb.utils.ConnectionUtils;
 import com.laptrinhjavaweb.utils.IsNullOrEmtyUtils;
 
-public class BuildingRepositoryImpl extends SimpleJdbcRepository<BuildingEntity> implements BuildingRepository {
+@Repository
+public class BuildingRepositoryImpl  implements BuildingRepository {
 	
+	@Autowired
+	private BuildingMapper buildingmapper;
+	
+	@Override
 	public List<BuildingEntity> findBuilding(Map<String, Object> params, List<String> rentTypes) {
 		
+		List<BuildingEntity> results = new ArrayList<>();
+	
 		StringBuilder sql = new StringBuilder("SELECT name,street,ward,districid,,floorarea,numberofbasement,managerphone,managername FROM building b");
 		StringBuilder joinQuery = new StringBuilder("");
 		StringBuilder whereQuery = new StringBuilder(" Where 1=1 ");
@@ -20,7 +36,40 @@ public class BuildingRepositoryImpl extends SimpleJdbcRepository<BuildingEntity>
 		
 		sql.append(joinQuery).append(whereQuery).append(" group by b.id");
 		
-		return findByCondition(sql.toString());
+		String sqlDeBug = sql.toString();
+		
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		try {
+			conn = ConnectionUtils.getConnection();
+			conn.setAutoCommit(false);
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sqlDeBug);
+			while (rs.next()) {
+				results.add(buildingmapper.mapRow(rs));
+				conn.commit();
+			}
+			return results;
+			
+		} catch (SQLException e) {
+			return null;
+		} finally {
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+				if (stmt != null) {
+					stmt.close();
+				}
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (SQLException e) {
+				return null;
+			}
+		}
+		
 	}
 	
 	private StringBuilder buildQueryWithoutJoin(Map<String, Object> params, StringBuilder whereQuery) {
@@ -95,6 +144,7 @@ public class BuildingRepositoryImpl extends SimpleJdbcRepository<BuildingEntity>
 			whereQuery.append(" AND rt.code IN (").append(String.join(",", buildingTypes)).append(")");
 		}
 		return joinQuery;
+		
 	}
 
 }

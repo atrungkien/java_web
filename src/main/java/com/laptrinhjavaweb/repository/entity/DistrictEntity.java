@@ -1,17 +1,8 @@
 package com.laptrinhjavaweb.repository.entity;
 
-import com.laptrinhjavaweb.anotation.Column;
-import com.laptrinhjavaweb.anotation.Entity;
-import com.laptrinhjavaweb.anotation.Table;
-
-@Entity
-@Table(name = "district")
-
 public class DistrictEntity {
-	
-	@Column(name = "code")
+	private Long id;
 	private String code;
-	@Column(name = "name")
 	private String name;
 	
 	public String getCode() {
@@ -25,6 +16,12 @@ public class DistrictEntity {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
 	}
 	
 }

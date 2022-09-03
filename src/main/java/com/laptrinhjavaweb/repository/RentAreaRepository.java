@@ -4,6 +4,6 @@ import java.util.List;
 
 import com.laptrinhjavaweb.repository.entity.RentAreaEntity;
 
-public interface RentAreaRepository extends JdbcRepository<RentAreaEntity> {
+public interface RentAreaRepository  {
 	List<RentAreaEntity> findByBuildingId(Long id);
 }
