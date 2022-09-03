@@ -11,7 +11,7 @@ public class BuildingEntity{
 	private String serviceFee;
 	private String managerphone;
 	private String managername;
-	private String districtid;
+	private Long districtid;
 	private Integer numberofbasement;
 	private Integer floorarea;
 	private Integer rentpricedescription;
@@ -95,5 +95,11 @@ public class BuildingEntity{
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}
+	public Long getDistrictid() {
+		return districtid;
+	}
+	public void setDistrictid(Long districtid) {
+		this.districtid = districtid;
 	}
 }
