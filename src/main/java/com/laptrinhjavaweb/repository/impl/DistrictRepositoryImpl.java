@@ -23,7 +23,7 @@ public class DistrictRepositoryImpl  implements DistrictRepository{
 	private DistrictMapper districtMapper;
 	
 	@Override
-	public DistrictEntity findByDistrictID(long id) {
+	public DistrictEntity findByDistrictID(Long id) {
 		String sql = "select * from district where id = "+id+" " ;
 		List<DistrictEntity>  district = new ArrayList<>();
 		Connection conn = null;

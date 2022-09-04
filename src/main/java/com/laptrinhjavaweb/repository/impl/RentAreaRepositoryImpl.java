@@ -21,7 +21,7 @@ public class RentAreaRepositoryImpl implements RentAreaRepository {
 	
 	@Override
 	public List<RentAreaEntity> findByBuildingId(Long id) {
-		String sql = "select * from district where id = "+id+" " ;
+		String sql = "select * from rentarea where id = "+id+" " ;
 		List<RentAreaEntity>  rentAreaEntities = new ArrayList<>();
 		Connection conn = null;
 		Statement stmt = null;
