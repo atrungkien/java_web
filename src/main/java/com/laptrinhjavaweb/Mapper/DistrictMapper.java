@@ -2,8 +2,11 @@ package com.laptrinhjavaweb.Mapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import com.laptrinhjavaweb.repository.entity.DistrictEntity;
 
+import org.springframework.stereotype.Component;
+
+import com.laptrinhjavaweb.repository.entity.DistrictEntity;
+@Component
 public class DistrictMapper {
 
 	public DistrictEntity mapRow(ResultSet rs) {

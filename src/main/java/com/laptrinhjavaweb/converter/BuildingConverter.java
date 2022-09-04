@@ -3,11 +3,14 @@ package com.laptrinhjavaweb.converter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.laptrinhjavaweb.model.output.BuildingSeachOutput;
 import com.laptrinhjavaweb.repository.entity.BuildingEntity;
 import com.laptrinhjavaweb.repository.entity.DistrictEntity;
 import com.laptrinhjavaweb.repository.entity.RentAreaEntity;
 
+@Component
 public class BuildingConverter {
 	
 

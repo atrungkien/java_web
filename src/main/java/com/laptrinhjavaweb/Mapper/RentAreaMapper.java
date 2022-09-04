@@ -3,10 +3,12 @@ package com.laptrinhjavaweb.Mapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.springframework.stereotype.Component;
+
 import com.laptrinhjavaweb.repository.entity.RentAreaEntity;
 
 
-
+@Component
 public class RentAreaMapper {
 
 	public RentAreaEntity mapRow(ResultSet rs) {
