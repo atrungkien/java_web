@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.laptrinhjavaweb.Mapper.BuildingMapper;
 import com.laptrinhjavaweb.Mapper.DistrictMapper;
@@ -15,7 +16,7 @@ import com.laptrinhjavaweb.repository.DistrictRepository;
 import com.laptrinhjavaweb.repository.entity.DistrictEntity;
 import com.laptrinhjavaweb.repository.entity.RentAreaEntity;
 import com.laptrinhjavaweb.utils.ConnectionUtils;
-
+@Repository
 public class DistrictRepositoryImpl  implements DistrictRepository{
 
 	@Autowired

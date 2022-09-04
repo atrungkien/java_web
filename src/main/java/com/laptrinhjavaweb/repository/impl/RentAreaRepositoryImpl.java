@@ -7,13 +7,16 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import com.laptrinhjavaweb.Mapper.RentAreaMapper;
 import com.laptrinhjavaweb.repository.RentAreaRepository;
 import com.laptrinhjavaweb.repository.entity.RentAreaEntity;
 import com.laptrinhjavaweb.utils.ConnectionUtils;
-
+@Repository
 public class RentAreaRepositoryImpl implements RentAreaRepository {
-
+	@Autowired
 	RentAreaMapper rentareaMapper;
 	
 	@Override
