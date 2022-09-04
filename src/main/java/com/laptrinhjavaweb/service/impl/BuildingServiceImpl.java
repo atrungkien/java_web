@@ -37,6 +37,7 @@ public class BuildingServiceImpl implements BuildingService {
 					DistrictEntity districtEntity = districtRepository.findByDistrictID(item.getId());
 					List<RentAreaEntity> rentArea = rentAreaRepository.findByBuildingId(item.getId());
 					BuildingSeachOutput buildingSeachOutput = buildingConverter.toBuildingSearchs(buildingEntities,rentArea, districtEntity);
+					results.add(buildingSeachOutput);
 					
 				}
 				return results;
