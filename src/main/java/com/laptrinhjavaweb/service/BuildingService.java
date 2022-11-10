@@ -10,6 +10,16 @@ import java.util.List;
 import java.util.Map;
 
 public interface BuildingService {
+
+    List<BuildingResponse> findAll(Map<String, Object> params, List<String> rentTypes);
+
     List<BuildingResponse> findAll(BuildingSearchRequest buildingSearchRequest);
+
     BuildingDTO findById(Long id);
+
+    void assignmentBuilding(List<Long> staffIds, Long buildingID) throws NotFoundException;
+
+    void deleteWithCascade(BuildingDelRequest buildingDelRequest);
+
+    BuildingDTO save(BuildingDTO buildingDTO);
 }

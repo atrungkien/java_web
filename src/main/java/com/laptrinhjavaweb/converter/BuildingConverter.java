@@ -1,10 +1,12 @@
 package com.laptrinhjavaweb.converter;
 
 import com.laptrinhjavaweb.dto.BuildingDTO;
+import com.laptrinhjavaweb.dto.request.BuildingSearchRequest;
 import com.laptrinhjavaweb.dto.response.BuildingResponse;
 import com.laptrinhjavaweb.entity.BuildingEntity;
 import com.laptrinhjavaweb.entity.RentAreaEntity;
 import com.laptrinhjavaweb.enums.DistrictEnum;
+import com.laptrinhjavaweb.utils.ParseIntUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -48,6 +50,27 @@ public class BuildingConverter {
             buildingDTO.setType(typeDTOs);
         }
         return buildingDTO;
+    }
+
+
+    public BuildingEntity toBuildingEntity(BuildingDTO buildingDTO) {
+        BuildingEntity buildingEntity = modelMapper.map(buildingDTO, BuildingEntity.class);
+        if (buildingDTO.getType() != null) {
+            String type = String.join(",", buildingDTO.getType());
+            buildingEntity.setType(type);
+        }
+        if (buildingDTO.getRentArea() != null) {
+            List<RentAreaEntity> rentAreaEntityNews = new ArrayList<>();
+            String[] rentAreaValues = buildingDTO.getRentArea().trim().split(",");
+            for (String item : rentAreaValues) {
+                RentAreaEntity rentAreaEntity = new RentAreaEntity();
+                rentAreaEntity.setBuildingEntity(buildingEntity);
+                rentAreaEntity.setValue(ParseIntUtil.getValue(item));
+                rentAreaEntityNews.add(rentAreaEntity);
+            }
+            buildingEntity.setRentAreaEntities(rentAreaEntityNews);
+        }
+        return buildingEntity;
     }
 
 }
