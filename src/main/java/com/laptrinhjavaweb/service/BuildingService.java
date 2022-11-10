@@ -9,15 +9,7 @@ import javassist.NotFoundException;
 import java.util.List;
 import java.util.Map;
 
-public interface BuildingSevice {
-
+public interface BuildingService {
     List<BuildingResponse> findAll(BuildingSearchRequest buildingSearchRequest);
-
     BuildingDTO findById(Long id);
-
-    void assignmentBuilding(List<Long> staffIds, Long buildingID);
-
-    void deleteWithCascade(BuildingDelRequest buildingDelRequest);
-
-    BuildingDTO save(BuildingDTO buildingDTO);
 }

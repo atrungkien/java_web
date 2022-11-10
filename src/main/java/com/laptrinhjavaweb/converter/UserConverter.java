@@ -20,7 +20,6 @@ public class UserConverter {
     @Autowired
     private UserRepository userRepository;
 
-
     public UserDTO convertToDto (UserEntity entity){
         UserDTO result = modelMapper.map(entity, UserDTO.class);
         return result;
@@ -30,7 +29,6 @@ public class UserConverter {
         UserEntity result = modelMapper.map(dto, UserEntity.class);
         return result;
     }
-
     public List<StaffAssignmentResponse> toStaffAssignmentResponses(List<UserEntity> staffAssignments) {
         List<StaffAssignmentResponse> staffAssignmentResponses = new ArrayList<>();
         for (UserEntity item : userRepository.getAllStaff()) {
@@ -47,4 +45,5 @@ public class UserConverter {
 
         return staffAssignmentResponses;
     }
+
 }

@@ -1,11 +1,9 @@
 package com.laptrinhjavaweb.converter;
 
 import com.laptrinhjavaweb.dto.BuildingDTO;
-import com.laptrinhjavaweb.dto.UserDTO;
 import com.laptrinhjavaweb.dto.response.BuildingResponse;
 import com.laptrinhjavaweb.entity.BuildingEntity;
 import com.laptrinhjavaweb.entity.RentAreaEntity;
-import com.laptrinhjavaweb.entity.UserEntity;
 import com.laptrinhjavaweb.enums.DistrictEnum;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,53 +14,40 @@ import java.util.List;
 
 @Component
 public class BuildingConverter {
-
     @Autowired
     private ModelMapper modelMapper;
 
-    public BuildingResponse convertToResponse (BuildingEntity buildingEntity){
-        BuildingResponse buildingResponse = new BuildingResponse();
-        buildingResponse =modelMapper.map(buildingEntity,BuildingResponse.class);
-        String districtName ="";
-        for (DistrictEnum item : DistrictEnum.values() ){
-            districtName = item.getDistrictValue();
-            break;
+    public BuildingResponse toBuildingResponse(BuildingEntity buildingEntity) {
+        BuildingResponse buildingResponse;
+        buildingResponse = modelMapper.map(buildingEntity, BuildingResponse.class);
+        String districtName = "";
+        for (DistrictEnum item : DistrictEnum.values()) {
+            if (item.name().equals(buildingEntity.getDistrict())) {
+                districtName = item.getDistrictValue();
+                break;
+            }
         }
-        buildingResponse.setAddress(buildingEntity.getStreet() + " _ " + buildingEntity.getWard() + " _ " + districtName);
-        return null;
+        buildingResponse.setAddress(buildingEntity.getStreet() + "-" + buildingEntity.getWard() + "-" + districtName);
+        return buildingResponse;
     }
 
-    public BuildingDTO convertToBuildingDTO (BuildingEntity buildingEntity){
-        BuildingDTO buildingDTO = new BuildingDTO();
-        BuildingDTO result = modelMapper.map(buildingEntity, BuildingDTO.class);
+    public BuildingDTO toBuildingDTO(BuildingEntity buildingEntity) {
+        BuildingDTO buildingDTO = modelMapper.map(buildingEntity, BuildingDTO.class);
         List<String> rentAreas = new ArrayList<>();
         for (RentAreaEntity item : buildingEntity.getRentAreaEntities()) {
             rentAreas.add(String.valueOf(item.getValue()));
         }
-
-        String rentAreaStr = String.join(",",rentAreas);
+        String rentAreaStr = String.join(",", rentAreas);
         buildingDTO.setRentArea(rentAreaStr);
-        return result;
-    }
-
-    public BuildingEntity convertToBuildingEntity(BuildingDTO buildingDTO) {
-        BuildingEntity buildingEntity = modelMapper.map(buildingDTO, BuildingEntity.class);
-        if (buildingDTO.getType() != null) {
-            String type = String.join(",", buildingDTO.getType());
-            buildingEntity.setType(type);
-        }
-        if (buildingDTO.getRentArea() != null) {
-            List<RentAreaEntity> rentAreaEntityNews = new ArrayList<>();
-            String[] rentAreaValues = buildingDTO.getRentArea().trim().split(",");
-            for (String item : rentAreaValues) {
-                RentAreaEntity rentAreaEntity = new RentAreaEntity();
-                rentAreaEntity.setBuildingEntity(buildingEntity);
-                rentAreaEntity.setValue(Integer.parseInt(item));
-                rentAreaEntityNews.add(rentAreaEntity);
+        if (buildingEntity.getType() != null) {
+            List<String> typeDTOs = new ArrayList<>();
+            String[] types = buildingEntity.getType().trim().split(",");
+            for (String item : types) {
+                typeDTOs.add(item);
             }
-            buildingEntity.setRentAreaEntities(rentAreaEntityNews);
+            buildingDTO.setType(typeDTOs);
         }
-        return buildingEntity;
+        return buildingDTO;
     }
 
 }

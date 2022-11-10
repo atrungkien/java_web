@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@include file="/common/taglib.jsp"%>
+<%@include file="/common/taglib.jsp" %>
 <c:url var="buildingEditURL" value="/api/building"></c:url>
 <html>
 <head>
@@ -267,34 +267,39 @@
     </div>
 </div><!-- /.main-content -->
 <script>
-    $('#btnAddBuilding').click(function () {
+    $('#btnAddBuilding').click(function (e) {
         e.preventDefault();
-        var data = {};
-        var buildingTypes = [];
+        var data = {}
         var formData = $('#formEdit').serializeArray();
-        $.each(formData, function (index, v) {
-            if (v.name == 'buildingTypes') {
-                buildingTypes.push(v.value);
-            } else {
-                date[""+v.name+""] = v.value;
+        var id = ${modelBuilding.id}+'';
+        if ((id) != '') {
+            data["id"] = id;
+        }
+        var buildingTypes = [];
+        formData.forEach(item => {
+            if (item.name == "type") {
+                buildingTypes.push(item.value);
             }
-        });
-        data['buildingTypes'] = buildingTypes;
+            data[item.name] = item.value
+        })
+        data["type"] = buildingTypes;
         $.ajax({
-            type: "POST",
-            url: "http://localhost:8080/api-user-assignment",
+            type: "post",
+            url: '<c:url value="/api/building"/>',
             data: JSON.stringify(data),
-            dataType: "json",
-            contentType: "application/json",
+            dataType: "json",//kieu du lieu tu server tra ve client
+            contentType: "application/json",//kieu du lieu tu client gui ve server
             success: function (response) {
-                console.log('success');
+                window.location.href = '<c:url value="/admin/building-list" />'
             },
             error: function (response) {
-                console.log('failed');
-                console.log(response);
+                alert("fail")
+                console.log(response)
             }
         });
-    });
+    })
 </script>
 </body>
+
 </html>
+

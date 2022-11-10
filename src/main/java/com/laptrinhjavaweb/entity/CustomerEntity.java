@@ -6,7 +6,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "customer")
-public class CustomerEntity extends BaseEntity {
+public class CustomerEntity extends BaseEntity{
 
     @Column(name = "fullname")
     private String fullName;

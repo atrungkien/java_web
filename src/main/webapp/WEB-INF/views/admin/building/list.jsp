@@ -1,9 +1,10 @@
+<%@ page import="com.laptrinhjavaweb.dto.DistrictDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@include file="/common/taglib.jsp"%>
-<c:url var="buildingListURL" value="/admin/building-list"/>
+<%@include file="/common/taglib.jsp" %>
+<c:url var="buildingListURL" value="/admin/building-list"></c:url>
 <html>
 <head>
-    <title>Danh sách tòa nhà</title>
+    <title>Danh sách toà nhà</title>
 </head>
 <body>
 
@@ -336,77 +337,122 @@
     </div>
 </div>
 <script>
+    var buildingAssId;
 
-    function assingmentBuilding(buildingId){
-        openModalAssingmentBuilding();
-        $('#buildingId').val(buildingId);
-        console.log();
-    }
-
-    function openModalAssingmentBuilding(){
-        $('#assingmentBuildingModal').modal();
-    }
-
-    $('#btnAddBuilding').click(function () {
-        e.preventDefault();
-        var data = {};
-        data['buildingId']=$('#buildingId').val();
-        var staffs = $('#staffId').find('tbody input[type=checkbox]:checked').map(function () {
-            return $(this).val();
-        }).get;
-        var data = staffs;
-        assigStaff(data);
-    });
-
-    function assigStaff(data) {
+    function assignmentBuilding(value) {
+        buildingAssId = value;
         $.ajax({
-            type: "POST",
-            url: "http://localhost:8080/api-user-assignment",
-            data: JION.stringifly(data),
+            type: "get",
+            url: "<c:url value='/api/building/'/>" + value + '/staff',
             dataType: "json",
-            contentType: "application/json",
             success: function (response) {
-                console.log('success');
+                var arrBuilding = response;
+                $("#dsnv").empty()
+                arrBuilding.forEach(item => {
+                    var ttd = '<label class="pos-rel">'
+                        + '<input type="checkbox"' + item.checked + ' class="ace" name="checkStaffs[]" value="' + item.id + '">'
+                        + '  <span class="lbl"></span>'
+                        + '</label>'
+                    var str = "<tr> <td class='center'>" + ttd + "</td> <td>" + item.fullName + "</td> </tr> "
+                    $("#dsnv").append(str)
+                })
+                console.log(response)
             },
-            error: function (response) {
-                console.log('failed');
-                console.log(response);
+            error: function (res) {
+                alert("fail")
             }
         });
+        openModalAssignmentBuilding();
     }
 
-    $('#btnDeleteBuilding').click(function () {
-        e.preventDefault();
-        var data = {};
-        data['buildingIds']=$('#buildingIds').val();
-        var buildingIds = $('#staffId').find('tbody input[type=checkbox]:checked').map(function () {
-            return $(this).val();
-        }).get;
-        var data = buildingIds;
-        deleteBuilding(data);
-    });
+    function openModalAssignmentBuilding() {
+        $('#assignmentBuildingModal').modal();
+    }
 
-    function deleteBuilding(data) {
+    $("#btnSearch").click(function (e) {
+        e.preventDefault();
+        $("#listForm").submit();
+
+    })
+    $("#xoaBuilding").click(function (e) {
+        e.preventDefault();
+        $("#myModal").modal();
+    })
+    var idOne;
+    $("#btnXoa").click(function (e) {
+        e.preventDefault();
+        var values = [];
+        if (idOne != null)
+            values.push(idOne);
+        $.each($("input[name='checkBuildings[]']:checked"), function () {
+            values.push($(this).val());
+        });
+        var data = {};
+        data["buildingIds"] = values;
         $.ajax({
             type: "DELETE",
-            url: "http://localhost:8080/api-building",
-            data: JION.stringifly(data),
-            dataType: "json",
-            contentType: "application/json",
+            url: '<c:url value="/api/building"/>',
+            data:JSON.stringify(data),
+            dataType: "json",//kieu du lieu tu server tra ve client
+            contentType: "application/json",//kieu du lieu tu client gui ve server
             success: function (response) {
-                console.log('success');
+                window.location.reload();
             },
             error: function (response) {
-                console.log('failed');
-                console.log(response);
+                alert("fail")
+                console.log(response)
             }
         });
+    })
+
+    function deleteOneBuilding(value) {
+        idOne = value;
+        $("#myModal").modal();
     }
 
-    $('#btnSearch').click(function () {
+    $("#assignment").click(function (e) {
         e.preventDefault();
-        $('#lisForm').submit();
+        var values = [];
+        $.each($("input[name='checkStaffs[]']:checked"), function () {
+            values.push($(this).val());
+        });
+        var data = {
+            "staffIds": values
+        }
+        $.ajax({
+            type: "post",
+            url: '<c:url value="/api/building/"/>' + buildingAssId + '/assignment',
+            data: JSON.stringify(values),
+            dataType: "json",//kieu du lieu tu server tra ve client
+            contentType: "application/json",//kieu du lieu tu client gui ve server
+            success: function (response) {
+                console.log("sucess");
+                window.location.reload();
+            },
+            error: function (response) {
+                alert("fail")
+                console.log(response)
+            }
+        });
+    })
+    $("#selectAll").click(function () {
+        $("input[name='checkBuildings[]']").prop('checked', $(this).prop('checked'));
+
     });
+    $("#selectAll2").click(function () {
+        $("input[name='checkStaffs[]']").prop('checked', $(this).prop('checked'));
+
+    });
+
+    function editBuilding(value) {
+        window.location.href = "<c:url value="/admin/building-edit"/>" + "?buildingid=" + value;
+    }
+
+    if ((${modelSearch.rentTypes}) != []) {
+        $.each(${modelSearch.rentTypes}, function (index, value) {
+            $("#rent[value='" + value + "']").prop('checked', true);
+        });
+    }
 
 </script>
 </body>
