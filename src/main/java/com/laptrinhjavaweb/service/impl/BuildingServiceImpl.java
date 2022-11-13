@@ -101,9 +101,16 @@ public class BuildingServiceImpl implements BuildingService {
     @Override
     @Transactional
     public BuildingDTO save(BuildingDTO buildingDTO) {
-
         BuildingEntity buildingEntity = buildingConverter.toBuildingEntity(buildingDTO);
-        return buildingConverter.toBuildingDTO(buildingRepository.save(buildingEntity));
+        buildingEntity.setUserEntities(buildingEntity.getUserEntities()); // gửi lại các nv đang quản lý tòa nhà đó
+        {
+            BuildingEntity buildingEntityGetIDafterSave = buildingRepository.save(buildingEntity);
+            if (buildingDTO.getRentArea() != null) {
+                List<RentAreaDTO> rentAreaDTOS = rentAreaConverter.toRentAreaDTOs(buildingEntityGetIDafterSave.getId(), buildingDTO);
+                rentAreaService.saveAllByBuilding(rentAreaDTOS, buildingDTO);
+            }
+            return buildingConverter.toBuildingDTO(buildingEntityGetIDafterSave);
+        }
     }
 
         private BuildingSearchBuilder toBuildingSearchBuilder(Map<String, Object> params, List<String> rentTypes) {
