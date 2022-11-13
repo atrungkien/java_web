@@ -9,10 +9,12 @@ import com.laptrinhjavaweb.dto.request.BuildingDelRequest;
 import com.laptrinhjavaweb.dto.request.BuildingSearchRequest;
 import com.laptrinhjavaweb.dto.response.BuildingResponse;
 import com.laptrinhjavaweb.entity.BuildingEntity;
+import com.laptrinhjavaweb.entity.UserEntity;
 import com.laptrinhjavaweb.exception.MyException;
 import com.laptrinhjavaweb.repository.BuildingRepository;
 import com.laptrinhjavaweb.repository.RentAreaRepository;
 import com.laptrinhjavaweb.repository.UserRepository;
+import com.laptrinhjavaweb.repository.custom.UserRepositoryCustom;
 import com.laptrinhjavaweb.service.BuildingService;
 import com.laptrinhjavaweb.service.RentAreaService;
 import com.laptrinhjavaweb.utils.MapUtil;
@@ -26,6 +28,7 @@ import java.util.*;
 
 @Service
 public class BuildingServiceImpl implements BuildingService {
+
     @Autowired
     private BuildingConverter buildingConverter;
     @Autowired
@@ -36,6 +39,9 @@ public class BuildingServiceImpl implements BuildingService {
     private RentAreaService rentAreaService;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private RentAreaRepository rentAreaRepository;
+
 
     @Override
     public List<BuildingResponse> findAll(Map<String, Object> params, List<String> rentTypes) {
@@ -47,7 +53,6 @@ public class BuildingServiceImpl implements BuildingService {
         }
         return buildingResponses;
     }
-
     @Override
     public List<BuildingResponse> findAll(BuildingSearchRequest buildingSearchRequest) {
         List<BuildingResponse> buildingResponses = new ArrayList<>();
@@ -63,28 +68,23 @@ public class BuildingServiceImpl implements BuildingService {
         return id != null ? buildingConverter.toBuildingDTO(buildingRepository.findById(id)) : new BuildingDTO();
     }
 
-    @Override
-    public BuildingDTO save(BuildingDTO buildingDTO) {
-        BuildingEntity buildingEntity = buildingConverter.toBuildingEntity(buildingDTO);
-        buildingEntity.setUserEntities(buildingEntity.getUserEntities()); // gửi lại các nv đang quản lý tòa nhà đó
-        {
-            BuildingEntity IDAfterSave = buildingRepository.save(buildingEntity);
-            if (buildingDTO.getRentArea() != null) {
-                List<RentAreaDTO> rentAreaDTOS = rentAreaConverter.toRentAreaDTOs(IDAfterSave.getId(), buildingDTO);
-                rentAreaService.saveAllByBuilding(rentAreaDTOS, buildingDTO);
-            }
-            return buildingConverter.toBuildingDTO(IDAfterSave);
-        }
-    }
 
     @Override
     @Transactional
     public void assignmentBuilding(List<Long> staffIds, Long buildingID) {
         try {
             BuildingEntity buildingEntity = buildingRepository.findOne(buildingID);
-            buildingEntity.setUserEntities(new ArrayList<>(Optional.ofNullable(userRepository.findAll(staffIds))
-                    .orElseThrow(()->new NotFoundException("Not Found User"))));
-            buildingRepository.save(buildingEntity);
+            List<UserEntity> userEntities = userRepository.findAll(staffIds);
+            if (userEntities != null){
+                buildingEntity.setUserEntities(userEntities);
+                buildingRepository.save(buildingEntity);
+            }else {
+                System.out.println("Not Found User");
+            }
+//            BuildingEntity buildingEntity = buildingRepository.findOne(buildingID);
+//            buildingEntity.setUserEntities(new ArrayList<>(Optional.ofNullable(userRepository.findAll(staffIds))
+//                    .orElseThrow(()->new NotFoundException("Not Found User"))));
+//           buildingRepository.save(buildingEntity);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -96,6 +96,14 @@ public class BuildingServiceImpl implements BuildingService {
         if(!buildingDelRequest.getBuildingIds().isEmpty()){
             buildingRepository.deleteByIdIn(buildingDelRequest.getBuildingIds());
         }
+    }
+
+    @Override
+    @Transactional
+    public BuildingDTO save(BuildingDTO buildingDTO) {
+
+        BuildingEntity buildingEntity = buildingConverter.toBuildingEntity(buildingDTO);
+        return buildingConverter.toBuildingDTO(buildingRepository.save(buildingEntity));
     }
 
         private BuildingSearchBuilder toBuildingSearchBuilder(Map<String, Object> params, List<String> rentTypes) {
@@ -124,7 +132,6 @@ public class BuildingServiceImpl implements BuildingService {
                 return null;
             }
         }
-
 
         private BuildingSearchBuilder toBuildingSearchBuilder(BuildingSearchRequest buildingSearchRequest) {
             try {
@@ -171,4 +178,5 @@ public class BuildingServiceImpl implements BuildingService {
         }
 
     }
+
 }

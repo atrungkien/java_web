@@ -337,7 +337,7 @@
     </div>
 </div>
 <script>
-    var buildingAssId;
+    let buildingAssId;
 
     function assignmentBuilding(value) {
         buildingAssId = value;
@@ -346,14 +346,14 @@
             url: "<c:url value='/api/building/'/>" + value + '/staff',
             dataType: "json",
             success: function (response) {
-                var arrBuilding = response;
+                let arrBuilding = response;
                 $("#dsnv").empty()
                 arrBuilding.forEach(item => {
-                    var ttd = '<label class="pos-rel">'
+                    let ttd = '<label class="pos-rel">'
                         + '<input type="checkbox"' + item.checked + ' class="ace" name="checkStaffs[]" value="' + item.id + '">'
                         + '  <span class="lbl"></span>'
                         + '</label>'
-                    var str = "<tr> <td class='center'>" + ttd + "</td> <td>" + item.fullName + "</td> </tr> "
+                    let str = "<tr> <td class='center'>" + ttd + "</td> <td>" + item.fullName + "</td> </tr> "
                     $("#dsnv").append(str)
                 })
                 console.log(response)
@@ -378,16 +378,16 @@
         e.preventDefault();
         $("#myModal").modal();
     })
-    var idOne;
+    let idOne;
     $("#btnXoa").click(function (e) {
         e.preventDefault();
-        var values = [];
+        let values = [];
         if (idOne != null)
             values.push(idOne);
         $.each($("input[name='checkBuildings[]']:checked"), function () {
             values.push($(this).val());
         });
-        var data = {};
+        let data = {};
         data["buildingIds"] = values;
         $.ajax({
             type: "DELETE",
@@ -412,11 +412,11 @@
 
     $("#assignment").click(function (e) {
         e.preventDefault();
-        var values = [];
+        let values = [];
         $.each($("input[name='checkStaffs[]']:checked"), function () {
             values.push($(this).val());
         });
-        var data = {
+        let data = {
             "staffIds": values
         }
         $.ajax({

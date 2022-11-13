@@ -25,26 +25,22 @@ public class RentAreaServiceImpl implements RentAreaService {
     private BuildingConverter buildingConverter;
     @Autowired
     private BuildingRepository buildingRepository;
-
-
     @Override
     public void saveAllByBuilding(List<RentAreaDTO> rentAreaDTOS, BuildingDTO buildingDTO) {
-//
-//        List<RentAreaEntity> rentAreaEntities = new ArrayList<>();
-//
-//        for(RentAreaDTO item: rentAreaDTOS){
-//            RentAreaEntity rentAreaEntity = rentAreaConverter.toRentAreaEntity(item);
-//            rentAreaEntities.add(rentAreaEntity);
-//        }
-//      BuildingEntity buildingEntity;
-//        if(buildingDTO.getId()!=null){
-//            buildingEntity = buildingRepository.findById(buildingDTO.getId());
-//            rentAreaRepository.saveAllByBuilding(rentAreaEntities,buildingEntity);
-//        }else {
-//            buildingEntity = buildingConverter.toBuildingEntity(buildingDTO);
-//            rentAreaRepository.saveAllByBuilding(rentAreaEntities,buildingEntity);
-//        }
-    }
+       /* List<RentAreaEntity> rentAreaEntities = new ArrayList<>();
+        for(RentAreaDTO item: rentAreaDTOS){
+            RentAreaEntity rentAreaEntity = rentAreaConverter.toRentAreaEntity(item);
+            rentAreaEntities.add(rentAreaEntity);
+        }
 
+        BuildingEntity buildingEntity;
+        if(buildingDTO.getId()!=null){
+            buildingEntity = buildingRepository.findById(buildingDTO.getId());
+            rentAreaRepository.saveAllByBuilding(rentAreaEntities,buildingEntity);
+        }else {
+            buildingEntity = buildingConverter.toBuildingEntity(buildingDTO);
+            rentAreaRepository.saveAllByBuilding(rentAreaEntities,buildingEntity);
+        }*/
+    }
 }
 
