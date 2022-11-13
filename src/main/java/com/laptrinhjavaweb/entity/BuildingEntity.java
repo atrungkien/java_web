@@ -66,10 +66,11 @@ public class BuildingEntity extends BaseEntity {
     @OneToMany(mappedBy = "buildings", fetch = FetchType.LAZY)
     private List<AsignmentBuildingEntity> assignmentBuildingEntities = new ArrayList<>();
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "assignmentbuilding",
-            joinColumns = @JoinColumn(name = "buildingid", nullable = false),
-            inverseJoinColumns = @JoinColumn(name = "staffid", nullable = false))
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(name = "assignmentbuilding",
+//            joinColumns = @JoinColumn(name = "buildingid", nullable = false),
+//            inverseJoinColumns = @JoinColumn(name = "staffid", nullable = false))
+//       private List<UserEntity> userEntities = new ArrayList<>();
     private List<UserEntity> userEntities = new ArrayList<>();
 
     public String getDistrict() {

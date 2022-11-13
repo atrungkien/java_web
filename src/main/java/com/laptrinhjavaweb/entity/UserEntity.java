@@ -28,17 +28,19 @@ public class UserEntity extends BaseEntity {
     private String email;
 
     @OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
-    private List<AssignmentCustomerEntity> assignmentCustomerss = new ArrayList<>();
+    private List<AsignmentBuildingEntity> asignmentBuildingEntities = new ArrayList<>();
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "user_role",
-            joinColumns = @JoinColumn(name = "userid", nullable = false),
-            inverseJoinColumns = @JoinColumn(name = "roleid", nullable = false))
-    private List<RoleEntity> roles = new ArrayList<>();
+
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(name = "user_role",
+//            joinColumns = @JoinColumn(name = "userid", nullable = false),
+//            inverseJoinColumns = @JoinColumn(name = "roleid", nullable = false))
+//    private List<RoleEntity> roles = new ArrayList<>();
 
 
     @OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
     private List<AssignmentCustomerEntity> assignmentCustomers = new ArrayList<>();
+    private List<RoleEntity> roles = new ArrayList<>();
 //    @ManyToMany(fetch = FetchType.LAZY)
 //    @JoinTable(name = "assignmentcustomer",
 //            joinColumns = @JoinColumn(name = "staffid",nullable = false),
@@ -53,6 +55,14 @@ public class UserEntity extends BaseEntity {
 //        this.customerEntities = customerEntities;
 //    }
 
+
+    public List<AsignmentBuildingEntity> getAsignmentBuildingEntities() {
+        return asignmentBuildingEntities;
+    }
+
+    public void setAsignmentBuildingEntities(List<AsignmentBuildingEntity> asignmentBuildingEntities) {
+        this.asignmentBuildingEntities = asignmentBuildingEntities;
+    }
 
     public List<AssignmentCustomerEntity> getAssignmentCustomers() {
         return assignmentCustomers;
