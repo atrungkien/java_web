@@ -24,10 +24,10 @@ public class CustomerEntity extends BaseEntity{
     private List<TransactionEntity> transactionEntities = new ArrayList<>();
 
 
-    public List<AssignmentCustomerEntity> getAssignmentCustomers() {
+    public List<AssignmentCustomerEntity> getAssignmentCustomers()
+    {
         return assignmentCustomers;
     }
-
     public void setAssignmentCustomers(List<AssignmentCustomerEntity> assignmentCustomers) {
         this.assignmentCustomers = assignmentCustomers;
     }

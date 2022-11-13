@@ -30,6 +30,8 @@ public class UserEntity extends BaseEntity {
     @OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
     private List<AsignmentBuildingEntity> asignmentBuildingEntities = new ArrayList<>();
 
+    @OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
+    private List<AssignmentCustomerEntity> assignmentCustomers = new ArrayList<>();
 
 //    @ManyToMany(fetch = FetchType.LAZY)
 //    @JoinTable(name = "user_role",
@@ -38,9 +40,6 @@ public class UserEntity extends BaseEntity {
 //    private List<RoleEntity> roles = new ArrayList<>();
 
 
-    @OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
-    private List<AssignmentCustomerEntity> assignmentCustomers = new ArrayList<>();
-    private List<RoleEntity> roles = new ArrayList<>();
 //    @ManyToMany(fetch = FetchType.LAZY)
 //    @JoinTable(name = "assignmentcustomer",
 //            joinColumns = @JoinColumn(name = "staffid",nullable = false),
@@ -55,7 +54,7 @@ public class UserEntity extends BaseEntity {
 //        this.customerEntities = customerEntities;
 //    }
 
-
+    private List<RoleEntity> roles = new ArrayList<>();
     public List<AsignmentBuildingEntity> getAsignmentBuildingEntities() {
         return asignmentBuildingEntities;
     }
