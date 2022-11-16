@@ -2,9 +2,7 @@ package com.laptrinhjavaweb.entity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "user")
@@ -28,7 +26,7 @@ public class UserEntity extends BaseEntity {
     private String email;
 
     @OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
-    private List<AsignmentBuildingEntity> asignmentBuildingEntities = new ArrayList<>();
+    private List<AssignmentBuildingEntity> asignmentBuildingEntities = new ArrayList<>();
 
     @OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
     private List<AssignmentCustomerEntity> assignmentCustomers = new ArrayList<>();
@@ -55,11 +53,11 @@ public class UserEntity extends BaseEntity {
 //    }
 
     private List<RoleEntity> roles = new ArrayList<>();
-    public List<AsignmentBuildingEntity> getAsignmentBuildingEntities() {
+    public List<AssignmentBuildingEntity> getAsignmentBuildingEntities() {
         return asignmentBuildingEntities;
     }
 
-    public void setAsignmentBuildingEntities(List<AsignmentBuildingEntity> asignmentBuildingEntities) {
+    public void setAsignmentBuildingEntities(List<AssignmentBuildingEntity> asignmentBuildingEntities) {
         this.asignmentBuildingEntities = asignmentBuildingEntities;
     }
 

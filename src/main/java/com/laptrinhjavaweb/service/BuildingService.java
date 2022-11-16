@@ -1,5 +1,6 @@
 package com.laptrinhjavaweb.service;
 
+import com.laptrinhjavaweb.dto.AssignmentBuildingDTO;
 import com.laptrinhjavaweb.dto.BuildingDTO;
 import com.laptrinhjavaweb.dto.request.BuildingDelRequest;
 import com.laptrinhjavaweb.dto.request.BuildingSearchRequest;

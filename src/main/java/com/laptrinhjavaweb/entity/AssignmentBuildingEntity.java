@@ -8,7 +8,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "assignmentbuilding")
 
-public class AsignmentBuildingEntity {
+public class AssignmentBuildingEntity {
     @ManyToOne
     @JoinColumn(name = "staffid",nullable = false)
     private UserEntity users;
