@@ -79,7 +79,8 @@ public class BuildingServiceImpl implements BuildingService {
             AssignmentBuildingEntity asignmentBuildingEntity = (AssignmentBuildingEntity) assignmentBuildingRepository.findById(id);
             List<UserEntity> userEntities = (List<UserEntity>) asignmentBuildingEntity.getUsers();
             if (userEntities != null){
-                asignmentBuildingEntity.setUsers((UserEntity) userEntities);
+//                asignmentBuildingEntity.setUsers((UserEntity) userEntities);
+                asignmentBuildingEntity.setUsers((UserEntity) userRepository.findAll(staffIds));
                 assignmentBuildingRepository.save(asignmentBuildingEntity);
             }else {
                 System.out.println("Not Found User");
