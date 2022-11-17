@@ -74,14 +74,19 @@ public class BuildingServiceImpl implements BuildingService {
 
     @Override
     @Transactional
-    public void assignmentBuilding(List<Long> staffIds, Long id) {
+    public void assignmentBuilding(List<Long> staffIds, Long buildingID) {
         try {
-            AssignmentBuildingEntity asignmentBuildingEntity = (AssignmentBuildingEntity) assignmentBuildingRepository.findById(id);
-            List<UserEntity> userEntities = (List<UserEntity>) asignmentBuildingEntity.getUsers();
-            if (userEntities != null){
-//                asignmentBuildingEntity.setUsers((UserEntity) userEntities);
-                asignmentBuildingEntity.setUsers((UserEntity) userRepository.findAll(staffIds));
-                assignmentBuildingRepository.save(asignmentBuildingEntity);
+//            AssignmentBuildingEntity asignmentBuildingEntity = (AssignmentBuildingEntity) assignmentBuildingRepository.findById(id);
+//
+//            List<UserEntity> userEntities = (List<UserEntity>) asignmentBuildingEntity.getUsers();
+            BuildingEntity buildingEntity = buildingRepository.findOne(buildingID);
+            List<AssignmentBuildingEntity> assignmentBuildingEntities = assignmentBuildingRepository.findAll(staffIds);
+            if (assignmentBuildingEntities != null){
+                buildingEntity.setAssignmentBuildingEntities(assignmentBuildingEntities);
+////                asignmentBuildingEntity.setUsers((UserEntity) userEntities);
+//                asignmentBuildingEntity.setUsers((UserEntity) userRepository.findAll(staffIds));
+  //              assignmentBuildingRepository.save(asignmentBuildingEntity);
+                buildingRepository.save(buildingEntity);
             }else {
                 System.out.println("Not Found User");
             }
@@ -92,6 +97,15 @@ public class BuildingServiceImpl implements BuildingService {
         }catch (Exception e){
             e.printStackTrace();
         }
+//        try {
+//            BuildingEntity buildingEntity = buildingRepository.findOne(buildingID);
+//            List<UserEntity> userEntities = userRepository.findAll(staffIds);
+//            if (userEntities != null){
+//                buildingEntity.setUserEntities(userEntities);
+//                buildingRepository.save(buildingEntity);
+//            }else {
+//                System.out.println("Not Found User");
+//            }
     }
 
     @Override
@@ -106,9 +120,8 @@ public class BuildingServiceImpl implements BuildingService {
     @Transactional
     public BuildingDTO save(BuildingDTO buildingDTO) {
         BuildingEntity buildingEntity = buildingConverter.toBuildingEntity(buildingDTO);
-        AssignmentBuildingDTO assignmentBuildingDTO = new AssignmentBuildingDTO();
-        AssignmentBuildingEntity assignmentBuildingEntity = assignmentBuildingConverter.convertToEntity(assignmentBuildingDTO);
-        assignmentBuildingEntity.setUsers(assignmentBuildingEntity.getUsers()); // gửi lại các nv đang quản lý tòa nhà đó
+        buildingEntity.setAssignmentBuildingEntities(buildingEntity.getAssignmentBuildingEntities());
+        // gửi lại các nv đang quản lý tòa nhà đó
         {
             BuildingEntity buildingEntityGetIDafterSave = buildingRepository.save(buildingEntity);
             if (buildingDTO.getRentArea() != null) {

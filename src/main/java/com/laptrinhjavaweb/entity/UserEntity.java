@@ -25,7 +25,7 @@ public class UserEntity extends BaseEntity {
     @Column(name = "email", unique = true)
     private String email;
 
-    @OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "users2", fetch = FetchType.LAZY)
     private List<AssignmentBuildingEntity> asignmentBuildingEntities = new ArrayList<>();
 
     @OneToMany(mappedBy = "users", fetch = FetchType.LAZY)

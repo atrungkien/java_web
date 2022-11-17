@@ -12,18 +12,18 @@ public class AssignmentBuildingEntity extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "staffid",nullable = false)
-    private UserEntity users;
+    private UserEntity users2;
 
     @ManyToOne
     @JoinColumn(name = "buildingid",nullable = false)
     private BuildingEntity buildings;
 
     public UserEntity getUsers() {
-        return users;
+        return users2;
     }
 
     public void setUsers(UserEntity users) {
-        this.users = users;
+        this.users2 = users2;
     }
 
     public BuildingEntity getBuildings() {

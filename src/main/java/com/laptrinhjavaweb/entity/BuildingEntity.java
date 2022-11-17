@@ -272,7 +272,15 @@ public class BuildingEntity extends BaseEntity {
         this.rentAreaEntities = rentAreaEntities;
     }
 
-//    public List<UserEntity> getUserEntities() {
+    public List<AssignmentBuildingEntity> getAssignmentBuildingEntities() {
+        return assignmentBuildingEntities;
+    }
+
+    public void setAssignmentBuildingEntities(List<AssignmentBuildingEntity> assignmentBuildingEntities) {
+        this.assignmentBuildingEntities = assignmentBuildingEntities;
+    }
+
+    //    public List<UserEntity> getUserEntities() {
 //        return userEntities;
 //    }
 //
