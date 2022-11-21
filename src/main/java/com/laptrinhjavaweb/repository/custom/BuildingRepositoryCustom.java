@@ -7,5 +7,4 @@ import java.util.List;
 
 public interface BuildingRepositoryCustom {
     List<BuildingEntity> findAll(BuildingSearchBuilder buildingSearchBuilder);
-
 }

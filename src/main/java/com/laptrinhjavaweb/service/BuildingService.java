@@ -1,10 +1,11 @@
 package com.laptrinhjavaweb.service;
 
-import com.laptrinhjavaweb.dto.AssignmentBuildingDTO;
 import com.laptrinhjavaweb.dto.BuildingDTO;
+import com.laptrinhjavaweb.dto.StaffAssignmentDTO;
 import com.laptrinhjavaweb.dto.request.BuildingDelRequest;
 import com.laptrinhjavaweb.dto.request.BuildingSearchRequest;
 import com.laptrinhjavaweb.dto.response.BuildingResponse;
+import com.laptrinhjavaweb.dto.response.StaffResponseDTO;
 import javassist.NotFoundException;
 
 import java.util.List;
@@ -18,9 +19,16 @@ public interface BuildingService {
 
     BuildingDTO findById(Long id);
 
-    void assignmentBuilding(List<Long> staffIds, Long buildingID) throws NotFoundException;
+   // BuildingDTO save(BuildingDTO buildingDTO);
+
+    //void assignmentBuilding(List<Long> staffIds, Long buildingID) throws NotFoundException;
+    void assignmentBuilding(StaffAssignmentDTO staffAssignmentDTO);
+    List<StaffResponseDTO> findStaffByBuildingId(Long id);
 
     void deleteWithCascade(BuildingDelRequest buildingDelRequest);
 
+   // BuildingDTO savePart2(BuildingDTO buildingDTO) throws NotFoundException;
+
     BuildingDTO save(BuildingDTO buildingDTO);
+
 }

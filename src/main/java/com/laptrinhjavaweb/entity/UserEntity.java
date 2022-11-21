@@ -25,24 +25,24 @@ public class UserEntity extends BaseEntity {
     @Column(name = "email", unique = true)
     private String email;
 
-    @OneToMany(mappedBy = "users2", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "staffs", fetch = FetchType.LAZY)
     private List<AssignmentBuildingEntity> asignmentBuildingEntities = new ArrayList<>();
 
-    @OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
-    private List<AssignmentCustomerEntity> assignmentCustomers = new ArrayList<>();
+//    @OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
+//    private List<AssignmentCustomerEntity> assignmentCustomers = new ArrayList<>();
 
-//    @ManyToMany(fetch = FetchType.LAZY)
-//    @JoinTable(name = "user_role",
-//            joinColumns = @JoinColumn(name = "userid", nullable = false),
-//            inverseJoinColumns = @JoinColumn(name = "roleid", nullable = false))
-//    private List<RoleEntity> roles = new ArrayList<>();
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_role",
+            joinColumns = @JoinColumn(name = "userid", nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "roleid", nullable = false))
+    private List<RoleEntity> roles = new ArrayList<>();
 
 
-//    @ManyToMany(fetch = FetchType.LAZY)
-//    @JoinTable(name = "assignmentcustomer",
-//            joinColumns = @JoinColumn(name = "staffid",nullable = false),
-//            inverseJoinColumns = @JoinColumn(name = "customerid",nullable = false))
-//    private List<CustomerEntity> customerEntities = new ArrayList<>();
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "assignmentcustomer",
+            joinColumns = @JoinColumn(name = "staffid",nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "customerid",nullable = false))
+    private List<CustomerEntity> customerEntities = new ArrayList<>();
 
 //    public List<CustomerEntity> getCustomerEntities() {
 //        return customerEntities;
@@ -52,7 +52,7 @@ public class UserEntity extends BaseEntity {
 //        this.customerEntities = customerEntities;
 //    }
 
-    private List<RoleEntity> roles = new ArrayList<>();
+
     public List<AssignmentBuildingEntity> getAsignmentBuildingEntities() {
         return asignmentBuildingEntities;
     }
@@ -60,13 +60,22 @@ public class UserEntity extends BaseEntity {
     public void setAsignmentBuildingEntities(List<AssignmentBuildingEntity> asignmentBuildingEntities) {
         this.asignmentBuildingEntities = asignmentBuildingEntities;
     }
+//
+//    public List<AssignmentCustomerEntity> getAssignmentCustomers() {
+//        return assignmentCustomers;
+//    }
+//
+//    public void setAssignmentCustomers(List<AssignmentCustomerEntity> assignmentCustomers) {
+//        this.assignmentCustomers = assignmentCustomers;
+//    }
 
-    public List<AssignmentCustomerEntity> getAssignmentCustomers() {
-        return assignmentCustomers;
+
+    public List<CustomerEntity> getCustomerEntities() {
+        return customerEntities;
     }
 
-    public void setAssignmentCustomers(List<AssignmentCustomerEntity> assignmentCustomers) {
-        this.assignmentCustomers = assignmentCustomers;
+    public void setCustomerEntities(List<CustomerEntity> customerEntities) {
+        this.customerEntities = customerEntities;
     }
 
     public String getUserName() {

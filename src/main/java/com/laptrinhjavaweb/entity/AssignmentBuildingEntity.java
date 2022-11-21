@@ -1,29 +1,26 @@
 package com.laptrinhjavaweb.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "assignmentbuilding")
 
 public class AssignmentBuildingEntity extends BaseEntity {
 
-    @ManyToOne
-    @JoinColumn(name = "staffid",nullable = false)
-    private UserEntity users2;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "staffid")
+    private UserEntity staffs;
 
-    @ManyToOne
-    @JoinColumn(name = "buildingid",nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "buildingid")
     private BuildingEntity buildings;
 
     public UserEntity getUsers() {
-        return users2;
+        return staffs;
     }
 
     public void setUsers(UserEntity users) {
-        this.users2 = users2;
+        this.staffs = staffs;
     }
 
     public BuildingEntity getBuildings() {

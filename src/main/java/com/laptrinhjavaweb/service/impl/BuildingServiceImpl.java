@@ -1,35 +1,37 @@
 package com.laptrinhjavaweb.service.impl;
 
 import com.laptrinhjavaweb.builder.BuildingSearchBuilder;
-import com.laptrinhjavaweb.converter.AssignmentBuildingConverter;
 import com.laptrinhjavaweb.converter.BuildingConverter;
 import com.laptrinhjavaweb.converter.RentAreaConverter;
-import com.laptrinhjavaweb.dto.AssignmentBuildingDTO;
 import com.laptrinhjavaweb.dto.BuildingDTO;
 import com.laptrinhjavaweb.dto.RentAreaDTO;
+import com.laptrinhjavaweb.dto.StaffAssignmentDTO;
 import com.laptrinhjavaweb.dto.request.BuildingDelRequest;
 import com.laptrinhjavaweb.dto.request.BuildingSearchRequest;
 import com.laptrinhjavaweb.dto.response.BuildingResponse;
+import com.laptrinhjavaweb.dto.response.StaffResponseDTO;
 import com.laptrinhjavaweb.entity.AssignmentBuildingEntity;
 import com.laptrinhjavaweb.entity.BuildingEntity;
 import com.laptrinhjavaweb.entity.UserEntity;
 import com.laptrinhjavaweb.exception.MyException;
 import com.laptrinhjavaweb.repository.AssignmentBuildingRepository;
 import com.laptrinhjavaweb.repository.BuildingRepository;
+import com.laptrinhjavaweb.repository.RentAreaRepository;
 import com.laptrinhjavaweb.repository.UserRepository;
 import com.laptrinhjavaweb.service.BuildingService;
 import com.laptrinhjavaweb.service.RentAreaService;
 import com.laptrinhjavaweb.utils.MapUtil;
 import com.laptrinhjavaweb.utils.ParseIntUtil;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class BuildingServiceImpl implements BuildingService {
-
     @Autowired
     private BuildingConverter buildingConverter;
     @Autowired
@@ -37,13 +39,13 @@ public class BuildingServiceImpl implements BuildingService {
     @Autowired
     private BuildingRepository buildingRepository;
     @Autowired
+    private AssignmentBuildingRepository assignmentBuildingRepository;
+    @Autowired
     private RentAreaService rentAreaService;
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private AssignmentBuildingRepository assignmentBuildingRepository;
-    @Autowired
-    private AssignmentBuildingConverter assignmentBuildingConverter;
+    private RentAreaRepository rentAreaRepository;
 
 
     @Override
@@ -68,60 +70,36 @@ public class BuildingServiceImpl implements BuildingService {
 
     @Override
     public BuildingDTO findById(Long id) {
-        return id != null ? buildingConverter.toBuildingDTO(buildingRepository.findById(id)) : new BuildingDTO();
+        return id != null ? buildingConverter.toBuildingDTO(buildingRepository.findOne(id)) : new BuildingDTO();
     }
 
-
     @Override
-    @Transactional
-    public void assignmentBuilding(List<Long> staffIds, Long buildingID) {
-        try {
-//            AssignmentBuildingEntity asignmentBuildingEntity = (AssignmentBuildingEntity) assignmentBuildingRepository.findById(id);
-//
-//            List<UserEntity> userEntities = (List<UserEntity>) asignmentBuildingEntity.getUsers();
-            BuildingEntity buildingEntity = buildingRepository.findOne(buildingID);
-            List<AssignmentBuildingEntity> assignmentBuildingEntities = assignmentBuildingRepository.findAll(staffIds);
-            if (assignmentBuildingEntities != null){
-                buildingEntity.setAssignmentBuildingEntities(assignmentBuildingEntities);
-////                asignmentBuildingEntity.setUsers((UserEntity) userEntities);
-//                asignmentBuildingEntity.setUsers((UserEntity) userRepository.findAll(staffIds));
-  //              assignmentBuildingRepository.save(asignmentBuildingEntity);
-                buildingRepository.save(buildingEntity);
-            }else {
-                System.out.println("Not Found User");
+    public void assignmentBuilding(StaffAssignmentDTO staffAssignmentDTO) {
+        List<Long> newStaffIds = staffAssignmentDTO.getStaffIds();
+        List<Long> oldStaffs = userRepository.findByAssignmentBuildings_Building_Id(staffAssignmentDTO.getBuildingId())
+                .stream().map(UserEntity::getId).collect(Collectors.toList());
+        for (Long newStaff : newStaffIds) {
+            if (!oldStaffs.contains(newStaff)) {
+                AssignmentBuildingEntity assignmentBuildingEntity = new AssignmentBuildingEntity();
+                assignmentBuildingEntity.setBuildings(buildingRepository.findOne(staffAssignmentDTO.getBuildingId()));
+                assignmentBuildingEntity.setUsers(userRepository.findOne(newStaff));
+                assignmentBuildingRepository.save(assignmentBuildingEntity);
             }
-//            BuildingEntity buildingEntity = buildingRepository.findOne(buildingID);
-//            buildingEntity.setUserEntities(new ArrayList<>(Optional.ofNullable(userRepository.findAll(staffIds))
-//                    .orElseThrow(()->new NotFoundException("Not Found User"))));
-//           buildingRepository.save(buildingEntity);
-        }catch (Exception e){
-            e.printStackTrace();
         }
-//        try {
-//            BuildingEntity buildingEntity = buildingRepository.findOne(buildingID);
-//            List<UserEntity> userEntities = userRepository.findAll(staffIds);
-//            if (userEntities != null){
-//                buildingEntity.setUserEntities(userEntities);
-//                buildingRepository.save(buildingEntity);
-//            }else {
-//                System.out.println("Not Found User");
-//            }
-    }
-
-    @Override
-    @Transactional
-    public void deleteWithCascade(BuildingDelRequest buildingDelRequest) {
-        if(!buildingDelRequest.getBuildingIds().isEmpty()){
-            buildingRepository.deleteByIdIn(buildingDelRequest.getBuildingIds());
+        for (Long oldStaff : oldStaffs) {
+            assignmentBuildingRepository.deleteByUsers_Id(oldStaff);
         }
     }
 
     @Override
-    @Transactional
+    public List<StaffResponseDTO> findStaffByBuildingId(Long id) {
+        return null;
+    }
+
+    /*@Override
     public BuildingDTO save(BuildingDTO buildingDTO) {
         BuildingEntity buildingEntity = buildingConverter.toBuildingEntity(buildingDTO);
-        buildingEntity.setAssignmentBuildingEntities(buildingEntity.getAssignmentBuildingEntities());
-        // gửi lại các nv đang quản lý tòa nhà đó
+        buildingEntity.setUserEntities(buildingEntity.getUserEntities()); // gửi lại các nv đang quản lý tòa nhà đó
         {
             BuildingEntity buildingEntityGetIDafterSave = buildingRepository.save(buildingEntity);
             if (buildingDTO.getRentArea() != null) {
@@ -130,8 +108,71 @@ public class BuildingServiceImpl implements BuildingService {
             }
             return buildingConverter.toBuildingDTO(buildingEntityGetIDafterSave);
         }
+    }*/
 
+//    @Override
+//    @Transactional
+//    public void assignmentBuilding(List<Long> staffIds, Long buildingID) {
+//        try {
+//            BuildingEntity buildingEntity = buildingRepository.findOne(buildingID);
+//            buildingEntity.setUserEntities(new ArrayList<>(Optional.ofNullable(userRepository.findAll(staffIds))
+//                    .orElseThrow(()->new NotFoundException("Not Found User"))));
+//            buildingRepository.save(buildingEntity);
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+//    }
+
+    @Override
+    @Transactional
+    public void deleteWithCascade(BuildingDelRequest buildingDelRequest) {
+        if(!buildingDelRequest.getBuildingIds().isEmpty()){
+            buildingRepository.deleteByIdIn(buildingDelRequest.getBuildingIds());
+        }
     }
+    /*@Transactional
+    @Override
+    public BuildingDTO savePart2(BuildingDTO buildingDTO) throws NotFoundException {
+        Long buildingId = buildingDTO.getId();
+        if (Objects.nonNull(buildingDTO)) {//objects java 7, check != null
+            BuildingEntity buildingEntity = buildingConverter.toBuildingEntity(buildingDTO);
+            buildingEntity.setUserEntities(buildingEntity.getUserEntities()); // gửi lại các nv đang quản lý tòa nhà đó
+            if (Objects.nonNull(buildingId) && buildingId > 0) {//id != null update
+                BuildingEntity buildingEntityFound = Optional.ofNullable(buildingRepository.findOne(buildingId))
+                        .orElseThrow(() -> new NotFoundException("Building not found!"));
+                //Optional.ofNullable neu != null thi tra ve gia tri, null thi tra ve exception
+                buildingEntity.setCreatedBy(buildingEntityFound.getCreatedBy());
+                buildingEntity.setCreatedDate(buildingEntityFound.getCreatedDate());
+                if (!rentAreaIsPresent(buildingEntityFound, buildingDTO)) {
+                    rentAreaRepository.deleteByBuildingEntity_Id(buildingId);//xoa tat ca rent area cua building, de them lai
+                } else {
+                    buildingEntity.setRentAreaEntities(new ArrayList<>());
+                }
+            }
+            BuildingDTO savedBuilding = buildingConverter.toBuildingDTO(buildingRepository.save(buildingEntity));
+            rentAreaRepository.save(buildingEntity.getRentAreaEntities());//insert lai rent area
+            return savedBuilding;
+        }
+        return null;
+    }*/
+    @Override
+    @Transactional
+    public BuildingDTO save(BuildingDTO buildingDTO) {
+        /*if (buildingDTO.getId() != null) {
+            BuildingEntity newBuilding = new BuildingEntity();
+            newBuilding.setId(buildingDTO.getId());
+        }*/
+        BuildingEntity buildingEntity = buildingConverter.toBuildingEntity(buildingDTO);
+        return buildingConverter.toBuildingDTO(buildingRepository.save(buildingEntity));
+    }
+       /* private Boolean rentAreaIsPresent(BuildingEntity buildingEntity, BuildingDTO buildingDTO) {
+            List<String> valueAreas = new ArrayList<>();
+            buildingEntity.getRentAreaEntities().forEach(item -> {
+                valueAreas.add(String.valueOf(item.getValue()));
+            });
+            String rentAreaStrOut = String.join(",", valueAreas), rentAreaStrIn = buildingDTO.getRentArea();
+            return rentAreaStrIn.equals(rentAreaStrOut);
+        }*/
 
         private BuildingSearchBuilder toBuildingSearchBuilder(Map<String, Object> params, List<String> rentTypes) {
             try {

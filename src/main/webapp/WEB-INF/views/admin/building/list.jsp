@@ -337,7 +337,7 @@
     </div>
 </div>
 <script>
-    let buildingAssId;
+    var buildingAssId;
 
     function assignmentBuilding(value) {
         buildingAssId = value;
@@ -349,11 +349,11 @@
                 let arrBuilding = response;
                 $("#dsnv").empty()
                 arrBuilding.forEach(item => {
-                    let ttd = '<label class="pos-rel">'
+                    var ttd = '<label class="pos-rel">'
                         + '<input type="checkbox"' + item.checked + ' class="ace" name="checkStaffs[]" value="' + item.id + '">'
                         + '  <span class="lbl"></span>'
                         + '</label>'
-                    let str = "<tr> <td class='center'>" + ttd + "</td> <td>" + item.fullName + "</td> </tr> "
+                    var str = "<tr> <td class='center'>" + ttd + "</td> <td>" + item.fullName + "</td> </tr> "
                     $("#dsnv").append(str)
                 })
                 console.log(response)
@@ -378,16 +378,16 @@
         e.preventDefault();
         $("#myModal").modal();
     })
-    let idOne;
+    var idOne;
     $("#btnXoa").click(function (e) {
         e.preventDefault();
-        let values = [];
+        var values = [];
         if (idOne != null)
             values.push(idOne);
         $.each($("input[name='checkBuildings[]']:checked"), function () {
             values.push($(this).val());
         });
-        let data = {};
+        var data = {};
         data["buildingIds"] = values;
         $.ajax({
             type: "DELETE",
@@ -412,7 +412,7 @@
 
     $("#assignment").click(function (e) {
         e.preventDefault();
-        let values = [];
+        var values = [];
         $.each($("input[name='checkStaffs[]']:checked"), function () {
             values.push($(this).val());
         });

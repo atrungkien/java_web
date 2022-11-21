@@ -30,9 +30,9 @@ public class RentAreaConverter {
     public RentAreaEntity toRentAreaEntity(RentAreaDTO rentAreaDTO, BuildingDTO buildingDTO,BuildingEntity buildingEntity) {
         List<RentAreaEntity> rentAreaEntities = new ArrayList<>();
         RentAreaEntity rentAreaEntity = modelMapper.map(rentAreaDTO, RentAreaEntity.class);
-        rentAreaEntity.setBuildingEntity(buildingRepository.findById(rentAreaDTO.getBuildingID()));
+        rentAreaEntity.setBuildingEntity(buildingRepository.findOne(rentAreaDTO.getBuildingID()));
         if(buildingDTO.getId()!=null){
-            buildingEntity = buildingRepository.findById(buildingDTO.getId());
+            buildingEntity = buildingRepository.findOne(buildingDTO.getId());
             rentAreaRepository.saveAllByBuilding(rentAreaEntities,buildingEntity);
         }else {
             buildingEntity = buildingConverter.toBuildingEntity(buildingDTO);
@@ -43,7 +43,7 @@ public class RentAreaConverter {
 
     public List<RentAreaDTO> toRentAreaDTOs(Long buildingIDAfterSave, BuildingDTO buildingDTO) {
         List<RentAreaDTO> rentAreaDTOS = new ArrayList<>();
-        BuildingDTO buildingDTOGetRentArea = buildingConverter.toBuildingDTO(buildingRepository.findById(buildingIDAfterSave));
+        BuildingDTO buildingDTOGetRentArea = buildingConverter.toBuildingDTO(buildingRepository.findOne(buildingIDAfterSave));
         if(buildingDTOGetRentArea.getRentArea().equals(buildingDTO.getRentArea()))
             return new ArrayList<>();
         String[] rentArea = buildingDTO.getRentArea() != null ? buildingDTO.getRentArea().trim().split(",") : null;

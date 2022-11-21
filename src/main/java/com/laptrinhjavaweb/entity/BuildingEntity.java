@@ -3,7 +3,9 @@ package com.laptrinhjavaweb.entity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "building")
@@ -64,12 +66,12 @@ public class BuildingEntity extends BaseEntity {
     @OneToMany(mappedBy = "buildings", fetch = FetchType.LAZY)
     private List<AssignmentBuildingEntity> assignmentBuildingEntities = new ArrayList<>();
 
+//
 //    @ManyToMany(fetch = FetchType.LAZY)
 //    @JoinTable(name = "assignmentbuilding",
 //            joinColumns = @JoinColumn(name = "buildingid", nullable = false),
 //            inverseJoinColumns = @JoinColumn(name = "staffid", nullable = false))
-//       private List<UserEntity> userEntities = new ArrayList<>();
-
+//    private List<UserEntity> userEntities = new ArrayList<>();
 
     public String getDistrict() {
         return district;
@@ -272,15 +274,7 @@ public class BuildingEntity extends BaseEntity {
         this.rentAreaEntities = rentAreaEntities;
     }
 
-    public List<AssignmentBuildingEntity> getAssignmentBuildingEntities() {
-        return assignmentBuildingEntities;
-    }
-
-    public void setAssignmentBuildingEntities(List<AssignmentBuildingEntity> assignmentBuildingEntities) {
-        this.assignmentBuildingEntities = assignmentBuildingEntities;
-    }
-
-    //    public List<UserEntity> getUserEntities() {
+//    public List<UserEntity> getUserEntities() {
 //        return userEntities;
 //    }
 //

@@ -15,22 +15,12 @@ public class CustomerEntity extends BaseEntity{
     @Column(name = "email")
     private String email;
 
-    //    @ManyToMany(mappedBy = "customerEntities",fetch = FetchType.LAZY)
-//    private List<UserEntity> userEntities = new ArrayList<>();
-    @OneToMany(mappedBy = "customers", fetch = FetchType.LAZY)
-    private List<AssignmentCustomerEntity> assignmentCustomers = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "customerEntities",fetch = FetchType.LAZY)
+    private List<UserEntity> userEntities = new ArrayList<>();
 
     @OneToMany(mappedBy = "customerEntity",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<TransactionEntity> transactionEntities = new ArrayList<>();
-
-
-    public List<AssignmentCustomerEntity> getAssignmentCustomers()
-    {
-        return assignmentCustomers;
-    }
-    public void setAssignmentCustomers(List<AssignmentCustomerEntity> assignmentCustomers) {
-        this.assignmentCustomers = assignmentCustomers;
-    }
 
     public String getFullName() {
         return fullName;
@@ -64,12 +54,12 @@ public class CustomerEntity extends BaseEntity{
         this.transactionEntities = transactionEntities;
     }
 
-//    public List<UserEntity> getUserEntities() {
-//        return userEntities;
-//    }
-//
-//    public void setUserEntities(List<UserEntity> userEntities) {
-//        this.userEntities = userEntities;
-//    }
+    public List<UserEntity> getUserEntities() {
+        return userEntities;
+    }
+
+    public void setUserEntities(List<UserEntity> userEntities) {
+        this.userEntities = userEntities;
+    }
 }
 

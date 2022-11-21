@@ -269,13 +269,13 @@
 <script>
     $('#btnAddBuilding').click(function (e) {
         e.preventDefault();
-        let data = {}
-        let formData = $('#formEdit').serializeArray();
-        let id = ${modelBuilding.id}+'';
+        var data = {}
+        var formData = $('#formEdit').serializeArray();
+        var id = ${modelBuilding.id}+'';
         if ((id) != '') {
             data["id"] = id;
         }
-        let buildingTypes = [];
+        var buildingTypes = [];
         formData.forEach(item => {
             if (item.name == "type") {
                 buildingTypes.push(item.value);
