@@ -2,9 +2,9 @@ package com.laptrinhjavaweb.utils;
 
 import com.laptrinhjavaweb.dto.AbstractDTO;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 import org.displaytag.tags.TableTagParameters;
 import org.displaytag.util.ParamEncoder;
+import org.jboss.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 

@@ -19,7 +19,7 @@ public class CustomerEntity extends BaseEntity{
     @ManyToMany(mappedBy = "customerEntities",fetch = FetchType.LAZY)
     private List<UserEntity> userEntities = new ArrayList<>();
 
-    @OneToMany(mappedBy = "customerEntity",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "customerEntity",fetch = FetchType.LAZY)
     private List<TransactionEntity> transactionEntities = new ArrayList<>();
 
     public String getFullName() {

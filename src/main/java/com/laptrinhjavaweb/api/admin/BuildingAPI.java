@@ -7,7 +7,6 @@ import com.laptrinhjavaweb.dto.request.BuildingDelRequest;
 import com.laptrinhjavaweb.dto.response.BuildingResponse;
 import com.laptrinhjavaweb.dto.response.ReponseDTO;
 import com.laptrinhjavaweb.dto.response.StaffAssignmentResponse;
-import com.laptrinhjavaweb.dto.response.StaffResponseDTO;
 import com.laptrinhjavaweb.service.BuildingService;
 import com.laptrinhjavaweb.service.impl.UserService;
 import javassist.NotFoundException;
@@ -40,29 +39,17 @@ public class BuildingAPI {
         return userService.getAllStaffAssignmentBuilding(id);
     }
 
-//    @PostMapping("/{id}/assignment")
-//    public Long assignmentBuilding(@RequestBody(required = false) List<Long> staffIds
-//            , @PathVariable("id") Long buildingId) throws NotFoundException {
-//        buildingService.assignmentBuilding(staffIds, buildingId);
-//        return buildingId;
-//    }
-
     @PostMapping("/{id}/assignment")
-    public ReponseDTO assignmentBuilding(@RequestBody StaffAssignmentDTO staffAssignmentDTO)  {
+    public ReponseDTO assignmentBuilding(@RequestBody StaffAssignmentDTO staffAssignmentDTO) throws NotFoundException {
         buildingService.assignmentBuilding(staffAssignmentDTO);
         ReponseDTO results = new ReponseDTO();
         results.setMessage("success");
         return results;
     }
 
-//    @GetMapping("/{buildingId}/staffs")
-//    public ReponseDTO loadStaffs(@PathVariable Long buildingId){
-//        ReponseDTO result = new ReponseDTO();
-//        List<StaffResponseDTO> staffResponseDTOS = userService.fin
-//    }
     @DeleteMapping
     public BuildingDelRequest delete(@RequestBody BuildingDelRequest buildingDelRequest) throws NotFoundException {
-        buildingService.deleteWithCascade(buildingDelRequest);
+        buildingService.delete(buildingDelRequest);
         return buildingDelRequest;
     }
 }

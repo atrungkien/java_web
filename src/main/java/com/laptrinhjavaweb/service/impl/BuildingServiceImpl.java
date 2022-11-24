@@ -9,7 +9,6 @@ import com.laptrinhjavaweb.dto.StaffAssignmentDTO;
 import com.laptrinhjavaweb.dto.request.BuildingDelRequest;
 import com.laptrinhjavaweb.dto.request.BuildingSearchRequest;
 import com.laptrinhjavaweb.dto.response.BuildingResponse;
-import com.laptrinhjavaweb.dto.response.StaffResponseDTO;
 import com.laptrinhjavaweb.entity.AssignmentBuildingEntity;
 import com.laptrinhjavaweb.entity.BuildingEntity;
 import com.laptrinhjavaweb.entity.UserEntity;
@@ -39,13 +38,13 @@ public class BuildingServiceImpl implements BuildingService {
     @Autowired
     private BuildingRepository buildingRepository;
     @Autowired
-    private AssignmentBuildingRepository assignmentBuildingRepository;
-    @Autowired
     private RentAreaService rentAreaService;
     @Autowired
     private UserRepository userRepository;
     @Autowired
     private RentAreaRepository rentAreaRepository;
+    @Autowired
+    private AssignmentBuildingRepository assignmentBuildingRepository;
 
 
     @Override
@@ -70,30 +69,7 @@ public class BuildingServiceImpl implements BuildingService {
 
     @Override
     public BuildingDTO findById(Long id) {
-        return id != null ? buildingConverter.toBuildingDTO(buildingRepository.findOne(id)) : new BuildingDTO();
-    }
-
-    @Override
-    public void assignmentBuilding(StaffAssignmentDTO staffAssignmentDTO) {
-        List<Long> newStaffIds = staffAssignmentDTO.getStaffIds();
-        List<Long> oldStaffs = userRepository.findByAssignmentBuildings_Building_Id(staffAssignmentDTO.getBuildingId())
-                .stream().map(UserEntity::getId).collect(Collectors.toList());
-        for (Long newStaff : newStaffIds) {
-            if (!oldStaffs.contains(newStaff)) {
-                AssignmentBuildingEntity assignmentBuildingEntity = new AssignmentBuildingEntity();
-                assignmentBuildingEntity.setBuildings(buildingRepository.findOne(staffAssignmentDTO.getBuildingId()));
-                assignmentBuildingEntity.setUsers(userRepository.findOne(newStaff));
-                assignmentBuildingRepository.save(assignmentBuildingEntity);
-            }
-        }
-        for (Long oldStaff : oldStaffs) {
-            assignmentBuildingRepository.deleteByUsers_Id(oldStaff);
-        }
-    }
-
-    @Override
-    public List<StaffResponseDTO> findStaffByBuildingId(Long id) {
-        return null;
+        return id != null ? buildingConverter.toBuildingDTO(buildingRepository.findById(id).get()) : new BuildingDTO();
     }
 
     /*@Override
@@ -110,9 +86,24 @@ public class BuildingServiceImpl implements BuildingService {
         }
     }*/
 
-//    @Override
-//    @Transactional
-//    public void assignmentBuilding(List<Long> staffIds, Long buildingID) {
+    @Override
+    @Transactional
+    public void assignmentBuilding(StaffAssignmentDTO staffAssignmentDTO) {
+
+        List<Long> newStaffIds = staffAssignmentDTO.getStaffIds();
+        List<Long> oldStaffs = userRepository.findByAssignmentBuildings_Building_Id(staffAssignmentDTO.getBuildingId())
+                .stream().map(UserEntity::getId).collect(Collectors.toList());
+        for (Long newStaff : newStaffIds) {
+            if (!oldStaffs.contains(newStaff)) {
+                AssignmentBuildingEntity assignmentBuildingEntity = new AssignmentBuildingEntity();
+                assignmentBuildingEntity.setBuildings(buildingRepository.findById(staffAssignmentDTO.getBuildingId()).get());
+                assignmentBuildingEntity.setUsers(userRepository.findById(newStaff).get());
+                assignmentBuildingRepository.save(assignmentBuildingEntity);
+            }
+        }
+        for (Long oldStaff : oldStaffs) {
+            assignmentBuildingRepository.deleteByUsers_Id(oldStaff);
+        }
 //        try {
 //            BuildingEntity buildingEntity = buildingRepository.findOne(buildingID);
 //            buildingEntity.setUserEntities(new ArrayList<>(Optional.ofNullable(userRepository.findAll(staffIds))
@@ -121,14 +112,14 @@ public class BuildingServiceImpl implements BuildingService {
 //        }catch (Exception e){
 //            e.printStackTrace();
 //        }
-//    }
+    }
 
     @Override
     @Transactional
-    public void deleteWithCascade(BuildingDelRequest buildingDelRequest) {
-        if(!buildingDelRequest.getBuildingIds().isEmpty()){
-            buildingRepository.deleteByIdIn(buildingDelRequest.getBuildingIds());
-        }
+    public void delete(BuildingDelRequest buildingDelRequest) {
+//        if(!buildingDelRequest.getBuildingIds().isEmpty()){
+//            buildingRepository.deleteByIdIn(buildingDelRequest.getBuildingIds());
+//        }
     }
     /*@Transactional
     @Override
@@ -162,9 +153,14 @@ public class BuildingServiceImpl implements BuildingService {
             BuildingEntity newBuilding = new BuildingEntity();
             newBuilding.setId(buildingDTO.getId());
         }*/
-        BuildingEntity buildingEntity = buildingConverter.toBuildingEntity(buildingDTO);
-        return buildingConverter.toBuildingDTO(buildingRepository.save(buildingEntity));
+
+
+//        BuildingEntity buildingEntity = buildingConverter.toBuildingEntity(buildingDTO);
+//        return buildingConverter.toBuildingDTO(buildingRepository.save(buildingEntity));
+        return null;
     }
+
+
        /* private Boolean rentAreaIsPresent(BuildingEntity buildingEntity, BuildingDTO buildingDTO) {
             List<String> valueAreas = new ArrayList<>();
             buildingEntity.getRentAreaEntities().forEach(item -> {
