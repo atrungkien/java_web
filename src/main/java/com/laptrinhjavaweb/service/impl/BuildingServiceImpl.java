@@ -90,20 +90,20 @@ public class BuildingServiceImpl implements BuildingService {
     @Transactional
     public void assignmentBuilding(StaffAssignmentDTO staffAssignmentDTO) {
 
-        List<Long> newStaffIds = staffAssignmentDTO.getStaffIds();
-        List<Long> oldStaffs = userRepository.findByAssignmentBuildings_Building_Id(staffAssignmentDTO.getBuildingId())
-                .stream().map(UserEntity::getId).collect(Collectors.toList());
-        for (Long newStaff : newStaffIds) {
-            if (!oldStaffs.contains(newStaff)) {
-                AssignmentBuildingEntity assignmentBuildingEntity = new AssignmentBuildingEntity();
-                assignmentBuildingEntity.setBuildings(buildingRepository.findById(staffAssignmentDTO.getBuildingId()).get());
-                assignmentBuildingEntity.setUsers(userRepository.findById(newStaff).get());
-                assignmentBuildingRepository.save(assignmentBuildingEntity);
-            }
-        }
-        for (Long oldStaff : oldStaffs) {
-            assignmentBuildingRepository.deleteByUsers_Id(oldStaff);
-        }
+//        List<Long> newStaffIds = staffAssignmentDTO.getStaffIds();
+//       // List<Long> oldStaffs = userRepository.findByAssignmentBuildings_Building_Id(staffAssignmentDTO.getBuildingId())
+//                .stream().map(UserEntity::getId).collect(Collectors.toList());
+//        for (Long newStaff : newStaffIds) {
+//            if (!oldStaffs.contains(newStaff)) {
+//                AssignmentBuildingEntity assignmentBuildingEntity = new AssignmentBuildingEntity();
+//                assignmentBuildingEntity.setBuildings(buildingRepository.findById(staffAssignmentDTO.getBuildingId()).get());
+//                assignmentBuildingEntity.setUsers(userRepository.findById(newStaff).get());
+//                assignmentBuildingRepository.save(assignmentBuildingEntity);
+//            }
+//        }
+//        for (Long oldStaff : oldStaffs) {
+//            assignmentBuildingRepository.deleteByUsers_Id(oldStaff);
+//        }
 //        try {
 //            BuildingEntity buildingEntity = buildingRepository.findOne(buildingID);
 //            buildingEntity.setUserEntities(new ArrayList<>(Optional.ofNullable(userRepository.findAll(staffIds))

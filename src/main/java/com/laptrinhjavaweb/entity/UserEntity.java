@@ -45,13 +45,13 @@ public class UserEntity extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "customerid",nullable = false))
     private List<CustomerEntity> customerEntities = new ArrayList<>();
 
-    public List<AssignmentBuildingEntity> getAsignmentBuildingEntities() {
-        return asignmentBuildingEntities;
-    }
-
-    public void setAsignmentBuildingEntities(List<AssignmentBuildingEntity> asignmentBuildingEntities) {
-        this.asignmentBuildingEntities = asignmentBuildingEntities;
-    }
+//    public List<AssignmentBuildingEntity> getAsignmentBuildingEntities() {
+//        return asignmentBuildingEntities;
+//    }
+//
+//    public void setAsignmentBuildingEntities(List<AssignmentBuildingEntity> asignmentBuildingEntities) {
+//        this.asignmentBuildingEntities = asignmentBuildingEntities;
+//    }
 
     public List<CustomerEntity> getCustomerEntities() {
         return customerEntities;

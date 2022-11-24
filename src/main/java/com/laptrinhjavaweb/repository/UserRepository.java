@@ -5,9 +5,11 @@ import com.laptrinhjavaweb.repository.custom.UserRepositoryCustom;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface UserRepository extends JpaRepository<UserEntity, Long> , UserRepositoryCustom {
     UserEntity findOneByUserNameAndStatus(String name, int status);
     Page<UserEntity> findByUserNameContainingIgnoreCaseOrFullNameContainingIgnoreCaseAndStatusNot(String userName, String fullName, int status,
@@ -17,6 +19,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> , UserRe
     long countByStatusNot(int status);
     UserEntity findOneByUserName(String userName);
     UserEntity findOneById(Long id);
-    List<UserEntity> findByStatusAndRole_Code(Integer status, String roleCode);
-    List<UserEntity> findByAssignmentBuildings_Building_Id(Long buildingId);
+    List<UserEntity> findByStatusAndRoles_Code(Integer status, String roleCode);
+    //List<UserEntity> findByAssignmentBuildings_Building_Id(Long buildingId);
 }
