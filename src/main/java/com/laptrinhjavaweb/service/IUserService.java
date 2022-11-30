@@ -3,10 +3,14 @@ package com.laptrinhjavaweb.service;
 import com.laptrinhjavaweb.dto.PasswordDTO;
 import com.laptrinhjavaweb.dto.UserDTO;
 import com.laptrinhjavaweb.dto.response.StaffAssignmentResponse;
+import com.laptrinhjavaweb.dto.response.StaffResponseDTO;
+import com.laptrinhjavaweb.entity.UserEntity;
 import com.laptrinhjavaweb.exception.MyException;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Map;
 
 public interface IUserService {
     UserDTO findOneByUserNameAndStatus(String name, int status);
@@ -22,4 +26,6 @@ public interface IUserService {
     void delete(long[] ids);
     List<UserDTO> getAllStaff();
     List<StaffAssignmentResponse> getAllStaffAssignmentBuilding(Long buildingID);
+    List<StaffResponseDTO> findStaffByBuildingId(Long buildingId);
+    Map<Long,String> getStaffMaps();
 }

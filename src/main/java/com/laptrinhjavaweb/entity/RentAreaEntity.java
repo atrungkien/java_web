@@ -12,7 +12,7 @@ public class RentAreaEntity extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "buildingid",nullable = false)
-    private BuildingEntity buildingEntity;
+    private BuildingEntity building;
 
     public Integer getValue() {
         return value;
@@ -22,14 +22,12 @@ public class RentAreaEntity extends BaseEntity {
         this.value = value;
     }
 
-    public BuildingEntity getBuildingEntity() {
-        return buildingEntity;
+    public BuildingEntity getBuilding() {
+        return building;
     }
 
-    public void setBuildingEntity(BuildingEntity buildingEntity) {
-        this.buildingEntity = buildingEntity;
+    public void setBuilding(BuildingEntity building) {
+        this.building = building;
     }
-
-
 }
 

@@ -5,6 +5,7 @@ import com.laptrinhjavaweb.repository.custom.UserRepositoryCustom;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,4 +22,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> , UserRe
     UserEntity findOneById(Long id);
     List<UserEntity> findByStatusAndRoles_Code(Integer status, String roleCode);
     //List<UserEntity> findByAssignmentBuildings_Building_Id(Long buildingId);
+    @Query("select u FROM UserEntity u JOIN u.assignmentBuildingEntities ab WHERE ab.building.id=?1")
+    List<UserEntity> findAssignees (Long id);
 }

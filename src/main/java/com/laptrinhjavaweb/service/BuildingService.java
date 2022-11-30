@@ -5,6 +5,7 @@ import com.laptrinhjavaweb.dto.StaffAssignmentDTO;
 import com.laptrinhjavaweb.dto.request.BuildingDelRequest;
 import com.laptrinhjavaweb.dto.request.BuildingSearchRequest;
 import com.laptrinhjavaweb.dto.response.BuildingResponse;
+import com.laptrinhjavaweb.entity.AssignmentBuildingEntity;
 import javassist.NotFoundException;
 
 import java.util.List;
@@ -17,14 +18,10 @@ public interface BuildingService {
     List<BuildingResponse> findAll(BuildingSearchRequest buildingSearchRequest);
 
     BuildingDTO findById(Long id);
+    AssignmentBuildingEntity findByBuildingIDByAssignmentID(Long id);
 
-   // BuildingDTO save(BuildingDTO buildingDTO);
-
-    void assignmentBuilding(StaffAssignmentDTO staffAssignmentDTO) throws NotFoundException;
-
-    void delete(BuildingDelRequest buildingDelRequest);
-
-   // BuildingDTO savePart2(BuildingDTO buildingDTO) throws NotFoundException;
+    void assignmentBuildingToStaffs(StaffAssignmentDTO staffAssignmentDTO);
+    void deleteBuildings(BuildingDelRequest buildingDelRequest);
 
     BuildingDTO save(BuildingDTO buildingDTO);
 }

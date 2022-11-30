@@ -9,25 +9,25 @@ public class AssignmentBuildingEntity extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "staffid")
-    private UserEntity staffs;
+    private UserEntity assignee;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "buildingid")
-    private BuildingEntity buildings;
-
-    public UserEntity getUsers() {
-        return staffs;
-    }
-
-    public void setUsers(UserEntity users) {
-        this.staffs = staffs;
-    }
+    private BuildingEntity building;
 
     public BuildingEntity getBuildings() {
-        return buildings;
+        return building;
     }
 
     public void setBuildings(BuildingEntity buildings) {
-        this.buildings = buildings;
+        this.building = buildings;
+    }
+
+    public UserEntity getAssignee() {
+        return assignee;
+    }
+
+    public void setAssignee(UserEntity assignee) {
+        this.assignee = assignee;
     }
 }

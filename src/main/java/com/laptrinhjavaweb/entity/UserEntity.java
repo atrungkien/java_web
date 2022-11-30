@@ -27,8 +27,8 @@ public class UserEntity extends BaseEntity {
     @Column(name = "email", unique = true)
     private String email;
 
-    @OneToMany(mappedBy = "staffs", fetch = FetchType.LAZY)
-    private List<AssignmentBuildingEntity> asignmentBuildingEntities = new ArrayList<>();
+    @OneToMany(mappedBy = "assignee", fetch = FetchType.LAZY)
+    private List<AssignmentBuildingEntity> assignmentBuildingEntities = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_role",
@@ -36,38 +36,14 @@ public class UserEntity extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "roleid", nullable = false))
     private List<RoleEntity> roles = new ArrayList<>();
 
-//    @ManyToMany(mappedBy = "userEntities",fetch = FetchType.LAZY)
-//    private Set<BuildingEntity> buildingEntities = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "assignmentcustomer",
-            joinColumns = @JoinColumn(name = "staffid",nullable = false),
-            inverseJoinColumns = @JoinColumn(name = "customerid",nullable = false))
-    private List<CustomerEntity> customerEntities = new ArrayList<>();
-
-//    public List<AssignmentBuildingEntity> getAsignmentBuildingEntities() {
-//        return asignmentBuildingEntities;
-//    }
-//
-//    public void setAsignmentBuildingEntities(List<AssignmentBuildingEntity> asignmentBuildingEntities) {
-//        this.asignmentBuildingEntities = asignmentBuildingEntities;
-//    }
-
-    public List<CustomerEntity> getCustomerEntities() {
-        return customerEntities;
+    public List<AssignmentBuildingEntity> getAssignmentBuildingEntities() {
+        return assignmentBuildingEntities;
     }
 
-    public void setCustomerEntities(List<CustomerEntity> customerEntities) {
-        this.customerEntities = customerEntities;
+    public void setAssignmentBuildingEntities(List<AssignmentBuildingEntity> assignmentBuildingEntities) {
+        this.assignmentBuildingEntities = assignmentBuildingEntities;
     }
-
-//    public Set<BuildingEntity> getBuildingEntities() {
-//        return buildingEntities;
-//    }
-//
-//    public void setBuildingEntities(Set<BuildingEntity> buildingEntities) {
-//        this.buildingEntities = buildingEntities;
-//    }
 
     public String getUserName() {
         return userName;

@@ -59,17 +59,11 @@ public class BuildingEntity extends BaseEntity {
     @Column(name = "type")
     private String type;
 
-    @OneToMany(mappedBy = "buildingEntity", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "building", fetch = FetchType.LAZY)
     private List<RentAreaEntity> rentAreaEntities = new ArrayList<>();
 
-    @OneToMany(mappedBy = "buildings", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "building", fetch = FetchType.LAZY)
     private List<AssignmentBuildingEntity> assignmentBuildingEntities = new ArrayList<>();
-
-//    @ManyToMany(fetch = FetchType.LAZY)
-////    @JoinTable(name = "assignmentbuilding",
-////            joinColumns = @JoinColumn(name = "buildingid", nullable = false),
-////            inverseJoinColumns = @JoinColumn(name = "staffid", nullable = false))
-////    private List<UserEntity> userEntities = new ArrayList<>();
 
     public List<AssignmentBuildingEntity> getAssignmentBuildingEntities() {
         return assignmentBuildingEntities;
@@ -280,12 +274,5 @@ public class BuildingEntity extends BaseEntity {
         this.rentAreaEntities = rentAreaEntities;
     }
 
-//    public List<UserEntity> getUserEntities() {
-//        return userEntities;
-//    }
-//
-//    public void setUserEntities(List<UserEntity> userEntities) {
-//        this.userEntities = userEntities;
-//    }
 }
 

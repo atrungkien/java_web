@@ -11,6 +11,7 @@ import com.laptrinhjavaweb.dto.request.BuildingSearchRequest;
 import com.laptrinhjavaweb.dto.response.BuildingResponse;
 import com.laptrinhjavaweb.entity.AssignmentBuildingEntity;
 import com.laptrinhjavaweb.entity.BuildingEntity;
+import com.laptrinhjavaweb.entity.RentAreaEntity;
 import com.laptrinhjavaweb.entity.UserEntity;
 import com.laptrinhjavaweb.exception.MyException;
 import com.laptrinhjavaweb.repository.AssignmentBuildingRepository;
@@ -31,6 +32,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class BuildingServiceImpl implements BuildingService {
+
     @Autowired
     private BuildingConverter buildingConverter;
     @Autowired
@@ -57,6 +59,7 @@ public class BuildingServiceImpl implements BuildingService {
         }
         return buildingResponses;
     }
+
     @Override
     public List<BuildingResponse> findAll(BuildingSearchRequest buildingSearchRequest) {
         List<BuildingResponse> buildingResponses = new ArrayList<>();
@@ -72,157 +75,115 @@ public class BuildingServiceImpl implements BuildingService {
         return id != null ? buildingConverter.toBuildingDTO(buildingRepository.findById(id).get()) : new BuildingDTO();
     }
 
-    /*@Override
+    @Override
+    public AssignmentBuildingEntity findByBuildingIDByAssignmentID(Long id) {
+        return null;
+    }
+
+    @Override
     public BuildingDTO save(BuildingDTO buildingDTO) {
         BuildingEntity buildingEntity = buildingConverter.toBuildingEntity(buildingDTO);
-        buildingEntity.setUserEntities(buildingEntity.getUserEntities()); // gửi lại các nv đang quản lý tòa nhà đó
-        {
-            BuildingEntity buildingEntityGetIDafterSave = buildingRepository.save(buildingEntity);
-            if (buildingDTO.getRentArea() != null) {
-                List<RentAreaDTO> rentAreaDTOS = rentAreaConverter.toRentAreaDTOs(buildingEntityGetIDafterSave.getId(), buildingDTO);
-                rentAreaService.saveAllByBuilding(rentAreaDTOS, buildingDTO);
-            }
-            return buildingConverter.toBuildingDTO(buildingEntityGetIDafterSave);
+        BuildingEntity buildingEntityGetIDafterSave = buildingRepository.save(buildingEntity);
+        if (buildingDTO.getRentArea() != null) {
+            List<RentAreaDTO> rentAreaDTOS = rentAreaConverter.toRentAreaDTOs(buildingEntityGetIDafterSave.getId(), buildingDTO);
+            rentAreaService.saveAllByBuilding(rentAreaDTOS, buildingDTO);
         }
-    }*/
-
-    @Override
-    @Transactional
-    public void assignmentBuilding(StaffAssignmentDTO staffAssignmentDTO) {
-
-//        List<Long> newStaffIds = staffAssignmentDTO.getStaffIds();
-//       // List<Long> oldStaffs = userRepository.findByAssignmentBuildings_Building_Id(staffAssignmentDTO.getBuildingId())
-//                .stream().map(UserEntity::getId).collect(Collectors.toList());
-//        for (Long newStaff : newStaffIds) {
-//            if (!oldStaffs.contains(newStaff)) {
-//                AssignmentBuildingEntity assignmentBuildingEntity = new AssignmentBuildingEntity();
-//                assignmentBuildingEntity.setBuildings(buildingRepository.findById(staffAssignmentDTO.getBuildingId()).get());
-//                assignmentBuildingEntity.setUsers(userRepository.findById(newStaff).get());
-//                assignmentBuildingRepository.save(assignmentBuildingEntity);
-//            }
-//        }
-//        for (Long oldStaff : oldStaffs) {
-//            assignmentBuildingRepository.deleteByUsers_Id(oldStaff);
-//        }
-//        try {
-//            BuildingEntity buildingEntity = buildingRepository.findOne(buildingID);
-//            buildingEntity.setUserEntities(new ArrayList<>(Optional.ofNullable(userRepository.findAll(staffIds))
-//                    .orElseThrow(()->new NotFoundException("Not Found User"))));
-//            buildingRepository.save(buildingEntity);
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
+        return buildingConverter.toBuildingDTO(buildingEntityGetIDafterSave);
     }
 
     @Override
-    @Transactional
-    public void delete(BuildingDelRequest buildingDelRequest) {
-//        if(!buildingDelRequest.getBuildingIds().isEmpty()){
-//            buildingRepository.deleteByIdIn(buildingDelRequest.getBuildingIds());
-//        }
-    }
-    /*@Transactional
-    @Override
-    public BuildingDTO savePart2(BuildingDTO buildingDTO) throws NotFoundException {
-        Long buildingId = buildingDTO.getId();
-        if (Objects.nonNull(buildingDTO)) {//objects java 7, check != null
-            BuildingEntity buildingEntity = buildingConverter.toBuildingEntity(buildingDTO);
-            buildingEntity.setUserEntities(buildingEntity.getUserEntities()); // gửi lại các nv đang quản lý tòa nhà đó
-            if (Objects.nonNull(buildingId) && buildingId > 0) {//id != null update
-                BuildingEntity buildingEntityFound = Optional.ofNullable(buildingRepository.findOne(buildingId))
-                        .orElseThrow(() -> new NotFoundException("Building not found!"));
-                //Optional.ofNullable neu != null thi tra ve gia tri, null thi tra ve exception
-                buildingEntity.setCreatedBy(buildingEntityFound.getCreatedBy());
-                buildingEntity.setCreatedDate(buildingEntityFound.getCreatedDate());
-                if (!rentAreaIsPresent(buildingEntityFound, buildingDTO)) {
-                    rentAreaRepository.deleteByBuildingEntity_Id(buildingId);//xoa tat ca rent area cua building, de them lai
-                } else {
-                    buildingEntity.setRentAreaEntities(new ArrayList<>());
-                }
+    public void assignmentBuildingToStaffs(StaffAssignmentDTO staffAssignmentDTO) {
+        List<UserEntity> assignees = userRepository.findAssignees(staffAssignmentDTO.getBuildingId());
+        BuildingEntity buildingEntity = buildingRepository.findById(staffAssignmentDTO.getBuildingId()).orElse(null);
+
+
+        assignees.forEach(assignee -> {
+            if (staffAssignmentDTO.getStaffIds().stream().noneMatch(staffId -> staffId.equals(assignee.getId()))) {
+                AssignmentBuildingEntity assignmentBuildingEntity = (AssignmentBuildingEntity) assignmentBuildingRepository.findAssignmentBuilding(assignee.getId(), staffAssignmentDTO.getBuildingId());
+                assignmentBuildingRepository.delete(assignmentBuildingEntity);
             }
-            BuildingDTO savedBuilding = buildingConverter.toBuildingDTO(buildingRepository.save(buildingEntity));
-            rentAreaRepository.save(buildingEntity.getRentAreaEntities());//insert lai rent area
-            return savedBuilding;
-        }
-        return null;
-    }*/
-    @Override
-    @Transactional
-    public BuildingDTO save(BuildingDTO buildingDTO) {
-        /*if (buildingDTO.getId() != null) {
-            BuildingEntity newBuilding = new BuildingEntity();
-            newBuilding.setId(buildingDTO.getId());
-        }*/
+        });
 
-
-//        BuildingEntity buildingEntity = buildingConverter.toBuildingEntity(buildingDTO);
-//        return buildingConverter.toBuildingDTO(buildingRepository.save(buildingEntity));
-        return null;
+        staffAssignmentDTO.getStaffIds().forEach(staffId -> {
+            if (assignees.stream().noneMatch(assignee -> assignee.getId().equals(staffId))) {
+                UserEntity staff = userRepository.findById(staffId).orElse(null);
+                AssignmentBuildingEntity assignmentBuildingEntity = new AssignmentBuildingEntity();
+                assignmentBuildingEntity.setBuildings(buildingEntity);
+                assignmentBuildingEntity.setAssignee(staff);
+                assignmentBuildingRepository.save(assignmentBuildingEntity);
+            }
+        });
     }
 
 
-       /* private Boolean rentAreaIsPresent(BuildingEntity buildingEntity, BuildingDTO buildingDTO) {
-            List<String> valueAreas = new ArrayList<>();
-            buildingEntity.getRentAreaEntities().forEach(item -> {
-                valueAreas.add(String.valueOf(item.getValue()));
-            });
-            String rentAreaStrOut = String.join(",", valueAreas), rentAreaStrIn = buildingDTO.getRentArea();
-            return rentAreaStrIn.equals(rentAreaStrOut);
-        }*/
-
-        private BuildingSearchBuilder toBuildingSearchBuilder(Map<String, Object> params, List<String> rentTypes) {
-            try {
-                Map<String, Object> paramsPsd = toLowKey(params);
-                BuildingSearchBuilder buildingSearchBuilder = new BuildingSearchBuilder.Builder()
-                        .name((String) MapUtil.getValue(paramsPsd, "name"))
-                        .floorArea(ParseIntUtil.getValue(MapUtil.getValue(paramsPsd, "floorarea")))
-                        .district((String) MapUtil.getValue(paramsPsd, "districtcode"))
-                        .ward((String) MapUtil.getValue(paramsPsd, "ward"))
-                        .street((String) MapUtil.getValue(paramsPsd, "street"))
-                        .numberOfBasement(ParseIntUtil.getValue(MapUtil.getValue(paramsPsd, "numberofbasement")))
-                        .direction((String) MapUtil.getValue(paramsPsd, "direction"))
-                        .level((String) MapUtil.getValue(paramsPsd, "level"))
-                        .rentAreaFrom(ParseIntUtil.getValue(MapUtil.getValue(paramsPsd, "rentareafrom")))
-                        .rentAreaTo(ParseIntUtil.getValue(MapUtil.getValue(paramsPsd, "rentareato")))
-                        .rentPriceFrom(ParseIntUtil.getValue(MapUtil.getValue(paramsPsd, "rentpricefrom")))
-                        .rentPriceTo(ParseIntUtil.getValue(MapUtil.getValue(paramsPsd, "rentpriceto")))
-                        .managerName((String) MapUtil.getValue(paramsPsd, "managername"))
-                        .managerPhone((String) MapUtil.getValue(paramsPsd, "managerphone"))
-                        .staffID(ParseIntUtil.getValue(MapUtil.getValue(paramsPsd, "staffid"))).rentTypes(rentTypes)
-                        .build();
-                return buildingSearchBuilder;
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
+    @Override
+    public void deleteBuildings(BuildingDelRequest buildingDelRequest) {
+        buildingDelRequest.getBuildingIds().forEach(buildingId ->{
+            List<AssignmentBuildingEntity> assignmentBuildingEntityList = assignmentBuildingRepository.findAssignmentBuildingByBuildingId(buildingId);
+            if (assignmentBuildingEntityList != null){
+                assignmentBuildingRepository.deleteAll(assignmentBuildingEntityList);
             }
-        }
-
-        private BuildingSearchBuilder toBuildingSearchBuilder(BuildingSearchRequest buildingSearchRequest) {
-            try {
-                BuildingSearchBuilder buildingSearchBuilder = new BuildingSearchBuilder.Builder()
-                        .name(buildingSearchRequest.getName())
-                        .floorArea(buildingSearchRequest.getFloorArea())
-                        .district(buildingSearchRequest.getDistrictCode())
-                        .ward(buildingSearchRequest.getWard())
-                        .street(buildingSearchRequest.getStreet())
-                        .numberOfBasement(buildingSearchRequest.getNumberOfBasement())
-                        .direction(buildingSearchRequest.getDirection())
-                        .level(buildingSearchRequest.getLevel())
-                        .rentAreaFrom(buildingSearchRequest.getRentAreaFrom())
-                        .rentAreaTo(buildingSearchRequest.getRentAreaTo())
-                        .rentPriceFrom(buildingSearchRequest.getRentPriceFrom())
-                        .rentPriceTo(buildingSearchRequest.getRentPriceTo())
-                        .managerName(buildingSearchRequest.getManagerName())
-                        .managerPhone(buildingSearchRequest.getManagerPhone())
-                        .staffID(buildingSearchRequest.getStaffID())
-                        .rentTypes(buildingSearchRequest.getRentTypes())
-                        .build();
-                return buildingSearchBuilder;
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
+            List<RentAreaEntity> rentAreaEntityList = rentAreaRepository.findRentAreasByBuildingId(buildingId);
+            if (rentAreaEntityList != null){
+                rentAreaRepository.deleteAll(rentAreaEntityList);
             }
+            buildingRepository.deleteById(buildingId);
+        });
+    }
+
+    private BuildingSearchBuilder toBuildingSearchBuilder(Map<String, Object> params, List<String> rentTypes) {
+        try {
+            Map<String, Object> paramsPsd = toLowKey(params);
+            BuildingSearchBuilder buildingSearchBuilder = new BuildingSearchBuilder.Builder()
+                    .name((String) MapUtil.getValue(paramsPsd, "name"))
+                    .floorArea(ParseIntUtil.getValue(MapUtil.getValue(paramsPsd, "floorarea")))
+                    .district((String) MapUtil.getValue(paramsPsd, "districtcode"))
+                    .ward((String) MapUtil.getValue(paramsPsd, "ward"))
+                    .street((String) MapUtil.getValue(paramsPsd, "street"))
+                    .numberOfBasement(ParseIntUtil.getValue(MapUtil.getValue(paramsPsd, "numberofbasement")))
+                    .direction((String) MapUtil.getValue(paramsPsd, "direction"))
+                    .level((String) MapUtil.getValue(paramsPsd, "level"))
+                    .rentAreaFrom(ParseIntUtil.getValue(MapUtil.getValue(paramsPsd, "rentareafrom")))
+                    .rentAreaTo(ParseIntUtil.getValue(MapUtil.getValue(paramsPsd, "rentareato")))
+                    .rentPriceFrom(ParseIntUtil.getValue(MapUtil.getValue(paramsPsd, "rentpricefrom")))
+                    .rentPriceTo(ParseIntUtil.getValue(MapUtil.getValue(paramsPsd, "rentpriceto")))
+                    .managerName((String) MapUtil.getValue(paramsPsd, "managername"))
+                    .managerPhone((String) MapUtil.getValue(paramsPsd, "managerphone"))
+                    .staffID(ParseIntUtil.getValue(MapUtil.getValue(paramsPsd, "staffid"))).rentTypes(rentTypes)
+                    .build();
+            return buildingSearchBuilder;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
+    }
+
+    private BuildingSearchBuilder toBuildingSearchBuilder(BuildingSearchRequest buildingSearchRequest) {
+        try {
+            BuildingSearchBuilder buildingSearchBuilder = new BuildingSearchBuilder.Builder()
+                    .name(buildingSearchRequest.getName())
+                    .floorArea(buildingSearchRequest.getFloorArea())
+                    .district(buildingSearchRequest.getDistrictCode())
+                    .ward(buildingSearchRequest.getWard())
+                    .street(buildingSearchRequest.getStreet())
+                    .numberOfBasement(buildingSearchRequest.getNumberOfBasement())
+                    .direction(buildingSearchRequest.getDirection())
+                    .level(buildingSearchRequest.getLevel())
+                    .rentAreaFrom(buildingSearchRequest.getRentAreaFrom())
+                    .rentAreaTo(buildingSearchRequest.getRentAreaTo())
+                    .rentPriceFrom(buildingSearchRequest.getRentPriceFrom())
+                    .rentPriceTo(buildingSearchRequest.getRentPriceTo())
+                    .managerName(buildingSearchRequest.getManagerName())
+                    .managerPhone(buildingSearchRequest.getManagerPhone())
+                    .staffID(buildingSearchRequest.getStaffID())
+                    .rentTypes(buildingSearchRequest.getRentTypes())
+                    .build();
+            return buildingSearchBuilder;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
 
     private Map<String, Object> toLowKey(Map<String, Object> params) {

@@ -3,6 +3,7 @@ package com.laptrinhjavaweb.dto;
 import java.util.List;
 
 public class StaffAssignmentDTO {
+
     private Long buildingId;
     private List<Long> StaffIds;
 

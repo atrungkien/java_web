@@ -7,6 +7,7 @@ import com.laptrinhjavaweb.dto.request.BuildingDelRequest;
 import com.laptrinhjavaweb.dto.response.BuildingResponse;
 import com.laptrinhjavaweb.dto.response.ReponseDTO;
 import com.laptrinhjavaweb.dto.response.StaffAssignmentResponse;
+import com.laptrinhjavaweb.dto.response.StaffResponseDTO;
 import com.laptrinhjavaweb.service.BuildingService;
 import com.laptrinhjavaweb.service.impl.UserService;
 import javassist.NotFoundException;
@@ -30,7 +31,7 @@ public class BuildingAPI {
         return buildingService.findAll(params, rentTypes);
     }
     @PostMapping
-    public BuildingDTO save(@RequestBody(required = false) BuildingDTO buildingDTO) {
+    public BuildingDTO save(@RequestBody(required = false) BuildingDTO buildingDTO,@PathVariable("id") Long id) {
         return buildingService.save(buildingDTO);
     }
 
@@ -39,18 +40,35 @@ public class BuildingAPI {
         return userService.getAllStaffAssignmentBuilding(id);
     }
 
+//    @GetMapping("/{id}/staff")
+//    public ReponseDTO loadStaff(@PathVariable("id") Long id){
+//        ReponseDTO result = new ReponseDTO();
+//        List<StaffResponseDTO> staffResponseDTOS = userService.findStaffByBuildingId(id);
+//        result.setMessage("success");
+//        result.setData(staffResponseDTOS);
+//        return result;
+//    }
+
     @PostMapping("/{id}/assignment")
-    public ReponseDTO assignmentBuilding(@RequestBody StaffAssignmentDTO staffAssignmentDTO) throws NotFoundException {
-        buildingService.assignmentBuilding(staffAssignmentDTO);
+    public ReponseDTO assignmentBuilding(@RequestBody StaffAssignmentDTO staffAssignmentDTO) {
+        buildingService.assignmentBuildingToStaffs(staffAssignmentDTO);
         ReponseDTO results = new ReponseDTO();
         results.setMessage("success");
         return results;
     }
 
+//    @DeleteMapping
+//    public BuildingDelRequest delete(@RequestBody BuildingDelRequest buildingDelRequest) throws NotFoundException {
+//        //buildingService.delete(buildingDelRequest);
+//        return buildingDelRequest;
+//    }
     @DeleteMapping
-    public BuildingDelRequest delete(@RequestBody BuildingDelRequest buildingDelRequest) throws NotFoundException {
-        buildingService.delete(buildingDelRequest);
-        return buildingDelRequest;
+    public ReponseDTO deleteBuilding(@RequestBody BuildingDelRequest buildingDelRequest){
+        buildingService.deleteBuildings(buildingDelRequest);
+        ReponseDTO result = new ReponseDTO();
+        result.setMessage("success");
+        return result;
     }
+
 }
 

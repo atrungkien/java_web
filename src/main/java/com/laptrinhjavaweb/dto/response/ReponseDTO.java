@@ -1,7 +1,10 @@
 package com.laptrinhjavaweb.dto.response;
 
+import java.util.List;
+
 public class ReponseDTO {
     private String message;
+    private List<String> data;
 
     public String getMessage() {
         return message;
@@ -9,5 +12,14 @@ public class ReponseDTO {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+
+    public List<String> getData() {
+        return data;
+    }
+
+    public void setData(List<String> data) {
+        this.data = data;
     }
 }

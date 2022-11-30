@@ -5,6 +5,7 @@ import com.laptrinhjavaweb.converter.UserConverter;
 import com.laptrinhjavaweb.dto.PasswordDTO;
 import com.laptrinhjavaweb.dto.UserDTO;
 import com.laptrinhjavaweb.dto.response.StaffAssignmentResponse;
+import com.laptrinhjavaweb.dto.response.StaffResponseDTO;
 import com.laptrinhjavaweb.entity.RoleEntity;
 import com.laptrinhjavaweb.entity.UserEntity;
 import com.laptrinhjavaweb.exception.MyException;
@@ -20,7 +21,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -167,5 +170,33 @@ public class UserService implements IUserService {
     @Override
     public List<StaffAssignmentResponse> getAllStaffAssignmentBuilding(Long buildingID) {
         return userConverter.toStaffAssignmentResponses(userRepository.getAllStaffByBuildingID(buildingID));
+    }
+
+    @Override
+    public Map<Long, String> getStaffMaps() {
+        Map<Long, String> result = new HashMap<>();
+        List<UserEntity> userEntities = userRepository.findByStatusAndRoles_Code(1,"staff");
+        userEntities.forEach(item -> result.put(item.getId(),item.getFullName()));
+        return result;
+    }
+
+    @Override
+    public List<StaffResponseDTO> findStaffByBuildingId(Long buildingId) {
+        List<UserEntity> assignees = userRepository.findAssignees(buildingId);
+        List<UserEntity> staffs = userRepository.findAll();
+        //List<UserEntity> staffs = userRepository.findByStatusAndRoles_Code(1,"staff");
+        List<StaffResponseDTO> result = new ArrayList<>();
+        staffs.forEach(staff ->{
+                StaffResponseDTO staffResponseDTO = new StaffResponseDTO();
+                staffResponseDTO.setStaffId(staff.getId());
+                staffResponseDTO.setFullname(staff.getFullName());
+                if (assignees.stream().filter(assignee -> assignee.getId().equals(staff.getId())).findAny().isPresent()){
+                    staffResponseDTO.setChecked(SystemConstant.CHECKED);
+                }else {
+                    staffResponseDTO.setChecked(SystemConstant.EMPTY_STRING);
+                }
+                result.add(staffResponseDTO);
+            });
+        return result;
     }
 }
