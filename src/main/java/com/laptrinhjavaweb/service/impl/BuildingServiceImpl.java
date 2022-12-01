@@ -22,13 +22,10 @@ import com.laptrinhjavaweb.service.BuildingService;
 import com.laptrinhjavaweb.service.RentAreaService;
 import com.laptrinhjavaweb.utils.MapUtil;
 import com.laptrinhjavaweb.utils.ParseIntUtil;
-import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.*;
-import java.util.stream.Collectors;
+
 
 @Service
 public class BuildingServiceImpl implements BuildingService {
@@ -76,11 +73,6 @@ public class BuildingServiceImpl implements BuildingService {
     }
 
     @Override
-    public AssignmentBuildingEntity findByBuildingIDByAssignmentID(Long id) {
-        return null;
-    }
-
-    @Override
     public BuildingDTO save(BuildingDTO buildingDTO) {
         BuildingEntity buildingEntity = buildingConverter.toBuildingEntity(buildingDTO);
         BuildingEntity buildingEntityGetIDafterSave = buildingRepository.save(buildingEntity);
@@ -95,7 +87,6 @@ public class BuildingServiceImpl implements BuildingService {
     public void assignmentBuildingToStaffs(StaffAssignmentDTO staffAssignmentDTO) {
         List<UserEntity> assignees = userRepository.findAssignees(staffAssignmentDTO.getBuildingId());
         BuildingEntity buildingEntity = buildingRepository.findById(staffAssignmentDTO.getBuildingId()).orElse(null);
-
 
         assignees.forEach(assignee -> {
             if (staffAssignmentDTO.getStaffIds().stream().noneMatch(staffId -> staffId.equals(assignee.getId()))) {

@@ -36,7 +36,7 @@ public class BuildingConverter {
     public BuildingDTO toBuildingDTO(BuildingEntity buildingEntity) {
         BuildingDTO buildingDTO = modelMapper.map(buildingEntity, BuildingDTO.class);
         List<String> rentAreas = new ArrayList<>();
-        for (RentAreaEntity item : buildingEntity.getRentAreaEntities()) {
+        for (RentAreaEntity item : buildingEntity.getRentArea()) {
             rentAreas.add(String.valueOf(item.getValue()));
         }
         String rentAreaStr = String.join(",", rentAreas);
@@ -64,11 +64,11 @@ public class BuildingConverter {
             String[] rentAreaValues = buildingDTO.getRentArea().trim().split(",");
             for (String item : rentAreaValues) {
                 RentAreaEntity rentAreaEntity = new RentAreaEntity();
-                rentAreaEntity.setBuildingEntity(buildingEntity);
+                rentAreaEntity.setRentArea(buildingEntity);
                 rentAreaEntity.setValue(ParseIntUtil.getValue(item));
                 rentAreaEntityNews.add(rentAreaEntity);
             }
-            buildingEntity.setRentAreaEntities(rentAreaEntityNews);
+            buildingEntity.setRentArea(rentAreaEntityNews);
         }
         return buildingEntity;
     }

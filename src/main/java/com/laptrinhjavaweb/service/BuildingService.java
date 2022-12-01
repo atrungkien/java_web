@@ -18,9 +18,9 @@ public interface BuildingService {
     List<BuildingResponse> findAll(BuildingSearchRequest buildingSearchRequest);
 
     BuildingDTO findById(Long id);
-    AssignmentBuildingEntity findByBuildingIDByAssignmentID(Long id);
 
     void assignmentBuildingToStaffs(StaffAssignmentDTO staffAssignmentDTO);
+
     void deleteBuildings(BuildingDelRequest buildingDelRequest);
 
     BuildingDTO save(BuildingDTO buildingDTO);

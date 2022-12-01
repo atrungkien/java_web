@@ -60,7 +60,7 @@ public class BuildingEntity extends BaseEntity {
     private String type;
 
     @OneToMany(mappedBy = "building", fetch = FetchType.LAZY)
-    private List<RentAreaEntity> rentAreaEntities = new ArrayList<>();
+    private List<RentAreaEntity> rentArea = new ArrayList<>();
 
     @OneToMany(mappedBy = "building", fetch = FetchType.LAZY)
     private List<AssignmentBuildingEntity> assignmentBuildingEntities = new ArrayList<>();
@@ -266,13 +266,13 @@ public class BuildingEntity extends BaseEntity {
         this.decorationTime = decorationTime;
     }
 
-    public List<RentAreaEntity> getRentAreaEntities() {
-        return rentAreaEntities;
+
+    public List<RentAreaEntity> getRentArea() {
+        return rentArea;
     }
 
-    public void setRentAreaEntities(List<RentAreaEntity> rentAreaEntities) {
-        this.rentAreaEntities = rentAreaEntities;
+    public void setRentArea(List<RentAreaEntity> rentArea) {
+        this.rentArea = rentArea;
     }
-
 }
 
