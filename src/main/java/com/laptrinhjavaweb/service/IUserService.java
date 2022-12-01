@@ -8,10 +8,11 @@ import com.laptrinhjavaweb.entity.UserEntity;
 import com.laptrinhjavaweb.exception.MyException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
-
+@Service
 public interface IUserService {
     UserDTO findOneByUserNameAndStatus(String name, int status);
     List<UserDTO> getUsers(String searchValue, Pageable pageable);

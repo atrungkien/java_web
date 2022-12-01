@@ -10,8 +10,8 @@ import java.util.List;
 @Repository
 public interface AssignmentBuildingRepository extends JpaRepository<AssignmentBuildingEntity, Long> {
     //void deleteByUsers_Id(Long staffId);
-    AssignmentBuildingEntity findByBuildingIDByAssignmentID(Long id);
-    AssignmentBuildingEntity finById(Long id);
+//    AssignmentBuildingEntity findByBuildingIDByAssignmentID(Long id);
+//    AssignmentBuildingEntity finById(Long id);
     @Query("select ab from AssignmentBuildingEntity ab Where ab.building.id = ?1")
     List<AssignmentBuildingEntity> findAssignmentBuildingByBuildingId(Long buildingId);
 

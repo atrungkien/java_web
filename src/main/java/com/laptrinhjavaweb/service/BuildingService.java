@@ -7,10 +7,11 @@ import com.laptrinhjavaweb.dto.request.BuildingSearchRequest;
 import com.laptrinhjavaweb.dto.response.BuildingResponse;
 import com.laptrinhjavaweb.entity.AssignmentBuildingEntity;
 import javassist.NotFoundException;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
-
+@Service
 public interface BuildingService {
 
     List<BuildingResponse> findAll(Map<String, Object> params, List<String> rentTypes);
