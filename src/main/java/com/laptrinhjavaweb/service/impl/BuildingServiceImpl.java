@@ -90,7 +90,7 @@ public class BuildingServiceImpl implements BuildingService {
 
         assignees.forEach(assignee -> {
             if (staffAssignmentDTO.getStaffIds().stream().noneMatch(staffId -> staffId.equals(assignee.getId()))) {
-                AssignmentBuildingEntity assignmentBuildingEntity = (AssignmentBuildingEntity) assignmentBuildingRepository.findAssignmentBuilding(assignee.getId(), staffAssignmentDTO.getBuildingId());
+                AssignmentBuildingEntity assignmentBuildingEntity = (AssignmentBuildingEntity) assignmentBuildingRepository.findByAssignee_IdAndAndBuilding_Id(assignee.getId(), staffAssignmentDTO.getBuildingId());
                 assignmentBuildingRepository.delete(assignmentBuildingEntity);
             }
         });
@@ -110,7 +110,7 @@ public class BuildingServiceImpl implements BuildingService {
     @Override
     public void deleteBuildings(BuildingDelRequest buildingDelRequest) {
         buildingDelRequest.getBuildingIds().forEach(buildingId ->{
-            List<AssignmentBuildingEntity> assignmentBuildingEntityList = assignmentBuildingRepository.findAssignmentBuildingByBuildingId(buildingId);
+            List<AssignmentBuildingEntity> assignmentBuildingEntityList = assignmentBuildingRepository.findAssignmentBuildingEntitiesByBuilding_Id(buildingId);
             if (assignmentBuildingEntityList != null){
                 assignmentBuildingRepository.deleteAll(assignmentBuildingEntityList);
             }
