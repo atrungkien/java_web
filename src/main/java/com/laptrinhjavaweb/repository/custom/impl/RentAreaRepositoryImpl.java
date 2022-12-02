@@ -17,15 +17,23 @@ import java.util.List;
 public class RentAreaRepositoryImpl implements RentAreaRepositoryCustom {
     @PersistenceContext
     EntityManager entityManager;
-    @Autowired
-    RentAreaRepository rentAreaRepository;
+
+    /**
+     *
+     * @author: kythuat.laptrinhjavaweb
+     * @description Đang nhúng RepositoryCustom bên trong RentAreaRepository, gọi lại RentAreaRepositorylàm gì quý khách.
+     */
+   // @Autowired
+   // RentAreaRepository rentAreaRepository;
+
 
     @Transactional
     @Override
     public void saveAllByBuilding(List<RentAreaEntity> rentAreaEntitis, BuildingEntity buildingEntity) {
         List<RentAreaEntity> rentAreaEntityListByBuilding = new ArrayList<>();
         if (buildingEntity.getRentArea().size()>0){
-            rentAreaEntityListByBuilding = rentAreaRepository.findByBuildingEntity(buildingEntity);
+//            rentAreaEntityListByBuilding = rentAreaRepository.findByBuildingEntity(buildingEntity);
+       //     rentAreaEntityListByBuilding = rentAreaRepository.findByBuilding_Id(buildingEntity.getId());
         }
 
         if(rentAreaEntitis.size()>0){

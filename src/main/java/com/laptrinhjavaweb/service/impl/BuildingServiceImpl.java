@@ -114,10 +114,10 @@ public class BuildingServiceImpl implements BuildingService {
             if (assignmentBuildingEntityList != null){
                 assignmentBuildingRepository.deleteAll(assignmentBuildingEntityList);
             }
-            List<RentAreaEntity> rentAreaEntityList = rentAreaRepository.findByRentArea_Id(buildingId);
-            if (rentAreaEntityList != null){
-                rentAreaRepository.deleteAll(rentAreaEntityList);
-            }
+//            List<RentAreaEntity> rentAreaEntityList = rentAreaRepository.findByRentArea_Id(buildingId);
+//            if (rentAreaEntityList != null){
+//                rentAreaRepository.deleteAll(rentAreaEntityList);
+//            }
             buildingRepository.deleteById(buildingId);
         });
     }

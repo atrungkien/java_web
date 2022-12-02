@@ -64,7 +64,8 @@ public class BuildingConverter {
             String[] rentAreaValues = buildingDTO.getRentArea().trim().split(",");
             for (String item : rentAreaValues) {
                 RentAreaEntity rentAreaEntity = new RentAreaEntity();
-                rentAreaEntity.setRentArea(buildingEntity);
+//                rentAreaEntity.setRentArea(buildingEntity);
+                rentAreaEntity.setBuilding(buildingEntity);
                 rentAreaEntity.setValue(ParseIntUtil.getValue(item));
                 rentAreaEntityNews.add(rentAreaEntity);
             }
