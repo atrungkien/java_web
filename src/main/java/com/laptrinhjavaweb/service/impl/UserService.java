@@ -182,7 +182,7 @@ public class UserService implements IUserService {
 
     @Override
     public List<StaffResponseDTO> findStaffByBuildingId(Long buildingId) {
-        List<UserEntity> assignees = userRepository.findAssignees(buildingId);
+        List<UserEntity> assignees = userRepository.findByAssignmentBuildingEntities_Id(buildingId);
         List<UserEntity> staffs = userRepository.findAll();
         //List<UserEntity> staffs = userRepository.findByStatusAndRoles_Code(1,"staff");
         List<StaffResponseDTO> result = new ArrayList<>();

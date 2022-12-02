@@ -22,6 +22,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> , UserRe
     UserEntity findOneById(Long id);
     List<UserEntity> findByStatusAndRoles_Code(Integer status, String roleCode);
     //List<UserEntity> findByAssignmentBuildings_Building_Id(Long buildingId);
-    @Query("select u FROM UserEntity u JOIN u.assignmentBuildingEntities ab WHERE ab.building.id=?1")
-    List<UserEntity> findAssignees (Long id);
+//    @Query("select u FROM UserEntity u JOIN u.assignmentBuildingEntities ab WHERE ab.building.id=?1")
+//    List<UserEntity> findAssignees (Long id);
+    List<UserEntity> findByAssignmentBuildingEntities_Id(Long BuildingId);
 }

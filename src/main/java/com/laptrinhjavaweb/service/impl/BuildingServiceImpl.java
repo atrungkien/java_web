@@ -85,7 +85,7 @@ public class BuildingServiceImpl implements BuildingService {
 
     @Override
     public void assignmentBuildingToStaffs(StaffAssignmentDTO staffAssignmentDTO) {
-        List<UserEntity> assignees = userRepository.findAssignees(staffAssignmentDTO.getBuildingId());
+        List<UserEntity> assignees = userRepository.findByAssignmentBuildingEntities_Id(staffAssignmentDTO.getBuildingId());
         BuildingEntity buildingEntity = buildingRepository.findById(staffAssignmentDTO.getBuildingId()).orElse(null);
 
         assignees.forEach(assignee -> {
@@ -114,7 +114,7 @@ public class BuildingServiceImpl implements BuildingService {
             if (assignmentBuildingEntityList != null){
                 assignmentBuildingRepository.deleteAll(assignmentBuildingEntityList);
             }
-            List<RentAreaEntity> rentAreaEntityList = rentAreaRepository.findRentAreasByBuildingId(buildingId);
+            List<RentAreaEntity> rentAreaEntityList = rentAreaRepository.findByRentArea_Id(buildingId);
             if (rentAreaEntityList != null){
                 rentAreaRepository.deleteAll(rentAreaEntityList);
             }
