@@ -20,19 +20,19 @@ public class BaseEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "createddate",updatable = false)
+    @Column(name = "createddate")
     @CreatedDate
     private Date createdDate;
 
-    @Column(name = "createdby",updatable = false)
+    @Column(name = "createdby")
     @CreatedBy
     private String createdBy;
 
-    @Column(name = "modifieddate",updatable = true)
+    @Column(name = "modifieddate")
     @LastModifiedDate
     private Date modifiedDate;
 
-    @Column(name = "modifiedby",updatable = true)
+    @Column(name = "modifiedby")
     @LastModifiedBy
     private String modifiedBy;
 

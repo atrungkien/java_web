@@ -11,4 +11,3 @@ public abstract class BaseResponse {
         this.id = id;
     }
 }
-

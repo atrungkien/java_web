@@ -12,5 +12,4 @@ public class StaffAssignmentResponse extends UserDTO {
     public void setChecked(String checked) {
         this.checked = checked;
     }
-
 }

@@ -1,6 +1,5 @@
 package com.laptrinhjavaweb.entity;
 
-
 import javax.persistence.*;
 
 @Entity
@@ -12,7 +11,7 @@ public class RentAreaEntity extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "buildingid",nullable = false)
-    private BuildingEntity rentArea;
+    private BuildingEntity buildingEntity;
 
     public Integer getValue() {
         return value;
@@ -22,13 +21,13 @@ public class RentAreaEntity extends BaseEntity {
         this.value = value;
     }
 
-
-    public BuildingEntity getRentArea() {
-        return rentArea;
+    public BuildingEntity getBuildingEntity() {
+        return buildingEntity;
     }
 
-    public void setRentArea(BuildingEntity rentArea) {
-        this.rentArea = rentArea;
+    public void setBuildingEntity(BuildingEntity buildingEntity) {
+        this.buildingEntity = buildingEntity;
     }
+
+
 }
-

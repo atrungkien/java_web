@@ -5,7 +5,6 @@ public class SystemConstant {
     public static final String ADMIN_ROLE = "ROLE_ADMIN";
     /*Spring security 4: ROLE_ADMIN, Spring security 3 not required*/
     public static final String USER_ROLE = "ROLE_USER";
-    public static final String STAFF_ROLE = "staff";
     public static final String MANAGER_ROLE = "MANAGER";
     public static final String HOME = "/trang-chu";
     public static final String ADMIN_HOME = "/admin/home";
@@ -19,6 +18,4 @@ public class SystemConstant {
     public static final String PASSWORD_DEFAULT = "123456";
     public static final String CHANGE_PASSWORD_FAIL = "change_password_fail";
     public static final String EMPTY_STRING = "";
-    public static final String ONE_EQUAL_ONE = "where 1=1";
-    public static final String CHECKED = "checked";
 }

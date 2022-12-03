@@ -20,4 +20,3 @@ public class BuildingTypeDTO {
         this.code = code;
     }
 }
-

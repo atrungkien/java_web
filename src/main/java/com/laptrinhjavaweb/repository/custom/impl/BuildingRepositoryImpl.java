@@ -1,11 +1,18 @@
 package com.laptrinhjavaweb.repository.custom.impl;
 
 import com.laptrinhjavaweb.builder.BuildingSearchBuilder;
-import com.laptrinhjavaweb.constant.SystemConstant;
+import com.laptrinhjavaweb.entity.AssignmentBuildingEntity;
 import com.laptrinhjavaweb.entity.BuildingEntity;
+import com.laptrinhjavaweb.entity.RentAreaEntity;
+import com.laptrinhjavaweb.entity.UserEntity;
+import com.laptrinhjavaweb.repository.AssignmentBuildingRepository;
+import com.laptrinhjavaweb.repository.RentAreaRepository;
+import com.laptrinhjavaweb.repository.UserRepository;
 import com.laptrinhjavaweb.repository.custom.BuildingRepositoryCustom;
 import com.laptrinhjavaweb.utils.ValidateUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -20,6 +27,12 @@ import java.util.stream.Collectors;
 public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
     @PersistenceContext
     private EntityManager entityManager;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private AssignmentBuildingRepository assignmentBuildingRepository;
+    @Autowired
+    private RentAreaRepository rentAreaRepository;
 
     @Override
     public List<BuildingEntity> findAll(BuildingSearchBuilder buildingSearchBuilder) {
@@ -33,26 +46,36 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
         }
     }
 
-    private String buildQuery(BuildingSearchBuilder buildingSearchBuilder) {
-        StringBuilder queryFinal = new StringBuilder("select * from building AS bd ");
+    public String buildQuery(BuildingSearchBuilder buildingSearchBuilder) {
+
+        StringBuilder queryFinal = new StringBuilder("select * from building as bd ");
+//		bd.id,bd.name,bd.street,bd.ward,bd.district,bd.managername,"
+//				+ "bd.managerphone,bd.floorarea,bd.rentpricedescription,bd.rentprice,bd.servicefee
         StringBuilder join = new StringBuilder();
         buildJoinQuery(join, buildingSearchBuilder);
-        StringBuilder where = new StringBuilder(SystemConstant.ONE_EQUAL_ONE);
+        StringBuilder where = new StringBuilder("\nwhere 1=1 ");
         List<String> likeFields = Arrays.asList("name", "ward", "street", "managername", "managerphone");
         List<String> operatorFields = Arrays.asList("floorarea", "district", "numberOfBasement", "direction", "level");
         buildQueryPart1(buildingSearchBuilder, where, likeFields, operatorFields);
         buildQueryPart2(buildingSearchBuilder, where);
-        where.append("\nGROUP BY bd.id");
-        queryFinal
-                .append(join)
-                .append(where);
+        where.append("\ngroup by bd.id");
+        queryFinal.append(join).append(where);
         System.out.println("===================================");
         System.out.println(queryFinal.toString());
         return queryFinal.toString();
     }
 
+    public void buildJoinQuery(StringBuilder join, BuildingSearchBuilder buildingSearchBuilder) {
+        if (ValidateUtil.isValid(buildingSearchBuilder.getRentAreaTo())
+                || ValidateUtil.isValid(buildingSearchBuilder.getRentAreaFrom()))
+            join.append("\ninner join rentarea as ra on bd.id = ra.buildingid ");
+        if (ValidateUtil.isValid(buildingSearchBuilder.getStaffID()))
+            join.append(
+                    "\ninner join assignmentbuilding as ab on bd.id = ab.buildingid inner join user as u on ab.staffid = u.id ");
+    }
 
-    private void buildQueryPart1(BuildingSearchBuilder buildingSearchBuilder, StringBuilder where, List<String> likeFields, List<String> operatorFields) {
+    public void buildQueryPart1(BuildingSearchBuilder buildingSearchBuilder, StringBuilder where,
+                                List<String> likeFields, List<String> operatorFields) {
         try {
             Field[] fields = BuildingSearchBuilder.class.getDeclaredFields();
             for (Field field : fields) {
@@ -74,7 +97,8 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
                     }
                     for (String likeField : likeFields) {
                         if (likeField.equals(fieldName)) {
-                            where.append(String.format("\nand bd.%s like '%s'", fieldName, "%" + fieldValue.toString() + "%"));
+                            where.append(String.format("\nand bd.%s like '%s'", fieldName,
+                                    "%" + fieldValue.toString() + "%"));
                             break;
                         }
                     }
@@ -88,11 +112,8 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
     private void buildQueryPart2(BuildingSearchBuilder buildingSearchBuilder, StringBuilder where) {
         if (buildingSearchBuilder.getRentTypes() != null && buildingSearchBuilder.getRentTypes().size() > 0) {
             where.append("\nand (");
-            String renttypes = buildingSearchBuilder
-                    .getRentTypes()
-                    .stream()
-                    .map(item -> ("bd.type like '%" + item + "%'"))
-                    .collect(Collectors.joining(" or "));
+            String renttypes = buildingSearchBuilder.getRentTypes().stream()
+                    .map(item -> ("bd.type like '%" + item + "%'")).collect(Collectors.joining(" or "));
             where.append(renttypes);
             where.append(" )");
         }
@@ -116,15 +137,5 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
         if (ValidateUtil.isValid(buildingSearchBuilder.getRentPriceTo())) {
             where.append("\nand bd.rentprice <= " + buildingSearchBuilder.getRentPriceTo());
         }
-
-    }
-
-
-    private void buildJoinQuery(StringBuilder join, BuildingSearchBuilder buildingSearchBuilder) {
-        if (ValidateUtil.isValid(buildingSearchBuilder.getRentAreaTo()) || ValidateUtil.isValid(buildingSearchBuilder.getRentAreaFrom()))
-            join.append("\nINNER JOIN rentarea AS ra on bd.id = ra.buildingid ");
-        if (ValidateUtil.isValid(buildingSearchBuilder.getStaffID()))
-            join.append( "\nINNER JOIN assignmentbuilding AS ab on bd.id = ab.buildingid " +
-                           "INNER JOIN user AS u on ab.staffid = u.id ");
     }
 }

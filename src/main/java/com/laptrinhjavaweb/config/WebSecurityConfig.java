@@ -16,12 +16,13 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
     @Bean
     public UserDetailsService userDetailsService() {
         return new CustomUserDetailService();
     }
 
-    @Bean // 1 phần có sẵn của security kiểu mã hóa là Bcrypt
+    @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
@@ -34,24 +35,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return authProvider;
     }
 
-    @Override // nơi xác thực username password
-    protected void configure(AuthenticationManagerBuilder auth) { // AuthenticationManagerBuilder là nơi quản lý các chứng(xác) thực
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(authenticationProvider());
     }
 
-    @Override // bắt ta chứng thực or không  khi vào 1 cái url nào đó .
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .authorizeRequests() // đường dẫn phải đc yêu cầu chứng thực luôn luôn có
-                .antMatchers("/admin/**").authenticated() // nếu path = /admin/** thì phải có role là ADMIN ms cho vào
-                .antMatchers("/login", "/resource/**", "/trang-chu", "/api/**").permitAll() // các paths = path như đã định nghĩa thì cho vào
-                //  /resource/**  là cho phép vào resource load các file css, js ...
-                .and() // và form login phải là trang login mà mình custom. username và password này là ta nhập ở ngoài  nó sẽ sánh với thằng trong  AuthenticationManagerBuilder
+                http.csrf().disable()
+                .authorizeRequests()
+                        .antMatchers("/admin/**").hasRole("ADMIN")
+                        .antMatchers("/login", "/resource/**", "/trang-chu", "/api/**").permitAll()
+                .and()
                 .formLogin().loginPage("/login").usernameParameter("j_username").passwordParameter("j_password").permitAll()
-                .loginProcessingUrl("/j_spring_security_check") // path có sẵn của SS nó nhận username password vào  và trong path này đã khai báo AuthenticationManagerBuilder
-                .successHandler(myAuthenticationSuccessHandler()) // nếu đúng thì nhảy tới page được định nghĩa
-                .failureUrl("/login?incorrectAccount").and() // sai thì về lại form login và hiển thị thông báo và
-                .logout().logoutUrl("/logout").deleteCookies("JSESSIONID") // khi logout thì xóa cookiees
+                .loginProcessingUrl("/j_spring_security_check")
+                .successHandler(myAuthenticationSuccessHandler())
+                .failureUrl("/login?incorrectAccount").and()
+                .logout().logoutUrl("/logout").deleteCookies("JSESSIONID")
                 .and().exceptionHandling().accessDeniedPage("/access-denied").and()
                 .sessionManagement().maximumSessions(1).expiredUrl("/login?sessionTimeout");
     }

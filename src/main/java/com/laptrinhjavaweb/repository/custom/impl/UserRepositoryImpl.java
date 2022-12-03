@@ -11,6 +11,7 @@ import java.util.List;
 
 @Repository
 public class UserRepositoryImpl implements UserRepositoryCustom {
+
     @PersistenceContext
     EntityManager entityManager;
 
@@ -29,9 +30,4 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
         Query query = entityManager.createNativeQuery(sql.toString(),UserEntity.class);
         return query.getResultList();
     }
-
-//    @Override
-//    public List<UserEntity> findByAssignmentBuilding_IDBy(Long buildingid) {
-//        return null;
-//    }
 }
