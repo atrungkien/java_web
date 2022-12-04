@@ -30,7 +30,7 @@ public class BuildingAPI {
     }
     @PostMapping
     public BuildingDTO save(@RequestBody(required = false) BuildingDTO buildingDTO) {
-        return buildingService.saveWithCascade(buildingDTO);
+        return buildingService.save(buildingDTO);
     }
 
     @GetMapping("/{id}/staff")
@@ -47,7 +47,7 @@ public class BuildingAPI {
 
     @DeleteMapping
     public BuildingDelRequest delete(@RequestBody BuildingDelRequest buildingDelRequest) throws NotFoundException {
-        buildingService.deleteWithCascade(buildingDelRequest);
+        buildingService.delete(buildingDelRequest);
         return buildingDelRequest;
     }
 }
