@@ -2,8 +2,10 @@ package com.laptrinhjavaweb.converter;
 
 import com.laptrinhjavaweb.dto.BuildingDTO;
 import com.laptrinhjavaweb.dto.RentAreaDTO;
+import com.laptrinhjavaweb.entity.BuildingEntity;
 import com.laptrinhjavaweb.entity.RentAreaEntity;
 import com.laptrinhjavaweb.repository.BuildingRepository;
+import com.laptrinhjavaweb.repository.RentAreaRepository;
 import com.laptrinhjavaweb.utils.ParseIntUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

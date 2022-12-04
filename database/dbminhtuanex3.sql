@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `estateadvance` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `estateadvance`;
 -- MySQL dump 10.13  Distrib 8.0.13, for Win64 (x86_64)
 --
 -- Host: localhost    Database: estateadvance
@@ -37,7 +35,7 @@ CREATE TABLE `assignmentbuilding` (
   KEY `fk_building_user` (`buildingid`),
   CONSTRAINT `fk_building_user` FOREIGN KEY (`buildingid`) REFERENCES `building` (`id`),
   CONSTRAINT `fk_user_building` FOREIGN KEY (`staffid`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -46,7 +44,7 @@ CREATE TABLE `assignmentbuilding` (
 
 LOCK TABLES `assignmentbuilding` WRITE;
 /*!40000 ALTER TABLE `assignmentbuilding` DISABLE KEYS */;
-INSERT INTO `assignmentbuilding` VALUES (1,2,1,NULL,NULL,NULL,NULL),(2,2,3,NULL,NULL,NULL,NULL),(3,3,1,NULL,NULL,NULL,NULL),(4,3,4,NULL,NULL,NULL,NULL);
+INSERT INTO `assignmentbuilding` VALUES (2,2,3,NULL,NULL,NULL,NULL),(3,3,1,NULL,NULL,NULL,NULL),(4,3,4,NULL,NULL,NULL,NULL),(12,2,1,'2021-12-23 10:35:38','2021-12-23 10:35:38','admin','admin'),(13,4,1,'2021-12-23 10:35:38','2021-12-23 10:35:38','admin','admin'),(14,3,43,'2021-12-23 12:59:57','2021-12-23 12:59:57','admin','admin'),(16,4,43,'2021-12-23 13:00:02','2021-12-23 13:00:02','admin','admin'),(17,3,44,'2021-12-23 13:23:12','2021-12-23 13:23:12','admin','admin'),(18,3,45,'2021-12-23 14:48:49','2021-12-23 14:48:49','admin','admin'),(19,4,45,'2021-12-23 14:48:49','2021-12-23 14:48:49','admin','admin');
 /*!40000 ALTER TABLE `assignmentbuilding` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -122,8 +120,10 @@ CREATE TABLE `building` (
   `modifieddate` datetime DEFAULT NULL,
   `createdby` varchar(255) DEFAULT NULL,
   `modifiedby` varchar(255) DEFAULT NULL,
+  `managerphone` varchar(255) DEFAULT NULL,
+  `managername` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -132,7 +132,7 @@ CREATE TABLE `building` (
 
 LOCK TABLES `building` WRITE;
 /*!40000 ALTER TABLE `building` DISABLE KEYS */;
-INSERT INTO `building` VALUES (1,'Nam Giao Building Tower','59 phan xích long','Phường 2','QUAN_1',NULL,2,500,NULL,NULL,15,'15 triệu/m2',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'TANG_TRET,NGUYEN_CAN',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2,'ACM Tower','96 cao thắng','Phường 4','QUAN_2',NULL,2,650,NULL,NULL,18,'18 triệu/m2',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'NGUYEN_CAN',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(3,'Alpha 2 Building Tower','153 nguyễn đình chiểu','Phường 6','QUAN_1',NULL,1,200,NULL,NULL,20,'20 triệu/m2',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'NOI_THAT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(4,'IDD 1 Building','111 Lý Chính Thắng','Phường 7','QUAN_4',NULL,1,200,NULL,NULL,12,'12 triệu/m2',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'TANG_TRET,NGUYEN_CAN,NOI_THAT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(6,'test',NULL,NULL,NULL,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `building` VALUES (1,'Đỗ Minh Tuấn\'','904/42 Nguyễn Kiệm','Phường 2','QUAN_1','',2,NULL,'','',15,'15 triệu/m2','','','','','','','','','','',NULL,'TANG_TRET,NGUYEN_CAN',NULL,NULL,NULL,NULL,NULL,'2021-12-23 14:45:38',NULL,'admin','0395131916','Tuan'),(2,'ACM Tower','96 cao thắng','Phường 4','QUAN_2',NULL,2,650,NULL,NULL,18,'18 triệu/m2',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'NGUYEN_CAN',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'0234523','SDFSD'),(3,'Alpha 2 Building Tower','153 nguyễn đình chiểu','Phường 6','QUAN_1',NULL,1,200,NULL,NULL,20,'20 triệu/m2',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'NOI_THAT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'056756','SDFS'),(4,'IDD 1 Building','111 Lý Chính Thắng','Phường 7','QUAN_4','',1,200,'','',12,'12 triệu/m2','','','','','','','','','','',NULL,'TANG_TRET,NGUYEN_CAN,NOI_THAT',NULL,NULL,NULL,NULL,NULL,'2021-12-23 12:07:19',NULL,'admin','0456674','SDFSD'),(43,'Đỗ Minh Tuấn\'','904/42 Nguyễn Kiệm','',NULL,'',NULL,NULL,'','',NULL,'','','','','','','','','','','',NULL,'',NULL,NULL,NULL,NULL,'2021-12-23 12:57:23','2021-12-23 12:57:23','admin','admin','0395131916',''),(44,'Nhà 2','904/42 Nguyễn Kiệm','21321','QUAN_2','qweqw',2,1123,'qweq','qwe',14,'qưeq','ert','','','','','','','','','',NULL,'TANG_TRET,NGUYEN_CAN',NULL,NULL,NULL,NULL,NULL,'2021-12-23 14:46:24',NULL,'admin','0395131916',''),(45,'Nha 5','904/42 Nguyễn Kiệm','','QUAN_2','',NULL,NULL,'','',NULL,'','','','','','','','','','','',NULL,'TANG_TRET,NGUYEN_CAN',NULL,NULL,NULL,NULL,NULL,'2021-12-23 14:49:05',NULL,'admin','0395131916','');
 /*!40000 ALTER TABLE `building` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -183,7 +183,7 @@ CREATE TABLE `rentarea` (
   PRIMARY KEY (`id`),
   KEY `rentarea_building` (`buildingid`),
   CONSTRAINT `rentarea_building` FOREIGN KEY (`buildingid`) REFERENCES `building` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=177 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -192,7 +192,7 @@ CREATE TABLE `rentarea` (
 
 LOCK TABLES `rentarea` WRITE;
 /*!40000 ALTER TABLE `rentarea` DISABLE KEYS */;
-INSERT INTO `rentarea` VALUES (1,100,1,NULL,NULL,NULL,NULL),(2,200,1,NULL,NULL,NULL,NULL),(3,200,2,NULL,NULL,NULL,NULL),(4,300,2,NULL,NULL,NULL,NULL),(5,400,2,NULL,NULL,NULL,NULL),(6,300,3,NULL,NULL,NULL,NULL),(7,400,3,NULL,NULL,NULL,NULL),(8,500,3,NULL,NULL,NULL,NULL),(9,100,4,NULL,NULL,NULL,NULL),(10,400,4,NULL,NULL,NULL,NULL),(11,250,4,NULL,NULL,NULL,NULL),(24,700,6,NULL,NULL,NULL,NULL);
+INSERT INTO `rentarea` VALUES (3,200,2,NULL,NULL,NULL,NULL),(4,300,2,NULL,NULL,NULL,NULL),(5,400,2,NULL,NULL,NULL,NULL),(6,300,3,NULL,NULL,NULL,NULL),(7,400,3,NULL,NULL,NULL,NULL),(8,500,3,NULL,NULL,NULL,NULL),(9,100,4,NULL,NULL,NULL,NULL),(98,400,4,'2021-12-23 12:07:20','2021-12-23 12:07:20','admin','admin'),(99,250,4,'2021-12-23 12:07:20','2021-12-23 12:07:20','admin','admin'),(100,300,4,'2021-12-23 12:07:20','2021-12-23 12:07:20','admin','admin'),(121,100,43,'2021-12-23 12:57:23','2021-12-23 12:57:23','admin','admin'),(122,400,43,'2021-12-23 12:57:23','2021-12-23 12:57:23','admin','admin'),(123,300,43,'2021-12-23 12:57:23','2021-12-23 12:57:23','admin','admin'),(124,200,43,'2021-12-23 12:57:23','2021-12-23 12:57:23','admin','admin'),(166,200,1,'2021-12-23 14:45:38','2021-12-23 14:45:38','admin','admin'),(167,100,1,'2021-12-23 14:45:38','2021-12-23 14:45:38','admin','admin'),(172,500,44,'2021-12-23 14:46:24','2021-12-23 14:46:24','admin','admin'),(173,400,44,'2021-12-23 14:46:24','2021-12-23 14:46:24','admin','admin'),(174,500,45,'2021-12-23 14:48:42','2021-12-23 14:48:42','admin','admin'),(175,400,45,'2021-12-23 14:48:42','2021-12-23 14:48:42','admin','admin'),(176,1000,45,'2021-12-23 14:48:42','2021-12-23 14:48:42','admin','admin');
 /*!40000 ALTER TABLE `rentarea` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -212,7 +212,7 @@ CREATE TABLE `role` (
   `createdby` varchar(255) DEFAULT NULL,
   `modifiedby` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -221,7 +221,7 @@ CREATE TABLE `role` (
 
 LOCK TABLES `role` WRITE;
 /*!40000 ALTER TABLE `role` DISABLE KEYS */;
-INSERT INTO `role` VALUES (1,'Quản lý','manager',NULL,NULL,NULL,NULL),(2,'Nhân viên','staff',NULL,NULL,NULL,NULL);
+INSERT INTO `role` VALUES (1,'Quản lý','manager',NULL,NULL,NULL,NULL),(2,'Nhân viên','staff',NULL,NULL,NULL,NULL),(3,'Quản trị hệ thống','ADMIN',NULL,NULL,NULL,NULL),(4,'người dùng','USER',NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -278,7 +278,7 @@ CREATE TABLE `user` (
   `modifiedby` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -287,7 +287,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'nguyenvana','$2a$10$/RUbuT9KIqk6f8enaTQiLOXzhnUkiwEJRdtzdrMXXwU7dgnLKTCYG','nguyen van a',NULL,NULL,1,NULL,NULL,NULL,NULL),(2,'nguyenvanb','$2a$10$/RUbuT9KIqk6f8enaTQiLOXzhnUkiwEJRdtzdrMXXwU7dgnLKTCYG','nguyen van b',NULL,NULL,1,NULL,NULL,NULL,NULL),(3,'nguyenvanc','$2a$10$/RUbuT9KIqk6f8enaTQiLOXzhnUkiwEJRdtzdrMXXwU7dgnLKTCYG','nguyen van c',NULL,NULL,1,NULL,NULL,NULL,NULL),(4,'nguyenvand','$2a$10$/RUbuT9KIqk6f8enaTQiLOXzhnUkiwEJRdtzdrMXXwU7dgnLKTCYG','nguyen van d',NULL,NULL,1,NULL,NULL,NULL,NULL);
+INSERT INTO `user` VALUES (1,'nguyenvana','$2a$10$/RUbuT9KIqk6f8enaTQiLOXzhnUkiwEJRdtzdrMXXwU7dgnLKTCYG','nguyen van a',NULL,NULL,1,NULL,NULL,NULL,NULL),(2,'nguyenvanb','$2a$10$/RUbuT9KIqk6f8enaTQiLOXzhnUkiwEJRdtzdrMXXwU7dgnLKTCYG','nguyen van b',NULL,NULL,1,NULL,NULL,NULL,NULL),(3,'nguyenvanc','$2a$10$/RUbuT9KIqk6f8enaTQiLOXzhnUkiwEJRdtzdrMXXwU7dgnLKTCYG','nguyen van c',NULL,NULL,1,NULL,NULL,NULL,NULL),(4,'nguyenvand','$2a$10$/RUbuT9KIqk6f8enaTQiLOXzhnUkiwEJRdtzdrMXXwU7dgnLKTCYG','nguyen van d',NULL,NULL,1,NULL,NULL,NULL,NULL),(5,'admin','$2a$10$/RUbuT9KIqk6f8enaTQiLOXzhnUkiwEJRdtzdrMXXwU7dgnLKTCYG','admin',NULL,NULL,1,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -311,7 +311,7 @@ CREATE TABLE `user_role` (
   KEY `fk_role_user` (`roleid`),
   CONSTRAINT `fk_role_user` FOREIGN KEY (`roleid`) REFERENCES `role` (`id`),
   CONSTRAINT `fk_user_role` FOREIGN KEY (`userid`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -320,17 +320,9 @@ CREATE TABLE `user_role` (
 
 LOCK TABLES `user_role` WRITE;
 /*!40000 ALTER TABLE `user_role` DISABLE KEYS */;
-INSERT INTO `user_role` VALUES (1,1,1,NULL,NULL,NULL,NULL),(2,2,2,NULL,NULL,NULL,NULL),(3,2,3,NULL,NULL,NULL,NULL),(4,2,4,NULL,NULL,NULL,NULL);
+INSERT INTO `user_role` VALUES (1,1,1,NULL,NULL,NULL,NULL),(2,2,2,NULL,NULL,NULL,NULL),(3,2,3,NULL,NULL,NULL,NULL),(4,2,4,NULL,NULL,NULL,NULL),(5,3,5,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `user_role` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Dumping events for database 'estateadvance'
---
-
---
--- Dumping routines for database 'estateadvance'
---
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -341,4 +333,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-05-01 13:04:26
+-- Dump completed on 2021-12-23 14:50:34

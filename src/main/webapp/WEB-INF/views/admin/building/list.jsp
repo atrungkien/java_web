@@ -1,4 +1,11 @@
 <%@ page import="com.laptrinhjavaweb.dto.DistrictDTO" %>
+<%--
+  Created by IntelliJ IDEA.
+  User: MinhTuan
+  Date: 20/12/2021
+  Time: 20:53
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="/common/taglib.jsp" %>
 <c:url var="buildingListURL" value="/admin/building-list"></c:url>
@@ -41,8 +48,7 @@
                     </div>
                     <div class="widget-body">
                         <div class="widget-main">
-                            <%--spring boot 1.5 su dung commandName, version 2 su dung modelAttribute nhe--%>
-                            <form:form modelAttribute="modelSearch" action="${buildingListURL}" id="listForm" method="get">
+                            <form:form commandName="modelSearch" action="${buildingListURL}" id="listForm" method="get">
                                 <div class="row">
                                     <div class="form-group">
                                         <div class="col-xs-12 ">
@@ -338,7 +344,7 @@
     </div>
 </div>
 <script>
-    let buildingAssId;
+    var buildingAssId;
 
     function assignmentBuilding(value) {
         buildingAssId = value;
@@ -347,14 +353,14 @@
             url: "<c:url value='/api/building/'/>" + value + '/staff',
             dataType: "json",
             success: function (response) {
-                let arrBuilding = response;
+                var arrBuilding = response;
                 $("#dsnv").empty()
                 arrBuilding.forEach(item => {
-                    let ttd = '<label class="pos-rel">'
+                    var ttd = '<label class="pos-rel">'
                         + '<input type="checkbox"' + item.checked + ' class="ace" name="checkStaffs[]" value="' + item.id + '">'
                         + '  <span class="lbl"></span>'
                         + '</label>'
-                    let str = "<tr> <td class='center'>" + ttd + "</td> <td>" + item.fullName + "</td> </tr> "
+                    var str = "<tr> <td class='center'>" + ttd + "</td> <td>" + item.fullName + "</td> </tr> "
                     $("#dsnv").append(str)
                 })
                 console.log(response)
@@ -379,16 +385,16 @@
         e.preventDefault();
         $("#myModal").modal();
     })
-    let idOne;
+    var idOne;
     $("#btnXoa").click(function (e) {
         e.preventDefault();
-        let values = [];
+        var values = [];
         if (idOne != null)
             values.push(idOne);
         $.each($("input[name='checkBuildings[]']:checked"), function () {
             values.push($(this).val());
         });
-        let data = {};
+        var data = {};
         data["buildingIds"] = values;
         $.ajax({
             type: "DELETE",
@@ -413,17 +419,17 @@
 
     $("#assignment").click(function (e) {
         e.preventDefault();
-        let values = [];
+        var values = [];
         $.each($("input[name='checkStaffs[]']:checked"), function () {
             values.push($(this).val());
         });
-        let data = {
-            "staffIds": values
+        var data = {
+            "staffIDs": values
         }
         $.ajax({
             type: "post",
             url: '<c:url value="/api/building/"/>' + buildingAssId + '/assignment',
-            data: JSON.stringify(values),
+            data: JSON.stringify(data),
             dataType: "json",//kieu du lieu tu server tra ve client
             contentType: "application/json",//kieu du lieu tu client gui ve server
             success: function (response) {

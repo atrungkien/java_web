@@ -40,7 +40,7 @@
         <li class="">
             <a href="#" class="dropdown-toggle">
                 <i class="menu-icon fa fas fa-users"></i>
-                <span class="menu-text">Quản Lí tài khoản</span>
+                <span class="menu-text">QL tài khoản</span>
                 <b class="arrow fa fa-angle-down"></b>
             </a>
             <b class="arrow"></b>
@@ -48,7 +48,7 @@
                 <li class="">
                     <a href='<c:url value='/admin/user-list'/>'>
                         <i class="menu-icon fa fa-caret-right"></i>
-                        Danh Sách tài khoản
+                        DS tài khoản
                     </a>
                     <b class="arrow"></b>
                 </li>
@@ -57,7 +57,7 @@
         <li class="">
             <a href="#" class="dropdown-toggle">
                 <i class="menu-icon fa fas fa-list"></i>
-                <span class="menu-text">Quản Lí Building</span>
+                <span class="menu-text">QL Building</span>
                 <b class="arrow fa fa-angle-down"></b>
             </a>
             <b class="arrow"></b>

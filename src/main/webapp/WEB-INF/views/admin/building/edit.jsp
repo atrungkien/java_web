@@ -1,3 +1,10 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: MinhTuan
+  Date: 20/12/2021
+  Time: 20:53
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="/common/taglib.jsp" %>
 <c:url var="buildingEditURL" value="/api/building"></c:url>
@@ -269,13 +276,13 @@
 <script>
     $('#btnAddBuilding').click(function (e) {
         e.preventDefault();
-        let data = {}
-        let formData = $('#formEdit').serializeArray();
-        let id = ${modelBuilding.id}+'';
+        var data = {}
+        var formData = $('#formEdit').serializeArray();
+        var id = ${modelBuilding.id}+'';
         if ((id) != '') {
             data["id"] = id;
         }
-        let buildingTypes = [];
+        var buildingTypes = [];
         formData.forEach(item => {
             if (item.name == "type") {
                 buildingTypes.push(item.value);
@@ -302,4 +309,3 @@
 </body>
 
 </html>
-
