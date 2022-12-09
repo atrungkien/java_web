@@ -30,7 +30,7 @@ public class BuildingAPI {
     }
     @PostMapping
     public BuildingDTO save(@RequestBody(required = false) BuildingDTO buildingDTO) {
-        return buildingService.save(buildingDTO);
+        return buildingService.save_2(buildingDTO);
     }
 
     @GetMapping("/{id}/staff")
@@ -46,7 +46,7 @@ public class BuildingAPI {
     }
 
     @DeleteMapping
-    public BuildingDelRequest delete(@RequestBody BuildingDelRequest buildingDelRequest) throws NotFoundException {
+    public BuildingDelRequest dele(@RequestBody BuildingDelRequest buildingDelRequest) throws NotFoundException {
         buildingService.delete(buildingDelRequest);
         return buildingDelRequest;
     }

@@ -156,7 +156,7 @@ public class BuildingServiceImpl implements BuildingService {
 
     @Override
     @Transactional
-    public BuildingDTO saveWithCascade(BuildingDTO buildingDTO) {
+    public BuildingDTO save_2(BuildingDTO buildingDTO) {
         if (buildingDTO.getId() != null) {
             rentAreaRepository.deleteByBuildingEntity_Id(buildingDTO.getId());
         }
