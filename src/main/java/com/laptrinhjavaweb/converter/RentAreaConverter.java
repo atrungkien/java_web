@@ -27,9 +27,12 @@ public class RentAreaConverter {
 
 
     public RentAreaEntity toRentAreaEntity(RentAreaDTO rentAreaDTO) {
+        if (rentAreaDTO != null){
         RentAreaEntity rentAreaEntity = modelMapper.map(rentAreaDTO, RentAreaEntity.class);
         rentAreaEntity.setBuildingEntity(buildingRepository.findById(rentAreaDTO.getBuildingID()));
-        return rentAreaEntity;
+            return rentAreaEntity;
+        }
+       return new RentAreaEntity();
     }
 
     public List<RentAreaDTO> toRentAreaDTOs(Long buildingIDAfterSave, BuildingDTO buildingDTO) {

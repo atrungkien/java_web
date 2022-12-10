@@ -61,6 +61,7 @@ public class BuildingServiceImpl implements BuildingService {
     }
 
     @Override
+    @Transactional
     public BuildingDTO save(BuildingDTO buildingDTO) {
         BuildingEntity buildingEntity = buildingConverter.toBuildingEntity(buildingDTO);
         try {
