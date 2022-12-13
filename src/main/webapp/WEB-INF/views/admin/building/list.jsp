@@ -1,11 +1,4 @@
 <%@ page import="com.laptrinhjavaweb.dto.DistrictDTO" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: MinhTuan
-  Date: 20/12/2021
-  Time: 20:53
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="/common/taglib.jsp" %>
 <c:url var="buildingListURL" value="/admin/building-list"></c:url>
@@ -464,3 +457,4 @@
 </script>
 </body>
 </html>
+

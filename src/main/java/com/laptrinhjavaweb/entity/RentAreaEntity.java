@@ -1,5 +1,6 @@
 package com.laptrinhjavaweb.entity;
 
+
 import javax.persistence.*;
 
 @Entity
@@ -31,3 +32,4 @@ public class RentAreaEntity extends BaseEntity {
 
 
 }
+

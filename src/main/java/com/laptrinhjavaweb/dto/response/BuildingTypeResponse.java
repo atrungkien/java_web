@@ -29,3 +29,4 @@ public class BuildingTypeResponse {
         this.checked = checked;
     }
 }
+

@@ -20,3 +20,4 @@ public class RentAreaDTO extends AbstractDTO{
         this.value = value;
     }
 }
+

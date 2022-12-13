@@ -17,7 +17,6 @@ import java.util.List;
 
 @Service
 public class RentAreaServiceImpl implements RentAreaService {
-
     @Autowired
     private RentAreaRepository rentAreaRepository;
     @Autowired
@@ -28,7 +27,7 @@ public class RentAreaServiceImpl implements RentAreaService {
     private BuildingRepository buildingRepository;
     @Override
     public void saveAllByBuilding(List<RentAreaDTO> rentAreaDTOS, BuildingDTO buildingDTO) {
-        List<RentAreaEntity> rentAreaEntities = new ArrayList<>();
+       /* List<RentAreaEntity> rentAreaEntities = new ArrayList<>();
         for(RentAreaDTO item: rentAreaDTOS){
             RentAreaEntity rentAreaEntity = rentAreaConverter.toRentAreaEntity(item);
             rentAreaEntities.add(rentAreaEntity);
@@ -41,6 +40,7 @@ public class RentAreaServiceImpl implements RentAreaService {
         }else {
             buildingEntity = buildingConverter.toBuildingEntity(buildingDTO);
             rentAreaRepository.saveAllByBuilding(rentAreaEntities,buildingEntity);
-        }
+        }*/
     }
 }
+

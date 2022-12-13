@@ -57,5 +57,4 @@ public class UserAPI {
         }
         return ResponseEntity.noContent().build();
     }
-
 }

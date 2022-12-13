@@ -1,6 +1,8 @@
 package com.laptrinhjavaweb.dto.response;
 
-public class BuildingResponse extends BaseResponse{
+
+
+public class BuildingResponse extends BaseResponse {
     private String name;
     private String address;
     private String managerName;
@@ -73,4 +75,5 @@ public class BuildingResponse extends BaseResponse{
     public void setServiceFee(String serviceFee) {
         this.serviceFee = serviceFee;
     }
+
 }

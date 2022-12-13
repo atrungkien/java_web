@@ -6,7 +6,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "customer")
-public class CustomerEntity extends BaseEntity {
+public class CustomerEntity extends BaseEntity{
 
     @Column(name = "fullname")
     private String fullName;
@@ -15,10 +15,10 @@ public class CustomerEntity extends BaseEntity {
     @Column(name = "email")
     private String email;
 
-    @OneToMany(mappedBy = "customerEntity",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "customerEntity",fetch = FetchType.LAZY)
     private List<AssignmentCustomerEntity> assignmentCustomerEntities = new ArrayList<>();
 
-    @OneToMany(mappedBy = "customerEntity",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "customerEntity",fetch = FetchType.LAZY)
     private List<TransactionEntity> transactionEntities = new ArrayList<>();
 
     public String getFullName() {
@@ -63,3 +63,4 @@ public class CustomerEntity extends BaseEntity {
 
 
 }
+

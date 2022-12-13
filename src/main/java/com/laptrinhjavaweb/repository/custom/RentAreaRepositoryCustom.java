@@ -1,6 +1,5 @@
 package com.laptrinhjavaweb.repository.custom;
 
-import com.laptrinhjavaweb.dto.RentAreaDTO;
 import com.laptrinhjavaweb.entity.BuildingEntity;
 import com.laptrinhjavaweb.entity.RentAreaEntity;
 

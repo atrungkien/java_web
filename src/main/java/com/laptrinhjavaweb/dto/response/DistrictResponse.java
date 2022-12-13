@@ -29,3 +29,4 @@ public class DistrictResponse {
         this.selected = selected;
     }
 }
+

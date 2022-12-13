@@ -228,4 +228,5 @@ public class BuildingDTO extends AbstractDTO{
     public void setType(List<String> type) {
         this.type = type;
     }
+
 }

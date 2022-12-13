@@ -4,9 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "assignmentbuilding")
-public class AssignmentBuildingEntity extends BaseEntity {
-
-
+public class AssignmentBuildingEntity extends BaseEntity{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "buildingid",nullable = false)
@@ -38,4 +36,5 @@ public class AssignmentBuildingEntity extends BaseEntity {
         this.buildingEntity = buildingEntity;
         this.userEntity = userEntity;
     }
+
 }

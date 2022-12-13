@@ -14,3 +14,4 @@ public class BuildingDelRequest {
         this.buildingIds = buildingIds;
     }
 }
+

@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RentAreaRepositoryImpl implements RentAreaRepositoryCustom {
-
     @PersistenceContext
     EntityManager entityManager;
     @Autowired
@@ -36,4 +35,6 @@ public class RentAreaRepositoryImpl implements RentAreaRepositoryCustom {
             });
         }
     }
+
+
 }

@@ -5,7 +5,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "assignmentcustomer")
 public class AssignmentCustomerEntity extends BaseEntity{
-
     public UserEntity getUserEntity() {
         return userEntity;
     }
@@ -30,3 +29,4 @@ public class AssignmentCustomerEntity extends BaseEntity{
     @JoinColumn(name = "customerid",nullable = false)
     private CustomerEntity customerEntity;
 }
+

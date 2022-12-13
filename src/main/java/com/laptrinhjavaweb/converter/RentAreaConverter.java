@@ -24,15 +24,21 @@ public class RentAreaConverter {
     @Autowired
     private BuildingConverter buildingConverter;
 
+    @Autowired
+    private RentAreaRepository rentAreaRepository;
 
-
-    public RentAreaEntity toRentAreaEntity(RentAreaDTO rentAreaDTO) {
-        if (rentAreaDTO != null){
+    public RentAreaEntity toRentAreaEntity(RentAreaDTO rentAreaDTO, BuildingDTO buildingDTO,BuildingEntity buildingEntity) {
+        List<RentAreaEntity> rentAreaEntities = new ArrayList<>();
         RentAreaEntity rentAreaEntity = modelMapper.map(rentAreaDTO, RentAreaEntity.class);
         rentAreaEntity.setBuildingEntity(buildingRepository.findById(rentAreaDTO.getBuildingID()));
-            return rentAreaEntity;
+        if(buildingDTO.getId()!=null){
+            buildingEntity = buildingRepository.findById(buildingDTO.getId());
+            rentAreaRepository.saveAllByBuilding(rentAreaEntities,buildingEntity);
+        }else {
+            buildingEntity = buildingConverter.toBuildingEntity(buildingDTO);
+            rentAreaRepository.saveAllByBuilding(rentAreaEntities,buildingEntity);
         }
-       return new RentAreaEntity();
+        return rentAreaEntity;
     }
 
     public List<RentAreaDTO> toRentAreaDTOs(Long buildingIDAfterSave, BuildingDTO buildingDTO) {
@@ -53,3 +59,4 @@ public class RentAreaConverter {
             return new ArrayList<>();
     }
 }
+

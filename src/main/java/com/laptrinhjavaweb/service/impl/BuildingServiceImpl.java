@@ -7,6 +7,7 @@ import com.laptrinhjavaweb.dto.BuildingDTO;
 import com.laptrinhjavaweb.dto.RentAreaDTO;
 import com.laptrinhjavaweb.dto.request.AssignmentBuildingRequest;
 import com.laptrinhjavaweb.dto.request.BuildingDelRequest;
+import com.laptrinhjavaweb.dto.request.BuildingSearchRequest;
 import com.laptrinhjavaweb.dto.response.BuildingResponse;
 import com.laptrinhjavaweb.entity.AssignmentBuildingEntity;
 import com.laptrinhjavaweb.entity.BuildingEntity;
@@ -54,6 +55,15 @@ public class BuildingServiceImpl implements BuildingService {
         }
         return buildingResponses;
     }
+    @Override
+    public List<BuildingResponse> findAll(BuildingSearchRequest buildingSearchRequest) {
+        List<BuildingResponse> buildingResponses = new ArrayList<>();
+        BuildingSearchBuilder buildingSearchBuilder = toBuildingSearchBuilder(buildingSearchRequest);
+        for (BuildingEntity item : buildingRepository.findAll(buildingSearchBuilder)) {
+            buildingResponses.add(buildingConverter.toBuildingResponse(item));
+        }
+        return buildingResponses;
+    }
 
     @Override
     public BuildingDTO findById(Long id) {
@@ -61,7 +71,6 @@ public class BuildingServiceImpl implements BuildingService {
     }
 
     @Override
-    @Transactional
     public BuildingDTO save(BuildingDTO buildingDTO) {
         BuildingEntity buildingEntity = buildingConverter.toBuildingEntity(buildingDTO);
         try {
@@ -72,7 +81,6 @@ public class BuildingServiceImpl implements BuildingService {
             }
             return buildingConverter.toBuildingDTO(buildingEntityGetIDafterSave);
         } catch (Exception e) {
-            System.out.println("Error BuildingService");
             e.printStackTrace();
             return null;
         }
@@ -113,22 +121,19 @@ public class BuildingServiceImpl implements BuildingService {
     @Transactional
     public void delete(BuildingDelRequest buildingDelRequest) throws NotFoundException {
         if (buildingDelRequest.getBuildingIds().size() > 0) {
-            Long count = buildingRepository.countByIdIn(buildingDelRequest.getBuildingIds());//check tim thay du tra count du
-            if (count != buildingDelRequest.getBuildingIds().size())
-                throw new NotFoundException("Not found Building");
             rentAreaRepository.deleteByBuildingEntity_IdIn(buildingDelRequest.getBuildingIds());
             assignmentBuildingRepository.deleteByBuildingEntity_IdIn(buildingDelRequest.getBuildingIds());
             buildingRepository.deleteByIdIn(buildingDelRequest.getBuildingIds());
         }
     }
 
-    @Override
+    /*@Override
     @Transactional
     public void deleteWithCascade(BuildingDelRequest buildingDelRequest) {
         if(!buildingDelRequest.getBuildingIds().isEmpty()){
             buildingRepository.deleteByIdIn(buildingDelRequest.getBuildingIds());
         }
-    }
+    }*/
 
     @Transactional
     @Override
@@ -157,7 +162,7 @@ public class BuildingServiceImpl implements BuildingService {
 
     @Override
     @Transactional
-    public BuildingDTO save_2(BuildingDTO buildingDTO) {
+    public BuildingDTO saveWithCascade(BuildingDTO buildingDTO) {
         if (buildingDTO.getId() != null) {
             rentAreaRepository.deleteByBuildingEntity_Id(buildingDTO.getId());
         }
@@ -201,6 +206,35 @@ public class BuildingServiceImpl implements BuildingService {
         }
     }
 
+    private BuildingSearchBuilder toBuildingSearchBuilder(BuildingSearchRequest buildingSearchRequest) {
+        try {
+            BuildingSearchBuilder buildingSearchBuilder = new BuildingSearchBuilder.Builder()
+                    .name(buildingSearchRequest.getName())
+                    .floorArea(buildingSearchRequest.getFloorArea())
+                    .district(buildingSearchRequest.getDistrictCode())
+                    .ward(buildingSearchRequest.getWard())
+                    .street(buildingSearchRequest.getStreet())
+                    .numberOfBasement(buildingSearchRequest.getNumberOfBasement())
+                    .direction(buildingSearchRequest.getDirection())
+                    .level(buildingSearchRequest.getLevel())
+                    .rentAreaFrom(buildingSearchRequest.getRentAreaFrom())
+                    .rentAreaTo(buildingSearchRequest.getRentAreaTo())
+                    .rentPriceFrom(buildingSearchRequest.getRentPriceFrom())
+                    .rentPriceTo(buildingSearchRequest.getRentPriceTo())
+                    .managerName(buildingSearchRequest.getManagerName())
+                    .managerPhone(buildingSearchRequest.getManagerPhone())
+                    .staffID(buildingSearchRequest.getStaffID())
+                    .rentTypes(buildingSearchRequest.getRentTypes())
+                    .build();
+            return buildingSearchBuilder;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+
     private Map<String, Object> toLowKey(Map<String, Object> params) {
         Map<String, Object> results = new HashMap<>();
         for (Map.Entry<String, Object> item : params.entrySet()) {
@@ -218,4 +252,5 @@ public class BuildingServiceImpl implements BuildingService {
         }
 
     }
+
 }

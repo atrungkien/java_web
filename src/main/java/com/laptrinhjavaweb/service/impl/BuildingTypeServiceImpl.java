@@ -26,7 +26,7 @@ public class BuildingTypeServiceImpl implements BuildingTypeService {
     @Override
     public List<BuildingTypeResponse> getAllByBuilding(BuildingDTO buildingDTO) {
         List<BuildingTypeResponse> buildingTypeResponses = new ArrayList<>();
-        for(BuildingTypeEnum item :BuildingTypeEnum.values()){
+        for(BuildingTypeEnum item : BuildingTypeEnum.values()){
             BuildingTypeResponse buildingTypeResponse = new BuildingTypeResponse();
             buildingTypeResponse.setCode(item.name());
             buildingTypeResponse.setName(item.getBuildingTypeValue());
