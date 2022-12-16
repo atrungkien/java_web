@@ -2,8 +2,10 @@ package com.laptrinhjavaweb.converter;
 
 import com.laptrinhjavaweb.dto.BuildingDTO;
 import com.laptrinhjavaweb.dto.RentAreaDTO;
+import com.laptrinhjavaweb.entity.BuildingEntity;
 import com.laptrinhjavaweb.entity.RentAreaEntity;
 import com.laptrinhjavaweb.repository.BuildingRepository;
+import com.laptrinhjavaweb.repository.RentAreaRepository;
 import com.laptrinhjavaweb.utils.ParseIntUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +24,20 @@ public class RentAreaConverter {
     @Autowired
     private BuildingConverter buildingConverter;
 
+    @Autowired
+    private RentAreaRepository rentAreaRepository;
 
-
-    public RentAreaEntity toRentAreaEntity(RentAreaDTO rentAreaDTO) {
+    public RentAreaEntity toRentAreaEntity(RentAreaDTO rentAreaDTO, BuildingDTO buildingDTO,BuildingEntity buildingEntity) {
+        List<RentAreaEntity> rentAreaEntities = new ArrayList<>();
         RentAreaEntity rentAreaEntity = modelMapper.map(rentAreaDTO, RentAreaEntity.class);
         rentAreaEntity.setBuildingEntity(buildingRepository.findById(rentAreaDTO.getBuildingID()));
+        if(buildingDTO.getId()!=null){
+            buildingEntity = buildingRepository.findById(buildingDTO.getId());
+            rentAreaRepository.saveAllByBuilding(rentAreaEntities,buildingEntity);
+        }else {
+            buildingEntity = buildingConverter.toBuildingEntity(buildingDTO);
+            rentAreaRepository.saveAllByBuilding(rentAreaEntities,buildingEntity);
+        }
         return rentAreaEntity;
     }
 
@@ -48,3 +59,4 @@ public class RentAreaConverter {
             return new ArrayList<>();
     }
 }
+

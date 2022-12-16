@@ -41,8 +41,7 @@
                     </div>
                     <div class="widget-body">
                         <div class="widget-main">
-                            <%--spring boot 1.5 su dung commandName, version 2 su dung modelAttribute nhe--%>
-                            <form:form modelAttribute="modelSearch" action="${buildingListURL}" id="listForm" method="get">
+                            <form:form commandName="modelSearch" action="${buildingListURL}" id="listForm" method="get">
                                 <div class="row">
                                     <div class="form-group">
                                         <div class="col-xs-12 ">

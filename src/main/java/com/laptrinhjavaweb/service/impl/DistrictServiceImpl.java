@@ -1,7 +1,6 @@
 package com.laptrinhjavaweb.service.impl;
 
 import com.laptrinhjavaweb.dto.BuildingDTO;
-import com.laptrinhjavaweb.dto.DistrictDTO;
 import com.laptrinhjavaweb.dto.response.DistrictResponse;
 import com.laptrinhjavaweb.enums.DistrictEnum;
 import com.laptrinhjavaweb.service.DistrictService;
@@ -22,6 +21,7 @@ public class DistrictServiceImpl implements DistrictService {
             districtResponses.add(districtResponse);
         }
         return districtResponses;
+
     }
 
     @Override
@@ -38,9 +38,9 @@ public class DistrictServiceImpl implements DistrictService {
             }
             return districtResponses;
         }catch (Exception e){
-            System.out.println("Loi District Service");
             e.printStackTrace();
             return new ArrayList<>();
         }
     }
+
 }

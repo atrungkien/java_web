@@ -2,7 +2,6 @@ package com.laptrinhjavaweb.api.admin;
 
 
 import com.laptrinhjavaweb.dto.BuildingDTO;
-import com.laptrinhjavaweb.dto.request.AssignmentBuildingRequest;
 import com.laptrinhjavaweb.dto.request.BuildingDelRequest;
 import com.laptrinhjavaweb.dto.response.BuildingResponse;
 import com.laptrinhjavaweb.dto.response.StaffAssignmentResponse;
@@ -39,15 +38,16 @@ public class BuildingAPI {
     }
 
     @PostMapping("/{id}/assignment")
-    public AssignmentBuildingRequest assignmentBuilding(@RequestBody(required = false) AssignmentBuildingRequest assignmentBuildingRequest
-            , @PathVariable("id") Long buildingId) {
-        buildingService.assignmentBuilding(assignmentBuildingRequest, buildingId);
-        return assignmentBuildingRequest;
+    public Long assignmentBuilding(@RequestBody(required = false) List<Long> staffIds
+            , @PathVariable("id") Long buildingId) throws NotFoundException {
+        buildingService.assignmentBuilding(staffIds, buildingId);
+        return buildingId;
     }
 
     @DeleteMapping
     public BuildingDelRequest delete(@RequestBody BuildingDelRequest buildingDelRequest) throws NotFoundException {
-        buildingService.delete(buildingDelRequest);
+        buildingService.deleteWithCascade(buildingDelRequest);
         return buildingDelRequest;
     }
 }
+

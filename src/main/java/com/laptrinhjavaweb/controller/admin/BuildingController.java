@@ -1,6 +1,5 @@
 package com.laptrinhjavaweb.controller.admin;
 
-import com.laptrinhjavaweb.api.admin.BuildingAPI;
 import com.laptrinhjavaweb.converter.BuildingConverter;
 import com.laptrinhjavaweb.dto.BuildingDTO;
 import com.laptrinhjavaweb.dto.request.BuildingSearchRequest;
@@ -10,12 +9,11 @@ import com.laptrinhjavaweb.service.DistrictService;
 import com.laptrinhjavaweb.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/admin")
@@ -29,19 +27,16 @@ public class BuildingController {
     private UserService userService;
     @Autowired
     private BuildingService buildingService;
-    @Autowired
-    private BuildingConverter buildingConverter;
+
 
     @GetMapping("/building-list")
-    public ModelAndView buildingList(@ModelAttribute("modelSearch") BuildingSearchRequest buildingSearchRequest,
-                                     @RequestParam(required = false) Map<String, Object> params,
-                                     @RequestParam(name = "rentTypes",required = false) List<String> rentTypes){
+    public ModelAndView buildingList(@ModelAttribute("modelSearch") BuildingSearchRequest buildingSearchRequest)
+    {
         ModelAndView modelAndView = new ModelAndView("admin/building/list");
-        modelAndView.addObject("modelSearch",buildingConverter.toBuildingSearchRequest(buildingSearchRequest));
         modelAndView.addObject("modelDistrict",districtService.getAll());
         modelAndView.addObject("modelStaff",userService.getAllStaff());
         modelAndView.addObject("modelBuildingType",buildingTypeService.getAll());
-        modelAndView.addObject("modelBuildings",buildingService.findAll(params,rentTypes));
+        modelAndView.addObject("modelBuildings",buildingService.findAll(buildingSearchRequest));
         return modelAndView;
     }
     @GetMapping("/building-edit")

@@ -3,6 +3,7 @@ package com.laptrinhjavaweb.builder;
 import java.util.List;
 
 public class BuildingSearchBuilder {
+
     private String name;
     private Integer floorArea;
     private String district;

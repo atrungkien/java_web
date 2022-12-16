@@ -1,29 +1,21 @@
 package com.laptrinhjavaweb.converter;
 
-
 import com.laptrinhjavaweb.dto.BuildingDTO;
 import com.laptrinhjavaweb.dto.request.BuildingSearchRequest;
 import com.laptrinhjavaweb.dto.response.BuildingResponse;
 import com.laptrinhjavaweb.entity.BuildingEntity;
 import com.laptrinhjavaweb.entity.RentAreaEntity;
 import com.laptrinhjavaweb.enums.DistrictEnum;
-import com.laptrinhjavaweb.repository.BuildingRepository;
-import com.laptrinhjavaweb.repository.RentAreaRepository;
-import com.laptrinhjavaweb.service.DistrictService;
 import com.laptrinhjavaweb.utils.ParseIntUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.acls.model.NotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Component
 public class BuildingConverter {
-
     @Autowired
     private ModelMapper modelMapper;
 
@@ -60,7 +52,7 @@ public class BuildingConverter {
         return buildingDTO;
     }
 
-    public BuildingSearchRequest toBuildingSearchRequest(BuildingSearchRequest buildingSearchRequest) {
+    /*public BuildingSearchRequest toBuildingSearchRequest(BuildingSearchRequest buildingSearchRequest) {
         if (buildingSearchRequest.getRentTypes() != null) {
             List<String> a = new ArrayList<>();
             for (String item : buildingSearchRequest.getRentTypes()) {
@@ -69,7 +61,7 @@ public class BuildingConverter {
             buildingSearchRequest.setRentTypes(a);
         }
         return buildingSearchRequest;
-    }
+    }*/
 
     public BuildingEntity toBuildingEntity(BuildingDTO buildingDTO) {
         BuildingEntity buildingEntity = modelMapper.map(buildingDTO, BuildingEntity.class);
@@ -90,4 +82,5 @@ public class BuildingConverter {
         }
         return buildingEntity;
     }
+
 }
