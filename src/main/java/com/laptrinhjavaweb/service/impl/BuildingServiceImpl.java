@@ -29,16 +29,9 @@ public class BuildingServiceImpl implements BuildingService {
     @Autowired
     private BuildingConverter buildingConverter;
     @Autowired
-    private RentAreaConverter rentAreaConverter;
-    @Autowired
     private BuildingRepository buildingRepository;
     @Autowired
-    private RentAreaService rentAreaService;
-    @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private RentAreaRepository rentAreaRepository;
-
 
     @Override
     public List<BuildingResponse> findAll(Map<String, Object> params, List<String> rentTypes) {
@@ -68,15 +61,19 @@ public class BuildingServiceImpl implements BuildingService {
     @Override
     public BuildingDTO save(BuildingDTO buildingDTO) {
         BuildingEntity buildingEntity = buildingConverter.toBuildingEntity(buildingDTO);
-        buildingEntity.setUserEntities(buildingEntity.getUserEntities()); // gửi lại các nv đang quản lý tòa nhà đó
-        {
-            BuildingEntity buildingEntityGetIDafterSave = buildingRepository.save(buildingEntity);
-            if (buildingDTO.getRentArea() != null) {
-                List<RentAreaDTO> rentAreaDTOS = rentAreaConverter.toRentAreaDTOs(buildingEntityGetIDafterSave.getId(), buildingDTO);
-                rentAreaService.saveAllByBuilding(rentAreaDTOS, buildingDTO);
-            }
-            return buildingConverter.toBuildingDTO(buildingEntityGetIDafterSave);
+        Long buildingId = buildingDTO.getId();
+        if(buildingId != null){
+           BuildingEntity buildingFound = buildingRepository.findOne(buildingId);
+           buildingEntity.setUserEntities(buildingFound.getUserEntities());
         }
+//        {
+            BuildingEntity buildingEntityGetIDafterSave = buildingRepository.save(buildingEntity);
+//            if (buildingDTO.getRentArea() != null) {
+//                List<RentAreaDTO> rentAreaDTOS = rentAreaConverter.toRentAreaDTOs(buildingEntityGetIDafterSave.getId(), buildingDTO);
+//                rentAreaService.saveAllByBuilding(rentAreaDTOS, buildingDTO);
+//            }
+            return buildingConverter.toBuildingDTO(buildingEntityGetIDafterSave);
+  //      }
     }
 
     @Override
@@ -99,49 +96,6 @@ public class BuildingServiceImpl implements BuildingService {
             buildingRepository.deleteByIdIn(buildingDelRequest.getBuildingIds());
         }
     }
-    /*@Transactional
-    @Override
-    public BuildingDTO savePart2(BuildingDTO buildingDTO) throws NotFoundException {
-        Long buildingId = buildingDTO.getId();
-        if (Objects.nonNull(buildingDTO)) {//objects java 7, check != null
-            BuildingEntity buildingEntity = buildingConverter.toBuildingEntity(buildingDTO);
-            buildingEntity.setUserEntities(buildingEntity.getUserEntities()); // gửi lại các nv đang quản lý tòa nhà đó
-            if (Objects.nonNull(buildingId) && buildingId > 0) {//id != null update
-                BuildingEntity buildingEntityFound = Optional.ofNullable(buildingRepository.findOne(buildingId))
-                        .orElseThrow(() -> new NotFoundException("Building not found!"));
-                //Optional.ofNullable neu != null thi tra ve gia tri, null thi tra ve exception
-                buildingEntity.setCreatedBy(buildingEntityFound.getCreatedBy());
-                buildingEntity.setCreatedDate(buildingEntityFound.getCreatedDate());
-                if (!rentAreaIsPresent(buildingEntityFound, buildingDTO)) {
-                    rentAreaRepository.deleteByBuildingEntity_Id(buildingId);//xoa tat ca rent area cua building, de them lai
-                } else {
-                    buildingEntity.setRentAreaEntities(new ArrayList<>());
-                }
-            }
-            BuildingDTO savedBuilding = buildingConverter.toBuildingDTO(buildingRepository.save(buildingEntity));
-            rentAreaRepository.save(buildingEntity.getRentAreaEntities());//insert lai rent area
-            return savedBuilding;
-        }
-        return null;
-    }*/
-    /*@Override
-    @Transactional
-    public BuildingDTO saveWithCascade(BuildingDTO buildingDTO) {
-        if (buildingDTO.getId() != null) {
-            BuildingEntity newBuilding = new BuildingEntity();
-            newBuilding.setId(buildingDTO.getId());
-        }
-        BuildingEntity buildingEntity = buildingConverter.toBuildingEntity(buildingDTO);
-        return buildingConverter.toBuildingDTO(buildingRepository.save(buildingEntity));
-    }*/
-       /* private Boolean rentAreaIsPresent(BuildingEntity buildingEntity, BuildingDTO buildingDTO) {
-            List<String> valueAreas = new ArrayList<>();
-            buildingEntity.getRentAreaEntities().forEach(item -> {
-                valueAreas.add(String.valueOf(item.getValue()));
-            });
-            String rentAreaStrOut = String.join(",", valueAreas), rentAreaStrIn = buildingDTO.getRentArea();
-            return rentAreaStrIn.equals(rentAreaStrOut);
-        }*/
 
         private BuildingSearchBuilder toBuildingSearchBuilder(Map<String, Object> params, List<String> rentTypes) {
             try {
