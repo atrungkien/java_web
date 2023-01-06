@@ -2,19 +2,16 @@ package com.laptrinhjavaweb.service.impl;
 
 import com.laptrinhjavaweb.builder.BuildingSearchBuilder;
 import com.laptrinhjavaweb.converter.BuildingConverter;
-import com.laptrinhjavaweb.converter.RentAreaConverter;
 import com.laptrinhjavaweb.dto.BuildingDTO;
-import com.laptrinhjavaweb.dto.RentAreaDTO;
 import com.laptrinhjavaweb.dto.request.BuildingDelRequest;
 import com.laptrinhjavaweb.dto.request.BuildingSearchRequest;
 import com.laptrinhjavaweb.dto.response.BuildingResponse;
 import com.laptrinhjavaweb.entity.BuildingEntity;
 import com.laptrinhjavaweb.exception.MyException;
 import com.laptrinhjavaweb.repository.BuildingRepository;
-import com.laptrinhjavaweb.repository.RentAreaRepository;
 import com.laptrinhjavaweb.repository.UserRepository;
 import com.laptrinhjavaweb.service.BuildingService;
-import com.laptrinhjavaweb.service.RentAreaService;
+
 import com.laptrinhjavaweb.utils.MapUtil;
 import com.laptrinhjavaweb.utils.ParseIntUtil;
 import javassist.NotFoundException;
@@ -66,14 +63,8 @@ public class BuildingServiceImpl implements BuildingService {
            BuildingEntity buildingFound = buildingRepository.findOne(buildingId);
            buildingEntity.setUserEntities(buildingFound.getUserEntities());
         }
-//        {
             BuildingEntity buildingEntityGetIDafterSave = buildingRepository.save(buildingEntity);
-//            if (buildingDTO.getRentArea() != null) {
-//                List<RentAreaDTO> rentAreaDTOS = rentAreaConverter.toRentAreaDTOs(buildingEntityGetIDafterSave.getId(), buildingDTO);
-//                rentAreaService.saveAllByBuilding(rentAreaDTOS, buildingDTO);
-//            }
             return buildingConverter.toBuildingDTO(buildingEntityGetIDafterSave);
-  //      }
     }
 
     @Override
@@ -84,6 +75,7 @@ public class BuildingServiceImpl implements BuildingService {
             buildingEntity.setUserEntities(new ArrayList<>(Optional.ofNullable(userRepository.findAll(staffIds))
                     .orElseThrow(()->new NotFoundException("Not Found User"))));
             buildingRepository.save(buildingEntity);
+
         }catch (Exception e){
             e.printStackTrace();
         }
