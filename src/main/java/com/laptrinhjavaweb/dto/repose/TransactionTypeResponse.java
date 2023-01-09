@@ -1,4 +1,4 @@
-package com.laptrinhjavaweb.dto.response;
+package com.laptrinhjavaweb.dto.repose;
 
 import java.util.ArrayList;
 import java.util.List;

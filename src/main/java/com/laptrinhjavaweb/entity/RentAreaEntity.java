@@ -5,7 +5,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "rentarea")
-public class RentAreaEntity extends BaseEntity {
+public class RentAreaEntity extends BaseEntity{
 
     @Column(name = "value")
     private Integer value;
@@ -30,6 +30,4 @@ public class RentAreaEntity extends BaseEntity {
         this.buildingEntity = buildingEntity;
     }
 
-
 }
-

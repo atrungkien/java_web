@@ -20,7 +20,7 @@ public class CustomerRepositoryImpl implements CustomerRepositoryCustom {
     @Override
     public List<CustomerEntity> findAll(CustomerSearchBuilder customerSearchBuilder) {
         String sql = SqlUtils.toQuery(customerSearchBuilder,buildDiff(customerSearchBuilder));
-        Query query = entityManager.createNativeQuery(sql, CustomerEntity.class);
+        Query query = entityManager.createNativeQuery(sql,CustomerEntity.class);
         return query.getResultList();
     }
     public String buildDiff(CustomerSearchBuilder customerSearchBuilder){

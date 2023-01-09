@@ -18,7 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/admin")
 public class BuildingController {
-
     @Autowired
     private DistrictService districtService;
     @Autowired
@@ -27,11 +26,11 @@ public class BuildingController {
     private UserService userService;
     @Autowired
     private BuildingService buildingService;
-
+    @Autowired
+    private BuildingConverter buildingConverter;
 
     @GetMapping("/building-list")
-    public ModelAndView buildingList(@ModelAttribute("modelSearch") BuildingSearchRequest buildingSearchRequest)
-    {
+    public ModelAndView buildingList(@ModelAttribute("modelSearch") BuildingSearchRequest buildingSearchRequest){
         ModelAndView modelAndView = new ModelAndView("admin/building/list");
         modelAndView.addObject("modelDistrict",districtService.getAll());
         modelAndView.addObject("modelStaff",userService.getAllStaff());
@@ -55,3 +54,4 @@ public class BuildingController {
     }
 
 }
+

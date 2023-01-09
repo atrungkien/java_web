@@ -1,5 +1,6 @@
 package com.laptrinhjavaweb.entity;
 
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,10 +17,13 @@ public class CustomerEntity extends BaseEntity{
     private String email;
 
 
-    @ManyToMany(mappedBy = "customerEntities",fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "assignmentcustomer",
+            joinColumns = @JoinColumn(name = "customerid",nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "staffid",nullable = false))
     private List<UserEntity> userEntities = new ArrayList<>();
 
-    @OneToMany(mappedBy = "customerEntity",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "customerEntity",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<TransactionEntity> transactionEntities = new ArrayList<>();
 
     public String getFullName() {
@@ -62,4 +66,3 @@ public class CustomerEntity extends BaseEntity{
         this.userEntities = userEntities;
     }
 }
-

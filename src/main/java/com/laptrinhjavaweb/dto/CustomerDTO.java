@@ -1,11 +1,10 @@
 package com.laptrinhjavaweb.dto;
 
-
-import com.laptrinhjavaweb.dto.response.TransactionTypeResponse;
+import com.laptrinhjavaweb.dto.repose.TransactionTypeResponse;
 
 import java.util.List;
 
-public class CustomerDTO extends AbstractDTO {
+public class CustomerDTO extends AbstractDTO{
     private String fullName;
     private String phone;
     private String email;

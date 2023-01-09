@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `estateadvance` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `estateadvance`;
 -- MySQL dump 10.13  Distrib 8.0.13, for Win64 (x86_64)
 --
 -- Host: localhost    Database: estateadvance
@@ -70,7 +68,7 @@ CREATE TABLE `assignmentcustomer` (
   KEY `fk_customer_user` (`customerid`),
   CONSTRAINT `fk_customer_user` FOREIGN KEY (`customerid`) REFERENCES `customer` (`id`),
   CONSTRAINT `fk_user_customer` FOREIGN KEY (`staffid`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -79,6 +77,7 @@ CREATE TABLE `assignmentcustomer` (
 
 LOCK TABLES `assignmentcustomer` WRITE;
 /*!40000 ALTER TABLE `assignmentcustomer` DISABLE KEYS */;
+INSERT INTO `assignmentcustomer` VALUES (1,2,1,NULL,NULL,NULL,NULL),(2,2,3,NULL,NULL,NULL,NULL),(3,3,3,NULL,NULL,NULL,NULL),(4,4,4,NULL,NULL,NULL,NULL),(5,3,6,NULL,NULL,NULL,NULL),(6,4,6,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `assignmentcustomer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -153,7 +152,7 @@ CREATE TABLE `customer` (
   `createdby` varchar(255) DEFAULT NULL,
   `modifiedby` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -162,6 +161,7 @@ CREATE TABLE `customer` (
 
 LOCK TABLES `customer` WRITE;
 /*!40000 ALTER TABLE `customer` DISABLE KEYS */;
+INSERT INTO `customer` VALUES (1,'Thach','678','0395899562','2022-09-28 09:17:04','2022-09-28 09:17:04','nguyenvana','nguyenvana'),(3,'Hoàng Thạch','03714104175','tuyen5316@gmail.com','2022-09-28 09:21:09','2022-09-28 09:21:09','nguyenvana','nguyenvana'),(4,'Đàm Hoàng Thạch','','tuyen5316@gmail.com','2022-09-28 09:21:10','2022-09-28 09:21:10','nguyenvana','nguyenvana'),(6,'cusrh','','ht781155@gmail.com','2022-09-28 09:24:39','2022-09-28 09:24:39','nguyenvana','nguyenvana');
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -245,7 +245,7 @@ CREATE TABLE `transaction` (
   PRIMARY KEY (`id`),
   KEY `fk_customer_transaction` (`customerid`),
   CONSTRAINT `fk_customer_transaction` FOREIGN KEY (`customerid`) REFERENCES `customer` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -254,6 +254,7 @@ CREATE TABLE `transaction` (
 
 LOCK TABLES `transaction` WRITE;
 /*!40000 ALTER TABLE `transaction` DISABLE KEYS */;
+INSERT INTO `transaction` VALUES (1,'CSKH','có chăm nha',3,'2022-09-28 09:21:54','2022-09-28 09:21:54','nguyenvana','nguyenvana',NULL),(2,'DANDIXEM','xem phim',3,'2022-09-28 09:22:01','2022-09-28 09:22:01','nguyenvana','nguyenvana',NULL),(3,'DANDIGIAITRI','massagse',3,'2022-09-28 09:22:27','2022-09-28 09:22:27','nguyenvana','nguyenvana',NULL);
 /*!40000 ALTER TABLE `transaction` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -323,14 +324,6 @@ LOCK TABLES `user_role` WRITE;
 INSERT INTO `user_role` VALUES (1,1,1,NULL,NULL,NULL,NULL),(2,2,2,NULL,NULL,NULL,NULL),(3,2,3,NULL,NULL,NULL,NULL),(4,2,4,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `user_role` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Dumping events for database 'estateadvance'
---
-
---
--- Dumping routines for database 'estateadvance'
---
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -341,4 +334,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-05-01 13:04:26
+-- Dump completed on 2022-09-28  9:28:20

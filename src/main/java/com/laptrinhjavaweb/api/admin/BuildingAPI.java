@@ -1,10 +1,9 @@
 package com.laptrinhjavaweb.api.admin;
 
-
 import com.laptrinhjavaweb.dto.BuildingDTO;
+import com.laptrinhjavaweb.dto.repose.BuildingResponse;
+import com.laptrinhjavaweb.dto.repose.StaffAssignmentResponse;
 import com.laptrinhjavaweb.dto.request.BuildingDelRequest;
-import com.laptrinhjavaweb.dto.response.BuildingResponse;
-import com.laptrinhjavaweb.dto.response.StaffAssignmentResponse;
 import com.laptrinhjavaweb.service.BuildingService;
 import com.laptrinhjavaweb.service.impl.UserService;
 import javassist.NotFoundException;
@@ -17,8 +16,10 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/building")
 public class BuildingAPI {
+
     @Autowired
     private BuildingService buildingService;
+
     @Autowired
     private UserService userService;
 

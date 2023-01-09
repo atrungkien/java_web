@@ -1,8 +1,16 @@
 package com.laptrinhjavaweb.builder;
 
+import com.laptrinhjavaweb.anotation.LikeField;
+import com.laptrinhjavaweb.anotation.OperatorField;
+import com.laptrinhjavaweb.anotation.SearchObject;
+
+@SearchObject(tableName = "customer",aliasValue = "c")
 public class CustomerSearchBuilder {
+    @LikeField
     private String fullName;
+    @LikeField
     private String phone;
+    @OperatorField
     private String email;
     private Long staffId;
 

@@ -1,4 +1,4 @@
-package com.laptrinhjavaweb.dto.response;
+package com.laptrinhjavaweb.dto.repose;
 
 public class TransactionResponse {
     private String createDateStr;

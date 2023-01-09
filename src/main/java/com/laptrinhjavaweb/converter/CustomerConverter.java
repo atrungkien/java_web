@@ -1,9 +1,9 @@
 package com.laptrinhjavaweb.converter;
 
 import com.laptrinhjavaweb.dto.CustomerDTO;
-import com.laptrinhjavaweb.dto.response.CustomerResponse;
-import com.laptrinhjavaweb.dto.response.TransactionResponse;
-import com.laptrinhjavaweb.dto.response.TransactionTypeResponse;
+import com.laptrinhjavaweb.dto.repose.CustomerResponse;
+import com.laptrinhjavaweb.dto.repose.TransactionResponse;
+import com.laptrinhjavaweb.dto.repose.TransactionTypeResponse;
 import com.laptrinhjavaweb.entity.CustomerEntity;
 import com.laptrinhjavaweb.entity.TransactionEntity;
 import com.laptrinhjavaweb.enums.TransactionTypeEnum;
@@ -30,10 +30,10 @@ public class CustomerConverter {
         return customerResponse;
     }
     public CustomerEntity toCustomerEntity(CustomerDTO customerDTO){
-        return modelMapper.map(customerDTO, CustomerEntity.class);
+        return modelMapper.map(customerDTO,CustomerEntity.class);
     }
     public CustomerDTO toCustomerDTO(CustomerEntity customerEntity){
-        CustomerDTO customerDTO = modelMapper.map(customerEntity, CustomerDTO.class);
+        CustomerDTO customerDTO = modelMapper.map(customerEntity,CustomerDTO.class);
         List<TransactionTypeResponse> transactionResponseList = new ArrayList<>();
         for(TransactionTypeEnum item:TransactionTypeEnum.values()){
             TransactionTypeResponse transactionResponse = new TransactionTypeResponse();

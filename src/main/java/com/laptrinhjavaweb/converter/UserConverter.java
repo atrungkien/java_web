@@ -1,7 +1,7 @@
 package com.laptrinhjavaweb.converter;
 
 import com.laptrinhjavaweb.dto.UserDTO;
-import com.laptrinhjavaweb.dto.response.StaffAssignmentResponse;
+import com.laptrinhjavaweb.dto.repose.StaffAssignmentResponse;
 import com.laptrinhjavaweb.entity.UserEntity;
 import com.laptrinhjavaweb.repository.UserRepository;
 import org.modelmapper.ModelMapper;
@@ -14,11 +14,13 @@ import java.util.List;
 @Component
 public class UserConverter {
 
+
     @Autowired
     private ModelMapper modelMapper;
 
     @Autowired
     private UserRepository userRepository;
+
 
     public UserDTO convertToDto (UserEntity entity){
         UserDTO result = modelMapper.map(entity, UserDTO.class);
@@ -45,5 +47,4 @@ public class UserConverter {
 
         return staffAssignmentResponses;
     }
-
 }

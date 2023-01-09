@@ -1,7 +1,7 @@
 package com.laptrinhjavaweb.api.admin;
 
 import com.laptrinhjavaweb.dto.CustomerDTO;
-import com.laptrinhjavaweb.dto.response.StaffAssignmentResponse;
+import com.laptrinhjavaweb.dto.repose.StaffAssignmentResponse;
 import com.laptrinhjavaweb.service.CustomerService;
 import com.laptrinhjavaweb.service.IUserService;
 import javassist.NotFoundException;
@@ -21,7 +21,7 @@ public class CustomerAPI {
 
     @GetMapping("/{id}/staff")
     public List<StaffAssignmentResponse> getAllStaffByCustomer(@PathVariable("id") Long id) {
-        return userService.getAllStaffAssignmentBuilding(id);
+        return userService.getAllStaffAssignmentCustomer(id);
     }
     @GetMapping("/{id}")
     public ResponseEntity<CustomerDTO> findOne(@PathVariable Long id){

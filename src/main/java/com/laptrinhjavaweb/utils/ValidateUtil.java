@@ -5,14 +5,6 @@ import com.laptrinhjavaweb.constant.SystemConstant;
 import java.util.Collection;
 
 public class ValidateUtil {
-   /* public static boolean isValid(Object obj) {
-        if (obj == null)
-            return false;
-        else if (!obj.toString().equals(SystemConstant.EMPTY_STRING))
-            return true;
-        return false;
-    }*/
-
     public static boolean isValid(Object object) {
         boolean isTrue = (object!=null && !(object.toString()).equals(SystemConstant.EMPTY_STRING));
         if(isTrue) {

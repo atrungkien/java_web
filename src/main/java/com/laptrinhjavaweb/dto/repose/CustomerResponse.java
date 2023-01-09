@@ -1,4 +1,4 @@
-package com.laptrinhjavaweb.dto.response;
+package com.laptrinhjavaweb.dto.repose;
 
 import com.laptrinhjavaweb.dto.AbstractDTO;
 

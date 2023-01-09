@@ -4,7 +4,7 @@ import com.laptrinhjavaweb.constant.SystemConstant;
 import com.laptrinhjavaweb.converter.UserConverter;
 import com.laptrinhjavaweb.dto.PasswordDTO;
 import com.laptrinhjavaweb.dto.UserDTO;
-import com.laptrinhjavaweb.dto.response.StaffAssignmentResponse;
+import com.laptrinhjavaweb.dto.repose.StaffAssignmentResponse;
 import com.laptrinhjavaweb.entity.RoleEntity;
 import com.laptrinhjavaweb.entity.UserEntity;
 import com.laptrinhjavaweb.exception.MyException;
@@ -167,5 +167,10 @@ public class UserService implements IUserService {
     @Override
     public List<StaffAssignmentResponse> getAllStaffAssignmentBuilding(Long buildingID) {
         return userConverter.toStaffAssignmentResponses(userRepository.getAllStaffByBuildingID(buildingID));
+    }
+
+    @Override
+    public List<StaffAssignmentResponse> getAllStaffAssignmentCustomer(Long customerID) {
+        return userConverter.toStaffAssignmentResponses(userRepository.getAllStaffByCustomerID(customerID));
     }
 }

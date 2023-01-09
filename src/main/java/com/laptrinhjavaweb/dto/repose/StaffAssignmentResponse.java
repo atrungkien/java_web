@@ -1,4 +1,4 @@
-package com.laptrinhjavaweb.dto.response;
+package com.laptrinhjavaweb.dto.repose;
 
 import com.laptrinhjavaweb.dto.UserDTO;
 
@@ -12,5 +12,4 @@ public class StaffAssignmentResponse extends UserDTO {
     public void setChecked(String checked) {
         this.checked = checked;
     }
-
 }

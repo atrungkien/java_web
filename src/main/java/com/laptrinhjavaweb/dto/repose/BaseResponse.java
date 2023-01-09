@@ -1,4 +1,4 @@
-package com.laptrinhjavaweb.dto.response;
+package com.laptrinhjavaweb.dto.repose;
 
 public abstract class BaseResponse {
     private Long id;
@@ -11,4 +11,3 @@ public abstract class BaseResponse {
         this.id = id;
     }
 }
-

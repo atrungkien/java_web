@@ -5,6 +5,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "transaction")
 public class TransactionEntity extends BaseEntity{
+
+
     @Column(name = "code")
     private String code;
     @Column(name = "note")
@@ -47,5 +49,4 @@ public class TransactionEntity extends BaseEntity{
     public void setCustomerEntity(CustomerEntity customerEntity) {
         this.customerEntity = customerEntity;
     }
-
 }

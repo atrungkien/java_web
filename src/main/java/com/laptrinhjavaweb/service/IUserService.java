@@ -2,7 +2,7 @@ package com.laptrinhjavaweb.service;
 
 import com.laptrinhjavaweb.dto.PasswordDTO;
 import com.laptrinhjavaweb.dto.UserDTO;
-import com.laptrinhjavaweb.dto.response.StaffAssignmentResponse;
+import com.laptrinhjavaweb.dto.repose.StaffAssignmentResponse;
 import com.laptrinhjavaweb.exception.MyException;
 import org.springframework.data.domain.Pageable;
 
@@ -22,4 +22,5 @@ public interface IUserService {
     void delete(long[] ids);
     List<UserDTO> getAllStaff();
     List<StaffAssignmentResponse> getAllStaffAssignmentBuilding(Long buildingID);
+    List<StaffAssignmentResponse> getAllStaffAssignmentCustomer(Long customerID);
 }

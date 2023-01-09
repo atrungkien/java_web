@@ -1,8 +1,9 @@
 package com.laptrinhjavaweb.converter;
 
 import com.laptrinhjavaweb.dto.BuildingDTO;
+import com.laptrinhjavaweb.dto.UserDTO;
+import com.laptrinhjavaweb.dto.repose.BuildingResponse;
 import com.laptrinhjavaweb.dto.request.BuildingSearchRequest;
-import com.laptrinhjavaweb.dto.response.BuildingResponse;
 import com.laptrinhjavaweb.entity.BuildingEntity;
 import com.laptrinhjavaweb.entity.RentAreaEntity;
 import com.laptrinhjavaweb.enums.DistrictEnum;
@@ -18,6 +19,9 @@ import java.util.List;
 public class BuildingConverter {
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private UserConverter userConverter;
 
     public BuildingResponse toBuildingResponse(BuildingEntity buildingEntity) {
         BuildingResponse buildingResponse;
@@ -41,7 +45,6 @@ public class BuildingConverter {
         }
         String rentAreaStr = String.join(",", rentAreas);
         buildingDTO.setRentArea(rentAreaStr);
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         if (buildingEntity.getType() != null) {
             List<String> typeDTOs = new ArrayList<>();
             String[] types = buildingEntity.getType().trim().split(",");
@@ -49,6 +52,13 @@ public class BuildingConverter {
                 typeDTOs.add(item);
             }
             buildingDTO.setType(typeDTOs);
+        }
+        List<UserDTO> userDTOS = new ArrayList<>();
+        if (buildingEntity.getUserEntities().size() > 0) {
+            buildingEntity.getUserEntities().forEach(item -> {
+                userDTOS.add(userConverter.convertToDto(item));
+            });
+            buildingDTO.setUserDTOS(userDTOS);
         }
         return buildingDTO;
     }
@@ -59,7 +69,6 @@ public class BuildingConverter {
             String type = String.join(",", buildingDTO.getType());
             buildingEntity.setType(type);
         }
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         if (buildingDTO.getRentArea() != null) {
             List<RentAreaEntity> rentAreaEntityNews = new ArrayList<>();
             String[] rentAreaValues = buildingDTO.getRentArea().trim().split(",");
@@ -73,5 +82,4 @@ public class BuildingConverter {
         }
         return buildingEntity;
     }
-
 }

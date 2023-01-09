@@ -1,6 +1,5 @@
 package com.laptrinhjavaweb.entity;
 
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -9,7 +8,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "building")
-public class BuildingEntity extends BaseEntity {
+public class BuildingEntity extends BaseEntity{
+
     @Column(name = "name")
     private String name;
     @Column(name = "street")
@@ -59,14 +59,14 @@ public class BuildingEntity extends BaseEntity {
     @Column(name = "type")
     private String type;
 
-    @OneToMany(mappedBy = "buildingEntity", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
+    @OneToMany(mappedBy = "buildingEntity", fetch = FetchType.LAZY,  cascade ={CascadeType.PERSIST, CascadeType.MERGE} , orphanRemoval  = true)
     private List<RentAreaEntity> rentAreaEntities = new ArrayList<>();
 
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "assignmentbuilding",
-            joinColumns = @JoinColumn(name = "buildingid", nullable = false),
-            inverseJoinColumns = @JoinColumn(name = "staffid", nullable = false))
+            joinColumns = @JoinColumn(name = "buildingid",nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "staffid",nullable = false))
     private List<UserEntity> userEntities = new ArrayList<>();
 
     public String getDistrict() {
@@ -278,4 +278,3 @@ public class BuildingEntity extends BaseEntity {
         this.userEntities = userEntities;
     }
 }
-
