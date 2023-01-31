@@ -16,6 +16,7 @@ import java.util.List;
 
 @Component
 public class BuildingConverter {
+
     @Autowired
     private ModelMapper modelMapper;
 
@@ -52,16 +53,6 @@ public class BuildingConverter {
         return buildingDTO;
     }
 
-    /*public BuildingSearchRequest toBuildingSearchRequest(BuildingSearchRequest buildingSearchRequest) {
-        if (buildingSearchRequest.getRentTypes() != null) {
-            List<String> a = new ArrayList<>();
-            for (String item : buildingSearchRequest.getRentTypes()) {
-                a.add("'" + item + "'");
-            }
-            buildingSearchRequest.setRentTypes(a);
-        }
-        return buildingSearchRequest;
-    }*/
 
     public BuildingEntity toBuildingEntity(BuildingDTO buildingDTO) {
         BuildingEntity buildingEntity = modelMapper.map(buildingDTO, BuildingEntity.class);

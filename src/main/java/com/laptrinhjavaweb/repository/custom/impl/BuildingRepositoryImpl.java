@@ -2,14 +2,9 @@ package com.laptrinhjavaweb.repository.custom.impl;
 
 import com.laptrinhjavaweb.builder.BuildingSearchBuilder;
 import com.laptrinhjavaweb.entity.BuildingEntity;
-import com.laptrinhjavaweb.repository.AssignmentBuildingRepository;
-import com.laptrinhjavaweb.repository.RentAreaRepository;
-import com.laptrinhjavaweb.repository.UserRepository;
 import com.laptrinhjavaweb.repository.custom.BuildingRepositoryCustom;
 import com.laptrinhjavaweb.utils.ValidateUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -24,13 +19,6 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
     @PersistenceContext
     private EntityManager entityManager;
 
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private AssignmentBuildingRepository assignmentBuildingRepository;
-    @Autowired
-    private RentAreaRepository rentAreaRepository;
-    @Override
     public List<BuildingEntity> findAll(BuildingSearchBuilder buildingSearchBuilder) {
         try {
             String sql = buildQuery(buildingSearchBuilder);
@@ -112,7 +100,7 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
                     for (String likeField : likeFields) {
                         if (likeField.equals(fieldName)) {
                             where.append(String.format("\nand bd.%s like '%s'", fieldName,
-                                    "%" + fieldValue.toString() + "%"));
+                                    "%"  + fieldValue.toString() + "%"));
                             break;
                         }
                     }
