@@ -31,16 +31,9 @@ public class BuildingServiceImpl implements BuildingService {
     @Autowired
     private BuildingConverter buildingConverter;
     @Autowired
-    private RentAreaConverter rentAreaConverter;
-    @Autowired
     private BuildingRepository buildingRepository;
     @Autowired
-    private RentAreaService rentAreaService;
-    @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private RentAreaRepository rentAreaRepository;
-
 
     @Override
     public List<BuildingResponse> findAll(Map<String, Object> params, List<String> rentTypes) {
@@ -68,21 +61,6 @@ public class BuildingServiceImpl implements BuildingService {
         return id != null ? buildingConverter.toBuildingDTO(buildingRepository.findById(id)) : new BuildingDTO();
     }
 
-    /*@Override
-    public BuildingDTO save(BuildingDTO buildingDTO) {
-        BuildingEntity buildingEntity = buildingConverter.toBuildingEntity(buildingDTO);
-        try {
-            BuildingEntity buildingEntityGetIDafterSave = buildingRepository.save(buildingEntity);
-            if (buildingDTO.getRentArea() != null) {
-                List<RentAreaDTO> rentAreaDTOS = rentAreaConverter.toRentAreaDTOs(buildingEntityGetIDafterSave.getId(), buildingDTO);
-                rentAreaService.saveAllByBuilding(rentAreaDTOS, buildingDTO);
-            }
-            return buildingConverter.toBuildingDTO(buildingEntityGetIDafterSave);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }*/
     @Override
     @Transactional
     public void assignmentBuilding(List<Long> staffIds, Long buildingID) throws NotFoundException {
@@ -96,7 +74,6 @@ public class BuildingServiceImpl implements BuildingService {
         }
     }
 
-
     @Override
     @Transactional
     public void deleteWithCascade(BuildingDelRequest buildingDelRequest) {
@@ -105,49 +82,12 @@ public class BuildingServiceImpl implements BuildingService {
         }
     }
 
-    /*@Transactional
-    @Override
-    public BuildingDTO savePart2(BuildingDTO buildingDTO) throws NotFoundException {
-        Long buildingId = buildingDTO.getId();
-        if (Objects.nonNull(buildingDTO)) {//objects java 7, check != null
-            BuildingEntity buildingEntity = buildingConverter.toBuildingEntity(buildingDTO);
-            if (Objects.nonNull(buildingId) && buildingId > 0) {//id != null update
-                BuildingEntity buildingEntityFound = Optional.ofNullable(buildingRepository.findOne(buildingId))
-                        .orElseThrow(() -> new NotFoundException(SystemConstant.NF_BUILDING));
-                //Optional.ofNullable neu != null thi tra ve gia tri, null thi tra ve exception
-                buildingEntity.setCreatedBy(buildingEntityFound.getCreatedBy());
-                buildingEntity.setCreatedDate(buildingEntityFound.getCreatedDate());
-                if (!rentAreaIsPresent(buildingEntityFound, buildingDTO)) {
-                    rentAreaRepository.deleteByBuildingEntity_Id(buildingId);//xoa tat ca rent area cua building, de them lai
-                } else {
-                    buildingEntity.setRentAreaEntities(new ArrayList<>());
-                }
-            }
-            BuildingDTO savedBuilding = buildingConverter.toBuildingDTO(buildingRepository.save(buildingEntity));
-            rentAreaRepository.save(buildingEntity.getRentAreaEntities());//insert lai rent area
-            return savedBuilding;
-        }
-        return null;
-    }*/
-
     @Override
     @Transactional
     public BuildingDTO save(BuildingDTO buildingDTO) {
-       /* if (buildingDTO.getId() != null) {
-            rentAreaRepository.deleteByBuildingEntity_Id(buildingDTO.getId());
-        }*/
         BuildingEntity buildingEntity = buildingConverter.toBuildingEntity(buildingDTO);
         return buildingConverter.toBuildingDTO( buildingRepository.save(buildingEntity));
     }
-
-   /* private Boolean rentAreaIsPresent(BuildingEntity buildingEntity, BuildingDTO buildingDTO) {
-        List<String> valueAreas = new ArrayList<>();
-        buildingEntity.getRentAreaEntities().forEach(item -> {
-            valueAreas.add(String.valueOf(item.getValue()));
-        });
-        String rentAreaStrOut = String.join(",", valueAreas), rentAreaStrIn = buildingDTO.getRentArea();
-        return rentAreaStrIn.equals(rentAreaStrOut);
-    }*/
 
     private BuildingSearchBuilder toBuildingSearchBuilder(Map<String, Object> params, List<String> rentTypes) {
         try {

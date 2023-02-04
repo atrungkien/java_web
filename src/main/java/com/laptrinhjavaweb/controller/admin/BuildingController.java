@@ -26,8 +26,6 @@ public class BuildingController {
     private UserService userService;
     @Autowired
     private BuildingService buildingService;
-    @Autowired
-    private BuildingConverter buildingConverter;
 
     @GetMapping("/building-list")
     public ModelAndView buildingList(@ModelAttribute("modelSearch") BuildingSearchRequest buildingSearchRequest){

@@ -1,5 +1,6 @@
 package com.laptrinhjavaweb.utils;
 
+
 import com.laptrinhjavaweb.anotation.LikeField;
 import com.laptrinhjavaweb.anotation.OperatorField;
 import com.laptrinhjavaweb.anotation.SearchObject;
@@ -14,21 +15,21 @@ public class SqlUtils {
         StringBuilder join = new StringBuilder();
         StringBuilder where = new StringBuilder("\nwhere 1=1");
 
-        Class<?> classObj = searchObject.getClass();
-        String nameTable = "";
-        try {
-            if (classObj.isAnnotationPresent(SearchObject.class)) {
-                SearchObject searchObjectAno = classObj.getAnnotation(SearchObject.class);
-                if (searchObjectAno.tableName().isEmpty())
-                    throw new ObjectSearchException("Require table name !!!");
-                else {
-                    if (searchObjectAno.aliasValue().isEmpty()) {
-                        nameTable = searchObjectAno.tableName();
-                        query.append("select * from ").append(nameTable);
-                    } else {
-                        nameTable = searchObjectAno.aliasValue();
-                        query.append("select * from ").append(searchObjectAno.tableName()).append(" as ").append(nameTable);
-                    }
+                          Class<?> classObj = searchObject.getClass();
+                    String nameTable = "";
+                    try {
+                        if (classObj.isAnnotationPresent(SearchObject.class)) {
+                            SearchObject searchObjectAno = classObj.getAnnotation(SearchObject.class);
+                            if (searchObjectAno.tableName().isEmpty())
+                                throw new ObjectSearchException("Require table name !!!");
+                            else {
+                                if (searchObjectAno.aliasValue().isEmpty()) {
+                                    nameTable = searchObjectAno.tableName();
+                                    query.append("select * from ").append(nameTable);
+                                } else {
+                                    nameTable = searchObjectAno.aliasValue();
+                                    query.append("select * from ").append(searchObjectAno.tableName()).append(" as ").append(nameTable);
+                                }
 
                 }
 
